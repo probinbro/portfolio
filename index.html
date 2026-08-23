@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Probin — I build websites that behave like software</title>
+<meta name="description" content="Probin is a full-stack web developer with 3 years of experience building fast, custom, hand-coded websites and web apps. Frontend, backend, and everything between." />
+<meta name="theme-color" content="#06070B" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Probin — I build websites that behave like software" />
+<meta property="og:description" content="Full-stack web developer. Hand-coded, fast, and a little bit alive. Meet Robo Probin inside." />
+<meta property="og:image" content="assets/og.svg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/blueprint.css" />
+</head>
+<body>
+
+<!-- ══════════════ BOOT SEQUENCE ══════════════ -->
+<div id="boot" class="boot" aria-hidden="true">
+  <div class="boot__inner">
+    <div class="boot__mark"><span>P</span></div>
+    <pre class="boot__log" id="boot-log"></pre>
+    <div class="boot__bar"><i></i></div>
+    <button class="boot__skip" id="boot-skip" type="button">skip →</button>
+  </div>
+</div>
+
+<!-- ══════════════ CHROME ══════════════ -->
+<div class="scroll-rail" aria-hidden="true"><i id="scroll-rail-fill"></i></div>
+<div class="cursor" id="cursor" aria-hidden="true"><i class="cursor__dot"></i><i class="cursor__ring"></i><span class="cursor__label"></span></div>
+<div class="grain" aria-hidden="true"></div>
+
+<a class="skip-link" href="#hero">Skip to content</a>
+
+<header class="nav" id="nav" data-x="header.nav">
+  <a class="nav__brand" href="#hero" aria-label="Probin, home">
+    <span class="nav__mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="30" height="30"><path class="mk-p" d="M9 25V7h8a6 6 0 0 1 0 12H9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle class="mk-dot" cx="24" cy="24" r="2.4" fill="currentColor"/></svg>
+    </span>
+    <span class="nav__name">Probin<i>.dev</i></span>
+  </a>
+
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#work" data-nav>Work</a>
+    <a href="#proof" data-nav>Proof</a>
+    <a href="#services" data-nav>Services</a>
+    <a href="#arcade" data-nav>Playground</a>
+    <a href="#chatbot" data-nav>Chatbot</a>
+    <a href="#contact" data-nav>Contact</a>
+  </nav>
+
+  <div class="nav__tools">
+    <button class="tool" id="btn-xray" type="button" title="X-ray mode (X)" aria-pressed="false">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg>
+      <span class="tool__kbd">X</span>
+    </button>
+    <button class="tool" id="btn-theme" type="button" title="Toggle light / dark (T)" aria-pressed="false">
+      <svg class="ic-moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+    </button>
+    <button class="tool" id="btn-sound" type="button" title="Toggle sound" aria-pressed="false">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="wave" d="M16.5 8.8a4.5 4.5 0 0 1 0 6.4M19 6.3a8 8 0 0 1 0 11.4"/></svg>
+    </button>
+    <button class="tool tool--k" id="btn-palette" type="button" title="Jump to anything (Ctrl or ⌘ + K)">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="tool__txt">Jump to…</span>
+      <kbd>⌘K</kbd>
+    </button>
+    <a class="btn btn--primary nav__cta" href="#contact" data-magnetic>
+      <span>Start a project</span>
+      <i class="btn__arrow" aria-hidden="true">→</i>
+    </a>
+    <button class="nav__burger" id="btn-burger" type="button" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<main id="app">
+
+<!-- ══════════════ 01 · HERO ══════════════ -->
+<section class="hero" id="hero" data-x="section#hero">
+  <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero__veil" aria-hidden="true"></div>
+
+  <div class="hero__inner shell">
+    <div class="hero__tag reveal">
+      <i class="pulse" aria-hidden="true"></i>
+      <span>Available for new builds · Remote worldwide</span>
+    </div>
+
+    <h1 class="hero__title" id="hero-title" data-x="h1">
+      <span class="line"><span class="w" data-w>I</span> <span class="w" data-w>build</span> <span class="w" data-w>websites</span></span>
+      <span class="line"><span class="w" data-w>that</span> <span class="w grad" data-w>behave</span></span>
+      <span class="line"><span class="w grad" data-w>like</span> <span class="w grad" data-w>software.</span></span>
+    </h1>
+
+    <p class="hero__sub reveal">
+      Three years, hand-coded. Frontend that feels expensive, backend that doesn't fall over.
+      No page builders, no templates — <b>this page is the proof</b>, and you're standing in it.
+    </p>
+
+    <div class="hero__cta reveal">
+      <a class="btn btn--primary btn--lg" href="#contact" data-magnetic><span>Start a project</span><i class="btn__arrow">→</i></a>
+      <button class="btn btn--ghost btn--lg" type="button" data-open-bot data-magnetic>
+        <span class="bot-dot" aria-hidden="true"></span><span>Ask Robo Probin, the chatbot</span>
+      </button>
+    </div>
+
+    <div class="hero__hint reveal">
+      Press <kbd>X</kbd> for the wireframe · <kbd>⌘</kbd><kbd>K</kbd> to jump anywhere
+    </div>
+  </div>
+
+  <div class="hero__ticker" aria-hidden="true">
+    <div class="ticker__track" id="ticker-track"></div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true"><i></i><span>scroll</span></div>
+</section>
+
+<!-- ══════════════ 02 · MANIFESTO ══════════════ -->
+<section class="manifesto" id="manifesto" data-x="section#manifesto">
+  <div class="shell">
+    <p class="kinetic" id="kinetic">
+      Most portfolios show you screenshots of work.
+      This one hands you the tools. Flip the x-ray, open the console, play the games,
+      interrogate the bot. Everything here was written by hand — because the fastest way to
+      prove I can build your site is to make you use mine.
+    </p>
+
+    <div class="manifesto__cards">
+      <article class="mcard reveal" data-x="article.mcard">
+        <span class="mcard__no">01</span>
+        <h3>Built, not assembled</h3>
+        <p>Zero page-builders. Zero bloated frameworks stapled on for looks. Every animation on this page is code Probin wrote and can change in a minute.</p>
+      </article>
+      <article class="mcard reveal" data-x="article.mcard">
+        <span class="mcard__no">02</span>
+        <h3>Front <em>and</em> back</h3>
+        <p>Interfaces, APIs, databases, auth, payments, deploys. One person, whole stack — so nothing gets lost in a handoff.</p>
+      </article>
+      <article class="mcard reveal" data-x="article.mcard">
+        <span class="mcard__no">03</span>
+        <h3>Shipped, then supported</h3>
+        <p>Five live client sites and counting, still running, still maintained. Launch day is the start of the relationship, not the end of it.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 03 · WORK ══════════════ -->
+<section class="work" id="work" data-x="section#work">
+  <div class="shell">
+    <header class="sec-head reveal">
+      <span class="sec-eyebrow"><i></i>01 — Selected work</span>
+      <h2 class="sec-title">Real sites. Real clients.<br /><span class="dim">Still live right now.</span></h2>
+      <p class="sec-lede">Every preview below is the <b>live site itself</b>, running in a frame on this page — not a screenshot. Hit <b>Peek</b> to open one full size and click around inside it.</p>
+    </header>
+
+    <div class="work__grid" id="work-grid"><!-- injected by js/work.js --></div>
+  </div>
+</section>
+
+<!-- ══════════════ 04 · PROOF / LIVE VITALS ══════════════ -->
+<section class="proof" id="proof" data-x="section#proof">
+  <div class="shell">
+    <header class="sec-head reveal">
+      <span class="sec-eyebrow"><i></i>02 — Live proof</span>
+      <h2 class="sec-title">Numbers measured from<br /><span class="dim">the page you're reading.</span></h2>
+      <p class="sec-lede">Not a marketing badge. These are read straight off your browser's Performance API, right now, on your device and your connection.</p>
+    </header>
+
+    <div class="vitals" id="vitals" data-x="div.vitals">
+      <article class="vital" data-vital="load"><h4>Time to interactive</h4><div class="vital__num"><span data-val>—</span><i>ms</i></div><div class="vital__bar"><i></i></div><p data-note>measuring…</p></article>
+      <article class="vital" data-vital="weight"><h4>Page weight shipped</h4><div class="vital__num"><span data-val>—</span><i>KB</i></div><div class="vital__bar"><i></i></div><p data-note>measuring…</p></article>
+      <article class="vital" data-vital="nodes"><h4>DOM nodes</h4><div class="vital__num"><span data-val>—</span><i></i></div><div class="vital__bar"><i></i></div><p data-note>measuring…</p></article>
+      <article class="vital" data-vital="fps"><h4>Live frame rate</h4><div class="vital__num"><span data-val>—</span><i>fps</i></div><div class="vital__bar"><i></i></div><p data-note>sampling…</p></article>
+    </div>
+
+    <div class="responsive-lab reveal" data-x="div.responsive-lab">
+      <div class="rl__head">
+        <h3>Drag the handle. Watch it adapt.</h3>
+        <p>Responsive isn't a checkbox — it's a decision at every breakpoint. Grab the edge and squeeze.</p>
+      </div>
+      <div class="rl__stage">
+        <div class="rl__frame" id="rl-frame">
+          <div class="rl__chrome"><i></i><i></i><i></i><span id="rl-width">1200px · desktop</span></div>
+          <div class="rl__page">
+            <div class="rl__nav"><b>Probin</b><span></span><span></span><span></span><em>Hire me</em></div>
+            <div class="rl__hero"><h5>Your next website</h5><p>Same code. Every screen.</p><i class="rl__btn">Get started</i></div>
+            <div class="rl__cards"><i></i><i></i><i></i></div>
+          </div>
+          <button class="rl__handle" id="rl-handle" aria-label="Resize preview"><span></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 05 · SERVICES ══════════════ -->
+<section class="services" id="services" data-x="section#services">
+  <div class="shell">
+    <header class="sec-head reveal">
+      <span class="sec-eyebrow"><i></i>03 — What Probin builds</span>
+      <h2 class="sec-title">Full support, both ends<br /><span class="dim">of the wire.</span></h2>
+    </header>
+    <div class="svc" id="svc-grid"><!-- injected by js/services.js --></div>
+
+    <div class="stack-marquee" aria-label="Tech stack">
+      <div class="stack-marquee__track" id="stack-track"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 06 · PROCESS ══════════════ -->
+<section class="process" id="process" data-x="section#process">
+  <div class="shell">
+    <header class="sec-head reveal">
+      <span class="sec-eyebrow"><i></i>04 — How it goes</span>
+      <h2 class="sec-title">Four steps. No mystery.<br /><span class="dim">You always know where it stands.</span></h2>
+    </header>
+    <ol class="steps" id="steps"><!-- injected --></ol>
+  </div>
+</section>
+
+<!-- ══════════════ 07 · ARCADE ══════════════ -->
+<section class="arcade" id="arcade" data-x="section#arcade">
+  <div class="shell">
+    <header class="sec-head sec-head--wide reveal">
+      <span class="sec-eyebrow"><i></i>05 — The playground <b class="sec-flag">6 live</b></span>
+      <h2 class="sec-title">Six things running in<br /><span class="dim">your browser right now.</span></h2>
+      <p class="sec-lede">Three games and three experiments — a <b>3D engine</b>, a <b>parallax journey</b> and a <b>particle forge</b> — all hand-written canvas. No engine, no library, nothing downloaded. This is the answer to "can you build something like that?"</p>
+    </header>
+
+    <div class="cabinet" data-x="div.cabinet">
+      <div class="cabinet__tabs" role="tablist" aria-label="Games and experiences">
+        <span class="tabs__label">Games</span>
+        <button class="gtab is-on" role="tab" aria-selected="true" data-game="bugs"><b>Bug Squash</b><span>reflex</span></button>
+        <button class="gtab" role="tab" aria-selected="false" data-game="stack"><b>Div Stacker</b><span>precision</span></button>
+        <button class="gtab" role="tab" aria-selected="false" data-game="hex"><b>Hex Hunter</b><span>colour</span></button>
+        <span class="tabs__label tabs__label--alt">Experiences</span>
+        <button class="gtab gtab--demo" role="tab" aria-selected="false" data-game="verse"><b>3D Verse</b><span>3d engine</span></button>
+        <button class="gtab gtab--demo" role="tab" aria-selected="false" data-game="unicorn"><b>Unicorn Journey</b><span>parallax</span></button>
+        <button class="gtab gtab--demo" role="tab" aria-selected="false" data-game="forge"><b>Particle Forge</b><span>particles</span></button>
+      </div>
+
+      <div class="cabinet__screen">
+        <div class="screen__scan" aria-hidden="true"></div>
+        <canvas id="game-canvas" width="960" height="540" tabindex="0" aria-label="Game screen"></canvas>
+        <div class="screen__hud">
+          <span class="hud__item">SCORE <b id="hud-score">0</b></span>
+          <span class="hud__item">BEST <b id="hud-best">0</b></span>
+          <span class="hud__item" id="hud-extra">LIVES <b>3</b></span>
+        </div>
+        <div class="screen__overlay" id="game-overlay">
+          <h3 id="ov-title">Bug Squash</h3>
+          <p id="ov-text">Bugs are crawling across the build. Click them before they reach the deploy line.</p>
+          <button class="btn btn--primary" id="ov-btn" type="button"><span>Insert coin</span><i class="btn__arrow">▸</i></button>
+          <small id="ov-hint">Tip: click or tap — space to pause</small>
+        </div>
+      </div>
+
+      <div class="cabinet__foot">
+        <p id="game-blurb">Every pixel here is drawn in a &lt;canvas&gt; with plain JavaScript.</p>
+        <button class="btn btn--ghost btn--sm" type="button" data-open-bot data-bot-seed="I just played the arcade"><span>Tell Probin I beat it</span></button>
+      </div>
+    </div>
+
+    <p class="cabinet__note reveal">
+      Want one of these on your own site — a 3D product viewer, a scroll-driven story, a particle hero?
+      <button class="linkish" type="button" data-open-bot data-bot-seed="Can you build something interactive like the playground?">Ask the chatbot</button>
+      or <a class="linkish" href="#contact">put it in the brief</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════ ROBO PROBIN BAND ══════════════ -->
+<section class="botband" id="chatbot" data-x="section#chatbot">
+  <div class="shell botband__inner">
+    <div class="botband__stage reveal" aria-hidden="true">
+      <span class="botband__face">
+        <i class="eye eye--l"></i><i class="eye eye--r"></i><i class="mouth"></i>
+      </span>
+      <span class="botband__ring"></span>
+      <span class="botband__chip botband__chip--1">how much?</span>
+      <span class="botband__chip botband__chip--2">how long?</span>
+      <span class="botband__chip botband__chip--3">my budget is…</span>
+    </div>
+
+    <div class="botband__copy reveal">
+      <span class="sec-eyebrow"><i></i>The chatbot</span>
+      <h2 class="sec-title">Meet <span class="grad">Robo Probin</span>.<br /><span class="dim">A chatbot, hand-written.</span></h2>
+      <p class="sec-lede">
+        Not a widget Probin bought and pasted in — a chatbot he wrote himself, living in the corner of this page.
+        Ask it anything about pricing, timelines, the stack or the process and it answers on the spot.
+      </p>
+      <ul class="botband__list">
+        <li><b>Answers instantly</b> — pricing, budgets, timelines, what he builds, how it works</li>
+        <li><b>Takes your brief</b> — name, email, project, budget, then emails it straight to Probin</li>
+        <li><b>Costs nothing to run</b> — no AI subscription behind it, just a few hundred lines of code</li>
+      </ul>
+      <div class="botband__cta">
+        <button class="btn btn--primary btn--lg" type="button" data-open-bot data-magnetic>
+          <span class="bot-dot" aria-hidden="true"></span><span>Open the chatbot</span><i class="btn__arrow">→</i>
+        </button>
+        <button class="btn btn--ghost btn--lg" type="button" data-open-bot data-bot-seed="My budget is tight, what can you do?" data-magnetic>
+          <span>"My budget is tight…"</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 08 · CONTACT ══════════════ -->
+<section class="contact" id="contact" data-x="section#contact">
+  <div class="shell">
+    <header class="sec-head reveal">
+      <span class="sec-eyebrow"><i></i>06 — Start something</span>
+      <h2 class="sec-title">Build the brief.<br /><span class="dim">Get a real answer in 24h.</span></h2>
+      <p class="sec-lede">Pick what you need — the estimate updates as you go. Then <b>tell it your budget</b>: Probin works to your number rather than against it, and the configurator will say plainly whether the scope fits or what to drop.</p>
+    </header>
+
+    <div class="contact__grid">
+      <!-- Configurator -->
+      <div class="configurator" data-x="div.configurator">
+        <div class="cfg__block">
+          <h4><i>01</i> What are we making?</h4>
+          <div class="chipset" id="cfg-type" data-single="true"></div>
+        </div>
+        <div class="cfg__block">
+          <h4><i>02</i> What does it need?</h4>
+          <div class="chipset" id="cfg-features"></div>
+        </div>
+        <div class="cfg__block">
+          <h4><i>03</i> How soon?</h4>
+          <div class="chipset" id="cfg-speed" data-single="true"></div>
+        </div>
+
+        <div class="cfg__block cfg__block--budget">
+          <h4><i>04</i> Your budget <em>the flexible bit</em></h4>
+          <div class="chipset" id="cfg-budget" data-single="true"></div>
+          <div class="cfg__exact">
+            <label for="cfg-amount">Or name your exact number</label>
+            <div class="cfg__money">
+              <i>$</i>
+              <input type="number" id="cfg-amount" min="0" step="50" placeholder="900" inputmode="numeric" aria-label="Your budget in dollars" />
+            </div>
+          </div>
+        </div>
+
+        <div class="cfg__out" id="cfg-out">
+          <div class="cfg__out-row">
+            <span>Estimated build</span>
+            <b><span id="cfg-weeks">—</span> weeks</b>
+          </div>
+          <div class="cfg__out-row">
+            <span>Indicative range</span>
+            <b><span id="cfg-price">—</span></b>
+          </div>
+          <div class="cfg__meter"><i id="cfg-meter-fill"></i></div>
+          <p class="cfg__verdict" id="cfg-verdict" role="status" aria-live="polite"></p>
+          <p class="cfg__note">Ballpark from scope alone. Real numbers come after a 20-minute call — sometimes lower, and Probin will say so.</p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form class="cform" id="contact-form" novalidate data-x="form#contact-form">
+        <div class="cform__row">
+          <label class="field">
+            <span>Your name</span>
+            <input type="text" name="name" id="f-name" autocomplete="name" required placeholder="Jane Doe" />
+            <em class="field__err" data-err></em>
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" id="f-email" autocomplete="email" required placeholder="jane@company.com" />
+            <em class="field__err" data-err></em>
+          </label>
+        </div>
+        <label class="field">
+          <span>Company <i>optional</i></span>
+          <input type="text" name="company" id="f-company" autocomplete="organization" placeholder="Acme Ltd." />
+        </label>
+        <label class="field">
+          <span>The brief</span>
+          <textarea name="message" id="f-message" rows="5" required placeholder="What are you building, who's it for, and what has to be true on launch day?"></textarea>
+          <em class="field__err" data-err></em>
+        </label>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
+        <input type="hidden" name="scope" id="f-scope" />
+
+        <div class="cform__foot">
+          <button class="btn btn--primary btn--lg" type="submit" id="f-submit" data-magnetic>
+            <span>Send the brief</span><i class="btn__arrow">→</i>
+          </button>
+          <p class="cform__msg" id="f-msg" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="cform__alt">
+          <span>Prefer to talk first?</span>
+          <button type="button" class="linkish" data-open-bot data-bot-seed="I want to book a call">Ask Robo Probin</button>
+          <span class="sep">·</span>
+          <a class="linkish" id="mail-link" href="#">Email directly</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot" data-x="footer">
+  <div class="shell foot__inner">
+    <div class="foot__brand">
+      <div class="foot__big" id="foot-big">PROBIN</div>
+      <p>Full-stack web developer · 3 years shipping · Frontend &amp; backend · Available now</p>
+    </div>
+    <div class="foot__cols">
+      <div><h5>Site</h5><a href="#work">Work</a><a href="#proof">Proof</a><a href="#services">Services</a><a href="#arcade">Arcade</a></div>
+      <div><h5>Elsewhere</h5><a id="lnk-github" href="#" target="_blank" rel="noopener">GitHub</a><a id="lnk-linkedin" href="#" target="_blank" rel="noopener">LinkedIn</a><a id="lnk-mail" href="#">Email</a></div>
+      <div><h5>Try</h5><button class="linkish" data-open-bot>Robo Probin</button><button class="linkish" id="foot-xray">X-ray mode</button><button class="linkish" id="foot-palette">Command palette</button></div>
+    </div>
+  </div>
+  <div class="shell foot__base">
+    <span>© <span id="year"></span> Probin. Hand-coded — no templates, no builders.</span>
+    <span class="foot__sig">Made with <i class="heart">♥</i> and far too many <code>requestAnimationFrame</code> calls.</span>
+  </div>
+</footer>
+
+<!-- ══════════════ ROBO PROBIN ══════════════ -->
+<button class="bot-launcher" id="bot-launcher" type="button" aria-label="Open Robo Probin chat">
+  <span class="bot-launcher__face" aria-hidden="true">
+    <i class="eye eye--l"></i><i class="eye eye--r"></i><i class="mouth"></i>
+  </span>
+  <span class="bot-launcher__ping"></span>
+  <span class="bot-launcher__bubble" id="bot-nudge">I'm a chatbot — ask me about budgets.</span>
+</button>
+
+<aside class="bot" id="bot" aria-hidden="true" aria-label="Robo Probin chat">
+  <header class="bot__head">
+    <span class="bot__avatar" aria-hidden="true"><i class="eye eye--l"></i><i class="eye eye--r"></i><i class="mouth"></i></span>
+    <div class="bot__id">
+      <b>Robo Probin</b>
+      <small><i class="pulse"></i>chatbot · hand-written, not rented</small>
+    </div>
+    <button class="bot__x" id="bot-close" type="button" aria-label="Close chat">✕</button>
+  </header>
+  <div class="bot__log" id="bot-log" role="log" aria-live="polite"></div>
+  <div class="bot__chips" id="bot-chips"></div>
+  <form class="bot__input" id="bot-form">
+    <input type="text" id="bot-text" placeholder="Ask about pricing, stack, timelines…" autocomplete="off" aria-label="Message Robo Probin" />
+    <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h14M12 5l7 7-7 7"/></svg></button>
+  </form>
+</aside>
+
+<!-- ══════════════ COMMAND PALETTE ══════════════ -->
+<div class="palette" id="palette" aria-hidden="true">
+  <div class="palette__box" role="dialog" aria-label="Command palette">
+    <div class="palette__field">
+      <span>⌘</span>
+      <input type="text" id="palette-input" placeholder="Type a command… (work, hire, x-ray, games, theme)" aria-label="Command" />
+      <kbd>esc</kbd>
+    </div>
+    <ul class="palette__list" id="palette-list"></ul>
+  </div>
+</div>
+
+<!-- ══════════════ PEEK MODAL ══════════════ -->
+<div class="peek" id="peek" aria-hidden="true">
+  <div class="peek__box" role="dialog" aria-label="Live site preview">
+    <div class="peek__chrome">
+      <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+      <span class="peek__url" id="peek-url">—</span>
+      <a class="peek__open" id="peek-open" href="#" target="_blank" rel="noopener">Open live ↗</a>
+      <button class="peek__x" id="peek-close" type="button" aria-label="Close preview">✕</button>
+    </div>
+    <div class="peek__body">
+      <div class="peek__loading" id="peek-loading"><i></i><span>fetching the live site…</span></div>
+      <iframe id="peek-frame" title="Live site preview" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      <div class="peek__blocked" id="peek-blocked">
+        <h4>This one refuses to be framed.</h4>
+        <p>The site sends a security header that blocks embedding — which is, honestly, the correct thing for it to do.</p>
+        <a class="btn btn--primary" id="peek-blocked-open" href="#" target="_blank" rel="noopener"><span>Open it in a new tab</span><i class="btn__arrow">↗</i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

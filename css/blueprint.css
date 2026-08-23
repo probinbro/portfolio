@@ -1,0 +1,144 @@
+/* ═══════════════════════════════════════════════════════════
+   PROBIN.DEV — blueprint.css
+   "X-ray mode": the page turns itself inside out and shows
+   the structure it was built from. Toggle with the X key.
+   ═══════════════════════════════════════════════════════════ */
+
+html.xray{
+  --bg:        #060B18;
+  --bg-2:      #08101F;
+  --bg-3:      #0A1426;
+  --surface:   rgba(79,240,214,.03);
+  --surface-2: rgba(79,240,214,.07);
+  --line:      rgba(79,240,214,.22);
+  --line-2:    rgba(79,240,214,.42);
+  --text:      #BFF7EE;
+  --text-2:    #7FCFC3;
+  --muted:     #4E8E88;
+  --noise-op:  .05;
+}
+
+html.xray body{
+  background-color:#060B18;
+  background-image:
+    linear-gradient(rgba(79,240,214,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,240,214,.07) 1px, transparent 1px),
+    linear-gradient(rgba(79,240,214,.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,240,214,.16) 1px, transparent 1px);
+  background-size:20px 20px, 20px 20px, 160px 160px, 160px 160px;
+  background-attachment:fixed;
+}
+
+/* Flatten decoration so structure is all that's left */
+html.xray .hero__veil,
+html.xray .grain,
+html.xray .scard__glow,
+html.xray .screen__scan,
+html.xray .mini__hero::after{ display:none; }
+
+html.xray .hero__canvas{ opacity:.28; filter:saturate(0) contrast(1.4); }
+
+html.xray .btn--primary,
+html.xray .chip.is-on,
+html.xray .gtab.is-on,
+html.xray .step.is-in .step__no,
+html.xray .bot__input button{
+  background:transparent!important; color:var(--cyan)!important;
+  border:1px dashed var(--line-2)!important; box-shadow:none!important;
+}
+html.xray .btn--primary::before{ display:none; }
+html.xray .bot-launcher{
+  background:transparent; border:1px dashed var(--line-2); box-shadow:none;
+}
+html.xray .bot-launcher .eye,
+html.xray .bot-launcher .mouth{ background:var(--cyan); }
+html.xray .hero__title .grad{
+  background:none; -webkit-background-clip:initial; background-clip:initial;
+  color:var(--cyan); animation:none;
+}
+html.xray .foot__big{
+  background:none; -webkit-background-clip:initial; background-clip:initial; color:var(--line-2);
+}
+
+/* Structural outlines */
+html.xray [data-x]{
+  outline:1px dashed rgba(79,240,214,.5);
+  outline-offset:-1px;
+  position:relative;
+}
+html.xray [data-x]::before{
+  content:attr(data-x);
+  position:absolute; top:0; left:0; z-index:60;
+  transform:translateY(-100%);
+  font-family:var(--font-mono); font-size:9.5px; letter-spacing:.1em;
+  background:#4FF0D6; color:#041014; padding:1px 6px;
+  white-space:nowrap; pointer-events:none; border-radius:0 3px 0 0;
+}
+
+/* Every meaningful box gets a hairline so the grid reads */
+html.xray .shell > *,
+html.xray .pcard,
+html.xray .mcard,
+html.xray .scard,
+html.xray .vital,
+html.xray .step,
+html.xray .field,
+html.xray .chip,
+html.xray .btn,
+html.xray .tag,
+html.xray .msg{
+  outline:1px solid rgba(79,240,214,.16);
+  outline-offset:-1px;
+}
+
+/* Corner ticks on major cards */
+html.xray .pcard::before,
+html.xray .scard::before,
+html.xray .vital::after{
+  content:''; position:absolute; inset:8px; pointer-events:none; z-index:5;
+  background:
+    linear-gradient(#4FF0D6,#4FF0D6) 0 0/12px 1px no-repeat,
+    linear-gradient(#4FF0D6,#4FF0D6) 0 0/1px 12px no-repeat,
+    linear-gradient(#4FF0D6,#4FF0D6) 100% 0/12px 1px no-repeat,
+    linear-gradient(#4FF0D6,#4FF0D6) 100% 0/1px 12px no-repeat,
+    linear-gradient(#4FF0D6,#4FF0D6) 0 100%/12px 1px no-repeat,
+    linear-gradient(#4FF0D6,#4FF0D6) 0 100%/1px 12px no-repeat,
+    linear-gradient(#4FF0D6,#4FF0D6) 100% 100%/12px 1px no-repeat,
+    linear-gradient(#4FF0D6,#4FF0D6) 100% 100%/1px 12px no-repeat;
+  opacity:.55;
+}
+
+/* Hover inspector: highlight + live size read-out */
+html.xray [data-x]:hover{ outline-color:#FFC46B; outline-style:solid; }
+html.xray [data-x]:hover::before{ background:#FFC46B; }
+
+/* The floating HUD (built by js/blueprint.js) */
+.xray-hud{
+  position:fixed; left:16px; bottom:16px; z-index:950;
+  font-family:var(--font-mono); font-size:11px; line-height:1.75;
+  color:#4FF0D6; background:rgba(6,11,24,.9); border:1px solid rgba(79,240,214,.35);
+  border-radius:10px; padding:12px 14px; pointer-events:none;
+  min-width:214px; box-shadow:0 20px 50px -20px rgba(0,0,0,.9);
+  opacity:0; transform:translateY(10px); transition:opacity .35s, transform .35s var(--ease);
+}
+html.xray .xray-hud{ opacity:1; transform:none; }
+.xray-hud h6{ font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:#2E6E68; margin-bottom:7px; font-weight:400; }
+.xray-hud dl{ display:grid; grid-template-columns:auto 1fr; gap:2px 12px; }
+.xray-hud dt{ color:#3F8079; }
+.xray-hud dd{ color:#BFF7EE; text-align:right; }
+.xray-hud .xh-el{ color:#FFC46B; }
+.xray-hud footer{ margin-top:9px; padding-top:8px; border-top:1px dashed rgba(79,240,214,.25); color:#3F8079; font-size:10px; }
+@media (max-width:760px){ .xray-hud{ display:none; } }
+
+/* Sweep animation when entering x-ray */
+.xray-sweep{
+  position:fixed; inset:0; z-index:9990; pointer-events:none;
+  background:linear-gradient(90deg,transparent 0%,rgba(79,240,214,.45) 45%,rgba(79,240,214,.9) 50%,rgba(79,240,214,.45) 55%,transparent 100%);
+  transform:translateX(-100%);
+}
+.xray-sweep.run{ animation:xraySweep .75s cubic-bezier(.7,0,.3,1) forwards; }
+@keyframes xraySweep{ to{ transform:translateX(100%); } }
+
+@media (prefers-reduced-motion:reduce){
+  .xray-sweep{ display:none; }
+}
