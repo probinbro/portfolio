@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Keystone Property — Real estate website demo</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+:root{
+  --bg:#FCFCFA; --card:#fff; --ink:#111C18; --muted:#61726B;
+  --line:#E2E8E4; --green:#0F3D2E; --moss:#3E7C5F; --sand:#C9A227;
+}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none;outline:none}
+h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;line-height:1.08;letter-spacing:-.01em}
+
+/* Scroll Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wrap{width:100%;max-width:1220px;margin-inline:auto;padding-inline:clamp(18px,4vw,40px)}
+.ribbon{position:fixed;right:-46px;top:22px;z-index:99;transform:rotate(45deg);background:var(--green);color:#fff;
+  font:700 11px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:8px 56px;box-shadow: 0 2px 10px rgba(0,0,0,0.15)}
+.up{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--moss);font-weight:800}
+
+.back-to-portfolio{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--green);
+  transition:color 0.25s, transform 0.25s;
+}
+.back-to-portfolio:hover{
+  color:var(--moss);
+  transform:translateX(-3px);
+}
+
+header{position:sticky;top:0;z-index:60;background:rgba(252,252,250,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:background 0.3s}
+.nav{display:flex;align-items:center;gap:26px;padding:16px 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'DM Serif Display';font-size:23px}
+.logo i{width:30px;height:30px;border-radius:8px;background:var(--green);display:grid;place-items:center}
+.logo i svg{width:16px;height:16px;stroke:#fff}
+.menu{display:flex;gap:22px;margin-left:auto;font-size:14.5px;font-weight:500}
+.menu a{color:var(--muted);transition:color .2s}.menu a:hover{color:var(--green)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:8px;font-weight:700;font-size:14.5px;transition:.25s}
+.btn-fill{background:var(--green);color:#fff}.btn-fill:hover{background:#0a2a20;transform:translateY(-1px);box-shadow:0 6px 15px rgba(15,61,46,0.15)}
+.btn-line{border:1.5px solid var(--line);background:#fff}.btn-line:hover{border-color:var(--green);background:rgba(15,61,46,0.01)}
+
+/* Mobile Navigation Bar controls */
+.burger{display:none;flex-direction:column;gap:5px;width:24px;height:24px;justify-content:center;cursor:pointer;z-index:100}
+.burger span{display:block;width:100%;height:2px;background:var(--green);transition:transform 0.3s, opacity 0.3s}
+
+.mobile-overlay{
+  position:fixed;inset:0;background:var(--bg);z-index:90;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;
+  opacity:0;pointer-events:none;transition:opacity 0.3s ease;padding:40px;
+}
+.mobile-overlay.active{opacity:1;pointer-events:auto}
+.mobile-overlay a{font-family:'DM Serif Display';font-size:32px;color:var(--green);transition:transform 0.3s}
+.mobile-overlay a:hover{color:var(--moss);transform:scale(1.05)}
+
+.hero{padding:clamp(34px,5vw,60px) 0 0}
+.hero h1{font-size:clamp(38px,6vw,70px);max-width:15ch;margin:16px 0 16px;font-weight:400}
+.hero>.wrap>p{color:var(--muted);max-width:52ch;font-size:17px}
+
+.search{margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;
+  display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;box-shadow:0 24px 50px -36px rgba(15,61,46,.45)}
+.sf{display:flex;flex-direction:column;gap:5px;padding:6px 12px;border-right:1px solid var(--line)}
+.sf:nth-last-child(2){border-right:none}
+.sf label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.sf input,.sf select{border:none;background:none;font-size:15px;font-weight:500;padding:0;outline:none}
+.search .btn{align-self:stretch}
+
+.banner{margin-top:clamp(30px,4vw,48px);height:clamp(240px,26vw,360px);border-radius:20px;position:relative;overflow:hidden;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08)}
+.banner img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:1}
+.banner::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(15,61,46,0.15)}
+.banner .pin{position:absolute;z-index:3;background:#fff;border-radius:12px;padding:11px 14px;box-shadow:0 12px 30px -14px rgba(0,0,0,0.3);animation: float-pin 4s ease-in-out infinite}
+.banner .pin b{display:block;font-family:'DM Serif Display';font-size:17px}
+.banner .pin span{font-size:12px;color:var(--muted)}
+.pin1{left:12%;top:28%;animation-delay: 0.5s !important}
+.pin2{right:15%;bottom:32%}
+@keyframes float-pin {
+  0%, 100% { transform: translateY(0) }
+  50% { transform: translateY(-8px) }
+}
+
+.sec{padding:clamp(50px,7vw,88px) 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.sec-head h2{font-size:clamp(28px,4vw,46px);margin-top:10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.chip{padding:9px 17px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;color:var(--muted);transition:.2s}
+.chip:hover{border-color:var(--moss);color:var(--moss)}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.2vw,24px)}
+.prop{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.35s;animation:pop .4s ease backwards}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}}
+.prop:hover{transform:translateY(-5px);box-shadow:0 24px 50px -32px rgba(15,61,46,.4)}
+.pshot{aspect-ratio:16/11;position:relative;overflow:hidden}
+.pshot img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
+.prop:hover .pshot img{transform:scale(1.05)}
+.pshot .tag{position:absolute;top:12px;left:12px;background:#fff;border-radius:99px;padding:5px 12px;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;z-index:2}
+.pshot .fav{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;z-index:2;transition:background 0.3s}
+.pshot .fav svg{width:16px;height:16px;stroke:var(--green);fill:none;transition:fill 0.3s, stroke 0.3s}
+.pshot .fav.on{background:#fff}
+.pshot .fav.on svg{fill:var(--sand);stroke:var(--sand)}
+.pb{padding:18px}
+.pb .pr{font-family:'DM Serif Display';font-size:25px;margin-bottom:4px}
+.pb h3{font-family:Manrope;font-weight:700;font-size:16.5px;letter-spacing:0;margin-bottom:3px}
+.pb .ad{font-size:13.5px;color:var(--muted);margin-bottom:14px}
+.specs{display:flex;gap:16px;padding-top:13px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.specs b{color:var(--ink);font-weight:700}
+
+.why{background:var(--green);color:#fff;border-radius:24px;padding:clamp(30px,4.6vw,58px);display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(24px,4vw,52px);align-items:center}
+.why h2{font-size:clamp(28px,4vw,46px);margin:12px 0 14px}
+.why p{color:#B7CDC2}
+.why .up{color:var(--sand)}
+.wstats{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.ws{border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:20px;transition:border-color 0.3s}
+.ws:hover{border-color:var(--sand)}
+.ws b{display:block;font-family:'DM Serif Display';font-size:34px;color:var(--sand)}
+.ws span{font-size:13px;color:#B7CDC2}
+
+.agent{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;background:var(--card);
+  border:1px solid var(--line);border-radius:18px;padding:clamp(20px,3vw,30px)}
+.agent .av{width:78px;height:78px;border-radius:50%;overflow:hidden;background:#ccc}
+.agent .av img{width:100%;height:100%;object-fit:cover}
+.agent h3{font-family:Manrope;font-weight:800;font-size:19px;letter-spacing:0}
+.agent p{color:var(--muted);font-size:14px}
+
+/* Back to Top */
+.back-to-top{
+  position:fixed;bottom:26px;right:26px;width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--line);
+  display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,0.05);z-index:45;cursor:pointer;
+  opacity:0;transform:translateY(10px);transition:all 0.3s ease;
+}
+.back-to-top.active{opacity:1;transform:translateY(0)}
+.back-to-top:hover{transform:translateY(-2px);border-color:var(--green)}
+
+/* Saved properties panel */
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);background:var(--green);color:#fff;
+  padding:13px 22px;border-radius:99px;font-size:14px;font-weight:600;z-index:100;transition:transform .45s cubic-bezier(.34,1.56,.64,1);box-shadow: 0 10px 30px rgba(15,61,46,0.3)}
+.toast.on{transform:translate(-50%,0)}
+
+footer{border-top:1px solid var(--line);margin-top:clamp(40px,6vw,70px);padding:40px 0 24px;font-size:14px;color:var(--muted)}
+.fgrid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:26px;margin-bottom:28px}
+.fgrid h4{color:var(--ink);font-family:Manrope;font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.fgrid a{display:block;padding:4px 0}.fgrid a:hover{color:var(--green)}
+.fbase{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
+
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.search{grid-template-columns:1fr 1fr}
+  .sf{border-right:none;border-bottom:1px solid var(--line)}.menu{display:none}.why{grid-template-columns:1fr}.burger{display:flex}}
+@media(max-width:680px){.grid{grid-template-columns:1fr}.search{grid-template-columns:1fr}
+  .agent{grid-template-columns:1fr;text-align:center;justify-items:center}.fgrid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="ribbon">Demo</div>
+
+<header><div class="wrap nav">
+  <a href="../index.html#demos" class="back-to-portfolio">← Back to Portfolio</a>
+  <div class="logo" style="margin-left: auto;">
+    <i><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 9v11h14V9"/></svg></i>
+    Keystone
+  </div>
+  <nav class="menu" style="margin-left: auto;"><a href="#buy">Buy</a><a href="#">Rent</a><a href="#">Sell</a><a href="#">New builds</a><a href="#">Guides</a></nav>
+  <div style="display: flex; align-items: center; gap: 14px; margin-left: auto;">
+    <button class="btn btn-line" style="border-radius: 99px; padding: 8px 16px;" id="fav-count">Saved (<b>0</b>)</button>
+    <a class="btn btn-fill" href="#agent">Book valuation</a>
+    <div class="burger" id="burger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div></header>
+
+<!-- Mobile Overlay Navigation -->
+<div class="mobile-overlay" id="mobile-overlay">
+  <a href="../index.html#demos" style="font-size: 16px; margin-bottom: 20px; font-family: 'DM Serif Display'; color: var(--green);">← Back to Portfolio</a>
+  <a href="#buy" onclick="toggleMobileMenu()">Buy</a>
+  <a href="#" onclick="toggleMobileMenu()">Rent</a>
+  <a href="#" onclick="toggleMobileMenu()">Sell</a>
+  <a href="#agent" onclick="toggleMobileMenu()">Book Valuation</a>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="up">Dhaka · Chattogram · Sylhet</p>
+    <h1>Find the one you'll actually stay in.</h1>
+    <p>Every listing verified in person, priced against the last six months of real sales — not what the neighbour thinks it's worth.</p>
+
+    <form class="search" onsubmit="event.preventDefault(); triggerSearch()">
+      <div class="sf"><label>Location</label><input id="search-loc" placeholder="Gulshan, Banani, Dhanmondi…" /></div>
+      <div class="sf"><label>Property type</label><select id="search-type"><option value="All">Any type</option><option value="Apartment">Apartment</option><option value="Duplex">Duplex</option><option value="House">House</option><option value="Plot">Plot</option></select></div>
+      <div class="sf"><label>Max price</label><select id="search-price"><option value="Any">Any price</option><option value="1">৳1.5 crore</option><option value="3">৳3 crore</option><option value="6">৳6 crore</option></select></div>
+      <button class="btn btn-fill" type="submit">Search homes</button>
+    </form>
+
+    <div class="banner">
+      <img src="img/hero_realestate.jpg" alt="Dhaka City Residential Buildings" />
+      <div class="pin pin1"><b>৳2.4 crore</b><span>Gulshan 2 · 3 bed</span></div>
+      <div class="pin pin2"><b>৳1.1 crore</b><span>Dhanmondi · 2 bed</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap reveal" id="buy">
+  <div class="sec-head">
+    <div><p class="up">Featured listings</p><h2>New this week</h2></div>
+    <a class="btn btn-line" href="#">See all listings →</a>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="wrap reveal" style="padding-bottom:clamp(50px,7vw,88px)">
+  <div class="why">
+    <div>
+      <p class="up">Why Keystone</p>
+      <h2>We turn down listings.</h2>
+      <p>If the price is fantasy or the paperwork is not clean, it does not go on our site. That is why our average sale closes in 34 days instead of six months.</p>
+    </div>
+    <div class="wstats">
+      <div class="ws"><b data-target="1284" class="stat-num">0</b><span>Verified listings</span></div>
+      <div class="ws"><b data-target="34" class="stat-num">0</b><span>Average days to close</span></div>
+      <div class="ws"><b>98%</b><span>Of asking price achieved</span></div>
+      <div class="ws"><b data-target="19" class="stat-num">0</b><span>Years in the market</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap reveal" id="agent" style="padding-bottom:clamp(40px,6vw,70px)">
+  <div class="agent">
+    <div class="av">
+      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop" alt="Tanvir Rahman" />
+    </div>
+    <div>
+      <h3>Tanvir Rahman — Senior valuer</h3>
+      <p>Free, no-obligation valuation at your property, usually within 48 hours. He will also tell you if now is the wrong time to sell.</p>
+    </div>
+    <button class="btn btn-fill" onclick="bookValuation()">Book a valuation</button>
+  </div>
+</section>
+
+<button class="back-to-top" id="back-to-top" aria-label="Scroll to top">↑</button>
+<div class="toast" id="toast"></div>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div>
+      <div class="logo" style="margin-bottom:12px"><i><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 9v11h14V9"/></svg></i>Keystone</div>
+      <p style="max-width:32ch">Independent estate agents. Verified listings, honest valuations, no listing fees until you sell.</p>
+    </div>
+    <div><h4>Buy</h4><a href="#">Apartments</a><a href="#">Houses</a><a href="#">New builds</a><a href="#">Plots</a></div>
+    <div><h4>Sell</h4><a href="#">Free valuation</a><a href="#">Our fees</a><a href="#">Marketing</a><a href="#">Reviews</a></div>
+    <div><h4>Company</h4><a href="#">About</a><a href="#">Offices</a><a href="#">Careers</a><a href="#">Contact</a></div>
+  </div>
+  <div class="fbase"><span>© 2026 Keystone Property — a demo site built by Probin.</span><span>Licensed estate agents</span></div>
+</div></footer>
+
+<script>
+const PROPS = [
+  { p:'৳2,40,00,000', t:'Corner apartment with roof terrace', a:'Gulshan 2, Dhaka', b:3, ba:3, s:2150, k:'Apartment', tag:'New', img:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=400&auto=format&fit=crop', rawPrice: 2.4 },
+  { p:'৳1,10,00,000', t:'Renovated flat near the lake',       a:'Dhanmondi, Dhaka', b:2, ba:2, s:1320, k:'Apartment', tag:'',    img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=400&auto=format&fit=crop', rawPrice: 1.1 },
+  { p:'৳5,80,00,000', t:'Four-storey family duplex',          a:'Baridhara, Dhaka', b:5, ba:5, s:4400, k:'Duplex',    tag:'Chain-free', img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=400&auto=format&fit=crop', rawPrice: 5.8 },
+  { p:'৳92,00,000',   t:'Bright two-bed with parking',        a:'Uttara, Dhaka',    b:2, ba:2, s:1080, k:'Apartment', tag:'',    img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=400&auto=format&fit=crop', rawPrice: 0.92 },
+  { p:'৳3,15,00,000', t:'Garden house on a quiet lane',       a:'Bashundhara, Dhaka', b:4, ba:4, s:3100, k:'House',   tag:'New', img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=400&auto=format&fit=crop', rawPrice: 3.15 },
+  { p:'৳1,85,00,000', t:'South-facing plot, ready to build',  a:'Purbachal, Dhaka', b:0, ba:0, s:5000, k:'Plot',      tag:'',    img:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=400&auto=format&fit=crop', rawPrice: 1.85 }
+];
+const KINDS = ['All', 'Apartment', 'Duplex', 'House', 'Plot'];
+let active = 'All';
+let savedHomes = [];
+
+const chips = document.getElementById('chips');
+chips.innerHTML = KINDS.map(k => `<button class="chip${k === 'All' ? ' on' : ''}" data-k="${k}">${k}</button>`).join('');
+chips.addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  active = b.dataset.k;
+  [...chips.children].forEach(c => c.classList.toggle('on', c === b));
+  render();
+});
+
+function render(filteredList = null){
+  const list = filteredList || (active === 'All' ? PROPS : PROPS.filter(p => p.k === active));
+  document.getElementById('grid').innerHTML = list.length ? list.map((p, i) => {
+    const isSaved = savedHomes.includes(p.t);
+    return `
+    <article class="prop" style="animation-delay:${i * 50}ms">
+      <div class="pshot">
+        ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
+        <img src="${p.img}" alt="${p.t}" loading="lazy" />
+        <button class="fav${isSaved ? ' on' : ''}" aria-label="Save" data-title="${p.t}"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 21s-7-4.7-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.3-7 10-7 10Z"/></svg></button>
+      </div>
+      <div class="pb">
+        <div class="pr">${p.p}</div>
+        <h3>${p.t}</h3>
+        <p class="ad">${p.a}</p>
+        <div class="specs">
+          ${p.b ? `<span><b>${p.b}</b> bed</span><span><b>${p.ba}</b> bath</span>` : '<span>Land plot</span>'}
+          <span><b>${p.s.toLocaleString()}</b> sq ft</span>
+        </div>
+      </div>
+    </article>`}).join('') : '<p style="color:var(--muted); grid-column: 1/-1; text-align: center; padding: 40px 0;">Nothing matches your criteria — try another filter.</p>';
+}
+render();
+
+// Handle Favorites saving toggler
+document.getElementById('grid').addEventListener('click', e => {
+  const f = e.target.closest('.fav');
+  if (!f) return;
+  
+  const title = f.dataset.title;
+  const index = savedHomes.indexOf(title);
+  
+  if (index > -1) {
+    savedHomes.splice(index, 1);
+    f.classList.remove('on');
+    toast('Removed from saved properties');
+  } else {
+    savedHomes.push(title);
+    f.classList.add('on');
+    toast('Saved to your properties!');
+  }
+  
+  document.getElementById('fav-count').querySelector('b').textContent = savedHomes.length;
+});
+
+// Search filter execution
+window.triggerSearch = function() {
+  const locInput = document.getElementById('search-loc').value.toLowerCase();
+  const typeSelect = document.getElementById('search-type').value;
+  const priceSelect = document.getElementById('search-price').value;
+  
+  let results = PROPS;
+  
+  if (locInput) {
+    results = results.filter(p => p.a.toLowerCase().includes(locInput) || p.t.toLowerCase().includes(locInput));
+  }
+  if (typeSelect !== 'All') {
+    results = results.filter(p => p.k === typeSelect);
+  }
+  if (priceSelect !== 'Any') {
+    const limit = parseFloat(priceSelect);
+    results = results.filter(p => p.rawPrice <= limit);
+  }
+  
+  // Update chip highlights
+  [...chips.children].forEach(c => c.classList.toggle('on', c.dataset.k === typeSelect));
+  active = typeSelect;
+  
+  render(results);
+  
+  document.getElementById('buy').scrollIntoView({ behavior: 'smooth' });
+};
+
+// Valuation popup demo
+window.bookValuation = function() {
+  toast("Valuation request sent! Tanvir will call you shortly.");
+};
+
+// Mobile menu toggling logic
+const burgerMenu = document.getElementById('burger-menu');
+const mobileOverlay = document.getElementById('mobile-overlay');
+
+function toggleMobileMenu() {
+  const isActive = mobileOverlay.classList.toggle('active');
+  burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
+  burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
+  burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
+}
+burgerMenu.addEventListener('click', toggleMobileMenu);
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => t.classList.remove('on'), 2600);
+}
+
+// Scroll Reveal
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Back to Top button toggler
+const backToTopBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    backToTopBtn.classList.add('active');
+  } else {
+    backToTopBtn.classList.remove('active');
+  }
+});
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Stats animators
+const statNumbers = document.querySelectorAll('.stat-num');
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const targetValue = parseInt(el.dataset.target, 10);
+      let currentValue = 0;
+      const duration = 1500; // ms
+      const stepTime = Math.abs(Math.floor(duration / targetValue));
+      
+      const counter = setInterval(() => {
+        currentValue += Math.ceil(targetValue / 40);
+        if (currentValue >= targetValue) {
+          currentValue = targetValue;
+          clearInterval(counter);
+        }
+        el.textContent = currentValue.toLocaleString();
+      }, 30);
+      countObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.8 });
+statNumbers.forEach(num => countObserver.observe(num));
+</script>
+</body>
+</html>

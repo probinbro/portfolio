@@ -6,10 +6,11 @@
    monthly bill — which is exactly the point he likes to make.
    ═══════════════════════════════════════════════════════════ */
 
-import { INTENTS, FALLBACKS, GREETING, PROFILE } from './config.js';
+import { INTENTS, FALLBACKS, GREETING, PROFILE, waLink } from './config.js';
 import { sendBrief } from './contact.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const SKIP_RE  = /^(skip|pass|later|rather not|prefer not|no thanks|not sure|no idea|dunno)/i;
 
 export function initBot({ onAction } = {}){
   const panel    = document.getElementById('bot');
@@ -95,61 +96,73 @@ export function initBot({ onAction } = {}){
     const v = raw.trim();
 
     if (lead.step === 'name'){
-      if (v.length < 2){ await say("I'll need something to call you — first name is plenty."); return; }
+      if (v.length < 2){ await say("Whatever you'd like to be called is perfectly fine — a first name is plenty."); return; }
       lead.name = v.replace(/^(i'?m|my name is|this is)\s+/i, '').trim();
       memory.name = lead.name;
-      lead.step = 'email';
-      await say(`Good to meet you, <b>${esc(lead.name)}</b>. What's the best <b>email</b> for the reply?`);
+      lead.step = 'contact';
+      await say(
+        `Lovely to meet you, <b>${esc(lead.name)}</b>. What's the easiest way to reach you?<br><br>` +
+        `An <b>email</b> or a <b>WhatsApp number</b> — whichever you prefer. Just the one is enough.`
+      );
       return;
     }
 
-    if (lead.step === 'email'){
-      const found = v.match(/[^\s@]+@[^\s@]+\.[^\s@]{2,}/);
-      if (!found || !EMAIL_RE.test(found[0])){
-        await say("That doesn't look like an email address. Something in the shape of <i>you@company.com</i> — it's only used for the reply.");
+    /* One step, either channel — asking for both up front puts people off. */
+    if (lead.step === 'contact'){
+      const mail  = v.match(/[^\s@]+@[^\s@]+\.[^\s@]{2,}/);
+      const digits = v.replace(/[^\d]/g, '');
+      if (mail && EMAIL_RE.test(mail[0])) lead.email = mail[0];
+      else if (digits.length >= 7)        lead.phone = v.trim();
+      else {
+        await say("Sorry, I didn't quite catch that one. An email like <i>you@company.com</i>, or a phone number with the country code — either is fine.");
         return;
       }
-      lead.email = found[0];
       lead.step = 'brief';
-      await say(`Locked in. Last one: <b>what are you building</b>, and is there a deadline I should flag?`);
+      await say(
+        `Thank you. And roughly <b>what are you hoping to build</b>? A sentence is plenty, and do mention a date if you have one in mind.`,
+        ['I would rather explain on a call']
+      );
       return;
     }
 
     if (lead.step === 'brief'){
-      lead.message = v;
+      lead.message = SKIP_RE.test(v) || /rather explain/i.test(v)
+        ? 'Would prefer to talk it through on a call.' : v;
       lead.step = 'budget';
       await say(
-        `Got it. Last thing, and it genuinely helps: <b>roughly what's the budget?</b><br><br>` +
-        `Probin shapes the scope around your number instead of quoting past it — so a small number is useful information, not a problem.`,
-        ['Under $500', '$500 – $1.5k', '$1.5k – $4k', '$4k+', 'Rather not say']
+        `That's helpful, thank you. One last question, entirely optional: <b>do you have a budget in mind?</b><br><br>` +
+        `It genuinely helps — Probin shapes the scope around your number rather than quoting past it, so a modest budget is useful information, never a problem.`,
+        ['Under $500', '$500 – $1.5k', '$1.5k – $4k', '$4k+', "I'd rather not say"]
       );
       return;
     }
 
     if (lead.step === 'budget'){
-      lead.budget = /rather not|skip|not sure|no idea/i.test(v) ? 'not stated' : v;
+      lead.budget = SKIP_RE.test(v) ? 'not stated' : v;
       lead.step = 'sending';
-      await say('Passing this to the human now…', [], 400);
+      await say('Thank you — passing this along to Probin now…', [], 400);
 
       const res = await sendBrief({
         name: lead.name,
-        email: lead.email,
+        email: lead.email || '',
+        phone: lead.phone || '',
         company: '',
         message: lead.message,
         budget: lead.budget || 'not stated',
+        prefer: lead.phone && !lead.email ? 'WhatsApp' : 'Either is fine',
         scope: window.__probinScope || 'not specified',
         source: 'Robo Probin (chat)'
       });
 
       lead = null;
       if (res.ok && res.mode === 'api'){
-        await say(`Done — that's in his inbox. Expect a reply within <b>${PROFILE.responseTime}</b>, usually sooner.<br><br>Anything else while you're here?`,
+        await say(`All sent, and thank you for taking the time. Probin will come back to you within <b>${PROFILE.responseTime}</b>, usually sooner.<br><br>Anything else I can help with while you're here?`,
           ['Show me the work','Take me to the games','How much does a site cost?']);
       } else if (res.ok){
-        await say(`Your email app should have opened with everything filled in — <b>press send there</b> and it reaches him directly.<br><br>If nothing opened, mail <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>.`,
+        await say(`Your email app should have opened with everything filled in — please <b>press send there</b> and it will reach him directly.<br><br>If nothing opened, you're very welcome to use <a href="${waLink()}" target="_blank" rel="noopener">WhatsApp</a> or <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>.`,
           ['Show me the work','Take me to the games']);
       } else {
-        await say(`Something went wrong on the way out (${esc(res.error || 'unknown')}). Mail him at <a href="mailto:${PROFILE.email}">${PROFILE.email}</a> and it will definitely land.`);
+        await say(`I'm sorry — that didn't go through (${esc(res.error || 'unknown error')}). Please try <a href="${waLink()}" target="_blank" rel="noopener">WhatsApp</a> or <a href="mailto:${PROFILE.email}">${PROFILE.email}</a> and it will certainly reach him.`);
       }
     }
   }
@@ -163,9 +176,10 @@ export function initBot({ onAction } = {}){
     input.value = '';
 
     if (lead){
-      if (/^(cancel|stop|never ?mind|forget it)$/i.test(v)){
+      if (/^(cancel|stop|never ?mind|forget it|quit)/i.test(v)){
         lead = null;
-        await say("No problem, dropped it. Ask me anything else.", ['Show me the work','How much does a site cost?']);
+        await say("Of course — I've set that aside. Do ask me anything else whenever you like.",
+          ['Show me the work','How much does a site cost?']);
         return;
       }
       await leadStep(v);
@@ -181,9 +195,9 @@ export function initBot({ onAction } = {}){
     memory.asked.add(it.id);
 
     if (it.action === 'lead'){
-      lead = { step: memory.name ? 'email' : 'name' };
+      lead = { step: memory.name ? 'contact' : 'name' };
       if (memory.name){
-        await say(`Welcome back, <b>${esc(memory.name)}</b>. What's the best <b>email</b> for the reply?`);
+        await say(`Welcome back, <b>${esc(memory.name)}</b>. What's the easiest way to reach you — an <b>email</b> or a <b>WhatsApp number</b>?`);
       } else {
         await say(pick(it.reply));
       }

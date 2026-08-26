@@ -3,7 +3,7 @@
    place that actually delivers a message to Probin.
    ═══════════════════════════════════════════════════════════ */
 
-import { CFG, PROFILE } from './config.js';
+import { CFG, PROFILE, waLink } from './config.js';
 
 /* ── shared delivery ────────────────────────────────────────
    Two modes, decided by PROFILE.formEndpoint:
@@ -12,27 +12,43 @@ import { CFG, PROFILE } from './config.js';
    ─────────────────────────────────────────────────────────── */
 export async function sendBrief(data){
   const body = [
-    `Name:    ${data.name || '—'}`,
-    `Email:   ${data.email || '—'}`,
-    `Company: ${data.company || '—'}`,
-    `Budget:  ${data.budget || 'not stated'}`,
-    `Scope:   ${data.scope || '—'}`,
-    `Source:  ${data.source || 'contact form'}`,
+    `Name:     ${data.name || '—'}`,
+    `Email:    ${data.email || '—'}`,
+    `Phone:    ${data.phone || '—'}`,
+    `Company:  ${data.company || '—'}`,
+    `Budget:   ${data.budget || 'not stated'}`,
+    `Reply by: ${data.prefer || 'either is fine'}`,
+    `Scope:    ${data.scope || '—'}`,
+    `Source:   ${data.source || 'contact form'}`,
     '',
     'Brief',
     '─────',
-    data.message || '—'
+    data.message || '(none written — happy to talk it through)'
   ].join('\n');
 
   if (PROFILE.formEndpoint){
     try {
+      // `...data` must come first — it carries an empty `message` when the
+      // visitor didn't write one, and would otherwise blank the body below.
+      const payload = {
+        ...data,
+        access_key: PROFILE.accessKey,
+        subject:    `New project enquiry — ${data.name || 'website'}`,
+        from_name:  data.name || 'Website enquiry',
+        message:    body
+      };
+      // Web3Forms uses `email` as reply-to; only send it when it's real,
+      // otherwise a phone-only enquiry is rejected for a bad address.
+      if (!data.email) delete payload.email;
+
       const res = await fetch(PROFILE.formEndpoint, {
         method: 'POST',
         headers: { 'Content-Type':'application/json', 'Accept':'application/json' },
-        body: JSON.stringify({ ...data, _subject: `New project brief — ${data.name || 'website enquiry'}`, body })
+        body: JSON.stringify(payload)
       });
-      if (res.ok) return { ok:true, mode:'api' };
-      return { ok:false, mode:'api', error:`HTTP ${res.status}` };
+      const out = await res.json().catch(() => ({}));
+      if (res.ok && out.success !== false) return { ok:true, mode:'api' };
+      return { ok:false, mode:'api', error: out.message || `HTTP ${res.status}` };
     } catch (err){
       return { ok:false, mode:'api', error:err.message };
     }
@@ -129,18 +145,18 @@ export function initContact(){
       return { label:'' };
     }
     if (B === null){
-      elVerdict.innerHTML = `No number yet — that's fine. Probin will size it on the call rather than guess at you.`;
+      elVerdict.innerHTML = `No figure yet is absolutely fine — Probin would rather size it properly on a call than guess.`;
       elVerdict.className = 'cfg__verdict is-neutral';
       return { label };
     }
 
     if (B >= max){
-      elVerdict.innerHTML = `<b>That covers it comfortably.</b> There's room left for extra polish, or to bank the difference.`;
+      elVerdict.innerHTML = `<b>That covers it comfortably.</b> There would be room for extra polish, or you could simply keep the difference.`;
       elVerdict.className = 'cfg__verdict is-good';
       return { label };
     }
     if (B >= min){
-      elVerdict.innerHTML = `<b>Workable.</b> This scope lands inside your number — Probin would prioritise the list so the important half ships first.`;
+      elVerdict.innerHTML = `<b>That should work nicely.</b> This scope sits inside your number, and Probin would prioritise the list so the most important half ships first.`;
       elVerdict.className = 'cfg__verdict is-good';
       return { label };
     }
@@ -152,8 +168,8 @@ export function initContact(){
         .filter(t => t.min * speed.pMul <= B)
         .sort((a, b2) => b2.min - a.min)[0];
       elVerdict.innerHTML = fits
-        ? `<b>${type.label} starts around ${fmt(baseMin)}.</b> At ${fmt(B)} the honest fit is a <b>${fits.label.toLowerCase()}</b> done properly — then grow it later.`
-        : `<b>That's under the floor for custom work.</b> Say so anyway — Probin would rather point you somewhere sensible than sell you something thin.`;
+        ? `A ${type.label.toLowerCase()} usually starts around <b>${fmt(baseMin)}</b>. At ${fmt(B)}, the honest fit would be a <b>${fits.label.toLowerCase()}</b> done properly — and you can always grow it later.`
+        : `That sits a little under the range for custom work — but do get in touch anyway. Probin would far rather point you somewhere sensible than sell you something thin.`;
       elVerdict.className = 'cfg__verdict is-warn';
       return { label };
     }
@@ -173,8 +189,8 @@ export function initContact(){
       drop.push(f.label);
     }
     elVerdict.innerHTML = drop.length
-      ? `<b>About ${fmt(min - B)} over.</b> Drop <b>${drop.join('</b> and <b>')}</b> and it fits — or keep them and run it in two phases.`
-      : `<b>About ${fmt(min - B)} over.</b> Phasing it is the usual answer: ship the core now, add the rest when it has earned its keep.`;
+      ? `This is around <b>${fmt(min - B)}</b> over. Setting aside <b>${drop.join('</b> and <b>')}</b> would bring it within reach — or you could keep them and run the build in two phases.`
+      : `This is around <b>${fmt(min - B)}</b> over. Phasing it is the usual answer: ship the core now, and add the rest once it has earned its keep.`;
     elVerdict.className = 'cfg__verdict is-warn';
     return { label };
   }
@@ -233,20 +249,37 @@ export function initContact(){
   };
 
   const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  const validPhone = v => v.replace(/\D/g, '').length >= 7;
 
+  /* Deliberately forgiving: a name and one way to reply is enough. Email or
+     phone — either will do — and the brief itself is optional, because plenty
+     of people would rather explain it in a conversation than type it out. */
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
+    if (form._gotcha.value) return;                 // honeypot: silently drop bots
+
+    const name    = form.name.value.trim();
+    const email   = form.email.value.trim();
+    const phone   = form.phone.value.trim();
     const message = form.message.value.trim();
     let bad = false;
 
-    setErr(form.name, name ? '' : (bad = true, 'Tell me who you are.'));
-    setErr(form.email, validEmail(email) ? '' : (bad = true, 'A working email, please — that is where the reply goes.'));
-    setErr(form.message, message.length >= 10 ? '' : (bad = true, 'A sentence or two about the project.'));
-    if (form._gotcha.value) return;            // honeypot: silently drop bots
+    setErr(form.name, name ? '' : (bad = true, 'Could we start with your name?'));
+
+    const hasEmail = email && validEmail(email);
+    const hasPhone = phone && validPhone(phone);
+    if (email && !hasEmail){
+      bad = true;
+      setErr(form.email, 'That address looks slightly off — mind checking it?');
+    } else setErr(form.email, '');
+
+    if (!hasEmail && !hasPhone){
+      bad = true;
+      setErr(form.phone, 'An email or a WhatsApp number — whichever suits you best.');
+    } else setErr(form.phone, '');
+
     if (bad){
-      msg.textContent = 'Nearly — check the highlighted fields.';
+      msg.textContent = 'Almost there — just the highlighted bits, please.';
       msg.className = 'cform__msg is-bad';
       return;
     }
@@ -255,30 +288,35 @@ export function initContact(){
     msg.textContent = 'Sending…'; msg.className = 'cform__msg';
 
     const res = await sendBrief({
-      name, email,
+      name,
+      email:  hasEmail ? email : '',
+      phone:  hasPhone ? phone : '',
       company: form.company.value.trim(),
       message,
+      prefer: form.prefer ? form.prefer.value : '',
       budget: budgetCeiling().label || 'not stated',
-      scope: calc(),
+      scope:  calc(),
       source: 'contact form'
     });
 
     btn.classList.remove('is-busy');
     if (res.ok && res.mode === 'api'){
-      msg.innerHTML = `Sent. Probin replies within ${PROFILE.responseTime} — check your inbox (and the spam folder, just in case).`;
+      msg.innerHTML = `Thank you — that's arrived safely. Probin will get back to you within ${PROFILE.responseTime}, usually sooner. Worth a quick glance in your spam folder just in case.`;
       msg.className = 'cform__msg is-ok';
       form.reset();
     } else if (res.ok){
-      msg.innerHTML = `Your email app should be open with the brief filled in — hit send there and it lands with Probin.`;
+      msg.innerHTML = `Your email app should have opened with everything filled in — please press send there and it will reach Probin directly.`;
       msg.className = 'cform__msg is-ok';
     } else {
-      msg.innerHTML = `That did not go through (${res.error}). Email <a class="linkish" href="mailto:${PROFILE.email}">${PROFILE.email}</a> directly and it will definitely arrive.`;
+      msg.innerHTML = `Sorry — that didn't get through (${res.error}). Please try
+        <a class="linkish" href="${waLink('Hi Probin, I tried the contact form and it did not send.')}" target="_blank" rel="noopener">WhatsApp</a>
+        or <a class="linkish" href="mailto:${PROFILE.email}">${PROFILE.email}</a>, and it will definitely reach him.`;
       msg.className = 'cform__msg is-bad';
     }
   });
 
-  ['name','email','message'].forEach(n => {
-    form[n].addEventListener('input', () => setErr(form[n], ''));
+  ['name','email','phone','message'].forEach(n => {
+    form[n]?.addEventListener('input', () => setErr(form[n], ''));
   });
 
   return { calc, getScope: () => calc() };

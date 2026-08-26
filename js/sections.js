@@ -3,7 +3,7 @@
    Ticker · services · process · stack marquee · responsive lab
    ═══════════════════════════════════════════════════════════ */
 
-import { TICKER, SERVICES, STEPS, STACK, PROFILE } from './config.js';
+import { TICKER, SERVICES, STEPS, STACK, PROFILE, waLink } from './config.js';
 
 const ICONS = {
   layers: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
@@ -22,12 +22,40 @@ const ICONS = {
 };
 
 export function initSections(){
+  heroSocial();
   ticker();
   services();
   steps();
   stack();
   responsiveLab();
   footer();
+}
+
+/* ── hero social row ────────────────────────────────────────
+   Built from PROFILE so there is still exactly one place to
+   change a handle. A link left as '#' is dropped, not shown.
+   ─────────────────────────────────────────────────────────── */
+const SOCIAL_ICONS = {
+  github: `<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>`,
+  linkedin: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C20.5 8.75 21 11.1 21 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.02 0-2.33 1.58-2.33 3.21V21H9z"/></svg>`,
+  mail: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>`,
+  whatsapp: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2A9.9 9.9 0 0 0 2.1 11.9c0 1.75.46 3.46 1.34 4.97L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01A9.9 9.9 0 0 0 22 11.94 9.9 9.9 0 0 0 12.04 2Zm0 18.13a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.22 8.22 0 1 1 6.97 3.86Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.71-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.47c-.16 0-.43.06-.65.31-.22.24-.85.83-.85 2.03s.87 2.35.99 2.51c.12.16 1.71 2.61 4.15 3.66.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.68-1.18.2-.58.2-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>`
+};
+
+function heroSocial(){
+  const el = document.getElementById('hero-social');
+  if (!el) return;
+  const links = [
+    { k:'whatsapp', label:'WhatsApp', href:PROFILE.whatsapp ? waLink('Hello Probin, I found your site and would like to talk about a project.') : '' },
+    { k:'github',   label:'GitHub',   href:PROFILE.github },
+    { k:'linkedin', label:'LinkedIn', href:PROFILE.linkedin },
+    { k:'mail',     label:'Email',    href:`mailto:${PROFILE.email}?subject=${encodeURIComponent('Website project')}` }
+  ].filter(l => l.href && l.href !== '#');
+
+  el.innerHTML = links.map(l => {
+    const ext = l.k !== 'mail' ? ' target="_blank" rel="noopener"' : '';
+    return `<li><a href="${l.href}"${ext} aria-label="${l.label}">${SOCIAL_ICONS[l.k]}<span>${l.label}</span></a></li>`;
+  }).join('');
 }
 
 /* ── hero ticker (duplicated once so the loop is seamless) ── */
@@ -152,6 +180,18 @@ function footer(){
     a.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent('Website project')}`;
     if (a === direct) a.textContent = PROFILE.email;
   });
+
+  // WhatsApp: footer entry plus the link under the contact form
+  const waMsg = 'Hello Probin, I found your site and would like to talk about a project.';
+  const formWa = document.getElementById('wa-link');
+  if (formWa) formWa.href = waLink(waMsg);
+  const col = document.querySelector('.foot__cols div:nth-child(2)');
+  if (col && PROFILE.whatsapp && !col.querySelector('[data-wa]')){
+    const a = document.createElement('a');
+    a.href = waLink(waMsg); a.target = '_blank'; a.rel = 'noopener';
+    a.dataset.wa = '1'; a.textContent = 'WhatsApp';
+    col.insertBefore(a, col.firstElementChild?.nextSibling || null);
+  }
 
   // footer wordmark: each letter lifts on hover
   const big = document.getElementById('foot-big');

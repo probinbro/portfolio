@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Flowdesk — SaaS landing page demo</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+:root{
+  --bg:#08090F; --bg2:#0D0F1A; --card:rgba(255,255,255,.035); --ink:#E9EAF2; --muted:#8A90A8;
+  --line:rgba(140,150,200,.14); --indigo:#6D6BF6; --lime:#B6F04A; --pink:#F471B5;
+}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.62 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;outline:none}
+h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:700;line-height:1.06;letter-spacing:-.035em}
+
+/* Scroll reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wrap{width:100%;max-width:1160px;margin-inline:auto;padding-inline:clamp(18px,4vw,40px)}
+.ribbon{position:fixed;right:-46px;top:22px;z-index:99;transform:rotate(45deg);background:var(--lime);color:#08090F;
+  font:700 11px/1 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:8px 56px;box-shadow: 0 2px 10px rgba(182,240,74,0.3)}
+
+.back-to-portfolio{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--lime);
+  transition:opacity 0.25s, transform 0.25s;
+}
+.back-to-portfolio:hover{
+  opacity:0.8;
+  transform:translateX(-3px);
+}
+
+header{position:sticky;top:0;z-index:60;background:rgba(8,9,15,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:26px;padding:15px 0}
+.logo{display:flex;align-items:center;gap:9px;font-family:'Space Grotesk';font-weight:700;font-size:20px;letter-spacing:-.02em}
+.logo i{width:26px;height:26px;border-radius:8px;background:linear-gradient(140deg,var(--indigo),var(--pink))}
+.menu{display:flex;gap:24px;margin-left:auto;font-size:14.5px;color:var(--muted)}
+.menu a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:10px;font-weight:600;font-size:14.5px;transition:.25s}
+.btn-fill{background:var(--indigo);color:#fff}.btn-fill:hover{background:#5755e8;transform:translateY(-1px);box-shadow:0 12px 30px -12px rgba(109,107,246,.8)}
+.btn-lime{background:var(--lime);color:#08090F}.btn-lime:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 12px 30px -12px rgba(182,240,74,0.4)}
+.btn-ghost{border:1px solid var(--line);color:var(--ink)}.btn-ghost:hover{border-color:var(--indigo);background:rgba(255,255,255,0.02)}
+
+/* Mobile overlay navigation */
+.burger{display:none;flex-direction:column;gap:5px;width:24px;height:24px;justify-content:center;cursor:pointer;z-index:100}
+.burger span{display:block;width:100%;height:2px;background:var(--ink);transition:transform 0.3s, opacity 0.3s}
+
+.mobile-overlay{
+  position:fixed;inset:0;background:var(--bg);z-index:90;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;
+  opacity:0;pointer-events:none;transition:opacity 0.3s ease;padding:40px;
+}
+.mobile-overlay.active{opacity:1;pointer-events:auto}
+.mobile-overlay a{font-family:'Space Grotesk';font-size:32px;color:var(--ink);transition:transform 0.3s}
+.mobile-overlay a:hover{color:var(--lime);transform:scale(1.05)}
+
+.hero{position:relative;padding:clamp(56px,9vw,110px) 0 clamp(40px,6vw,70px);text-align:center}
+.hero::before{content:'';position:absolute;inset:-10% -20% auto;height:520px;z-index:-1;
+  background:radial-gradient(50% 60% at 50% 0%,rgba(109,107,246,.32),transparent 70%),
+             radial-gradient(40% 50% at 78% 30%,rgba(244,113,181,.18),transparent 70%)}
+.pill{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:99px;padding:6px 15px;
+  font-size:13px;color:var(--muted);margin-bottom:26px;background:rgba(255,255,255,0.02)}
+.pill b{color:var(--lime);font-weight:600}
+.hero h1{font-size:clamp(38px,6.6vw,78px);margin-bottom:20px;font-weight:700}
+.hero h1 span{background:linear-gradient(100deg,var(--indigo),var(--pink) 60%,var(--lime));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero>.wrap>p{color:var(--muted);font-size:18px;max-width:52ch;margin:0 auto 30px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.fineprint{font-size:13px;color:var(--muted)}
+
+.app{margin-top:clamp(36px,5vw,60px);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  background:var(--bg2);box-shadow:0 50px 100px -40px rgba(0,0,0,.9);text-align:left}
+.appbar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+.appbar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16)}
+.appbar span{margin-left:10px;font-size:12px;color:var(--muted);font-family:'Space Grotesk'}
+.appbody{display:grid;grid-template-columns:180px 1fr;min-height:320px}
+.side{border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:5px}
+.side a{padding:9px 12px;border-radius:8px;font-size:13.5px;color:var(--muted);transition:all 0.25s}
+.side a.on{background:rgba(109,107,246,.16);color:#fff}
+.side a:hover:not(.on){color:var(--ink);background:rgba(255,255,255,0.02)}
+.main{padding:20px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:14px;background:rgba(255,255,255,0.01)}
+.kpi span{font-size:11.5px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.kpi b{display:block;font-family:'Space Grotesk';font-size:26px;margin-top:5px}
+.kpi em{font-style:normal;font-size:12px;color:var(--lime)}
+.chart{border:1px solid var(--line);border-radius:12px;padding:16px;height:150px;display:flex;align-items:flex-end;gap:8px;background:rgba(255,255,255,0.01)}
+.chart div{flex:1;border-radius:5px 5px 0 0;background:linear-gradient(180deg,var(--indigo),rgba(109,107,246,.16));
+  animation:grow .9s cubic-bezier(.2,.8,.3,1) backwards}
+@keyframes grow{from{height:4px!important}}
+
+.logos{padding:clamp(34px,5vw,56px) 0;border-block:1px solid var(--line);margin-top:clamp(40px,6vw,70px)}
+.logos p{text-align:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+.lrow{display:flex;justify-content:center;gap:clamp(22px,5vw,56px);flex-wrap:wrap;align-items:center;
+  font-family:'Space Grotesk';font-weight:700;font-size:19px;color:rgba(233,234,242,.32);letter-spacing:-.02em}
+
+.sec{padding:clamp(54px,8vw,100px) 0}
+.sec-head{text-align:center;max-width:620px;margin:0 auto clamp(34px,5vw,52px)}
+.up{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--indigo);font-weight:600;margin-bottom:14px}
+.sec-head h2{font-size:clamp(28px,4.4vw,50px);margin-bottom:14px}
+.sec-head p{color:var(--muted)}
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat{border:1px solid var(--line);border-radius:16px;padding:26px;background:var(--card);transition:.35s}
+.feat:hover{transform:translateY(-5px);border-color:rgba(109,107,246,.5);box-shadow: 0 10px 30px rgba(0,0,0,0.2)}
+.feat .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:16px;
+  background:rgba(109,107,246,.14)}
+.feat .ic svg{width:20px;height:20px;stroke:var(--indigo)}
+.feat h3{font-size:19px;margin-bottom:8px}
+.feat p{color:var(--muted);font-size:14.5px}
+
+.toggle{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:30px;font-size:14.5px}
+.sw{width:52px;height:28px;border-radius:99px;background:rgba(255,255,255,.1);border:1px solid var(--line);position:relative;transition:.3s}
+.sw i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--indigo);transition:.3s cubic-bezier(.34,1.56,.64,1)}
+.sw.on{background:rgba(109,107,246,.3)}.sw.on i{left:27px;background:var(--lime)}
+.save{font-size:12px;color:var(--lime);border:1px solid rgba(182,240,74,.35);border-radius:99px;padding:3px 10px}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+.plan{border:1px solid var(--line);border-radius:18px;padding:28px;background:var(--card);position:relative;transition:all 0.3s ease}
+.plan:hover{transform:translateY(-5px);border-color:var(--indigo)}
+.plan.hot{border-color:var(--indigo);background:linear-gradient(180deg,rgba(109,107,246,.12),transparent)}
+.plan.hot::before{content:'Most popular';position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  background:var(--indigo);color:#fff;font-size:11px;font-weight:600;padding:4px 13px;border-radius:99px;white-space:nowrap}
+.plan h3{font-size:17px;font-family:Inter;font-weight:600;letter-spacing:0;color:var(--muted);margin-bottom:10px}
+.plan .amt{font-family:'Space Grotesk';font-size:44px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.plan .per{font-size:13.5px;color:var(--muted);margin:6px 0 20px}
+.plan ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.plan li{font-size:14px;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+.plan li::before{content:'✓';color:var(--lime);font-weight:700}
+.plan .btn{width:100%}
+
+.close{text-align:center;border:1px solid var(--line);border-radius:24px;padding:clamp(34px,5vw,66px);
+  background:radial-gradient(70% 100% at 50% 0%,rgba(109,107,246,.2),transparent 70%)}
+.close h2{font-size:clamp(28px,4.4vw,50px);margin-bottom:14px}
+.close p{color:var(--muted);max-width:46ch;margin:0 auto 26px}
+
+/* Back to Top button */
+.back-to-top{
+  position:fixed;bottom:26px;right:26px;width:44px;height:44px;border-radius:50%;background:var(--bg2);border:1px solid var(--line);
+  display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,0.5);z-index:45;cursor:pointer;
+  opacity:0;transform:translateY(10px);transition:all 0.3s ease;
+}
+.back-to-top.active{opacity:1;transform:translateY(0)}
+.back-to-top:hover{transform:translateY(-2px);border-color:var(--lime)}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);background:var(--indigo);color:#fff;
+  padding:13px 22px;border-radius:99px;font-size:14px;font-weight:600;z-index:100;transition:transform .45s cubic-bezier(.34,1.56,.64,1);box-shadow: 0 10px 30px rgba(109,107,246,0.3)}
+.toast.on{transform:translate(-50%,0)}
+
+footer{border-top:1px solid var(--line);margin-top:clamp(50px,7vw,90px);padding:40px 0 24px;color:var(--muted);font-size:14px}
+.fgrid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:26px;margin-bottom:30px}
+.fgrid h4{color:var(--ink);font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.fgrid a{display:block;padding:4px 0}.fgrid a:hover{color:var(--ink)}
+.fbase{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
+
+@media(max-width:940px){.feats,.plans{grid-template-columns:1fr}
+  .appbody{grid-template-columns:1fr}
+  .side{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line)}
+  .menu{display:none}.fgrid{grid-template-columns:1fr 1fr}.burger{display:flex}}
+@media(max-width:600px){.kpis{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="ribbon">Demo</div>
+
+<header><div class="wrap nav">
+  <a href="../index.html#demos" class="back-to-portfolio">← Back to Portfolio</a>
+  <div class="logo" style="margin-left: auto;"><i></i>Flowdesk</div>
+  <nav class="menu" style="margin-left: auto;"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#">Docs</a><a href="#">Changelog</a><a href="#">Blog</a></nav>
+  <div style="display: flex; align-items: center; gap: 14px; margin-left: auto;">
+    <a class="btn btn-ghost" href="#" onclick="toast('Demo Sign In trigger')">Sign in</a>
+    <a class="btn btn-fill" href="#pricing">Start free</a>
+    <div class="burger" id="burger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div></header>
+
+<!-- Mobile Navigation Menu -->
+<div class="mobile-overlay" id="mobile-overlay">
+  <a href="../index.html#demos" style="font-size: 16px; margin-bottom: 20px; font-family: 'Space Grotesk'; color: var(--lime);">← Back to Portfolio</a>
+  <a href="#features" onclick="toggleMobileMenu()">Features</a>
+  <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
+  <a href="#" onclick="toggleMobileMenu()">Sign In</a>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="pill"><b>New</b> Automations are out of beta →</span>
+    <h1>Your team's work,<br /><span>finally in one place.</span></h1>
+    <p>Flowdesk replaces the spreadsheet, the group chat and the three tools nobody logs into. Set it up in an afternoon, not a quarter.</p>
+    <div class="cta">
+      <a class="btn btn-lime" href="#pricing">Start free — 14 days</a>
+      <a class="btn btn-ghost" href="#features">See how it works</a>
+    </div>
+    <p class="fineprint">No card required · Cancel in one click · SOC 2 Type II</p>
+
+    <!-- Interactive Mockup App Dashboard -->
+    <div class="app reveal">
+      <div class="appbar"><i></i><i></i><i></i><span>app.flowdesk.io/dashboard</span></div>
+      <div class="appbody">
+        <nav class="side" id="mock-nav">
+          <a class="on" data-tab="Overview">Overview</a>
+          <a data-tab="Projects">Projects</a>
+          <a data-tab="Automations">Automations</a>
+          <a data-tab="Reports">Reports</a>
+        </nav>
+        <div class="main" id="mock-main">
+          <!-- Overview Tab Content -->
+          <div class="kpis">
+            <div class="kpi"><span>Open tasks</span><b>248</b><em>▼ 12% this week</em></div>
+            <div class="kpi"><span>Cycle time</span><b>3.2d</b><em>▼ 0.8d</em></div>
+            <div class="kpi"><span>On time</span><b>94%</b><em>▲ 6%</em></div>
+          </div>
+          <div class="chart" id="chart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="logos">
+  <div class="wrap">
+    <p>Trusted by teams at</p>
+    <div class="lrow"><span>Northwind</span><span>Loop</span><span>Cassava</span><span>Verge</span><span>Tidal</span><span>Kite</span></div>
+  </div>
+</section>
+
+<section class="sec wrap reveal" id="features">
+  <div class="sec-head">
+    <p class="up">Features</p>
+    <h2>Fewer tools. Less chasing.</h2>
+    <p>Everything a small team needs to run projects, without the enterprise weight nobody asked for.</p>
+  </div>
+  <div class="feats" id="feats"></div>
+</section>
+
+<section class="sec wrap reveal" id="pricing">
+  <div class="sec-head">
+    <p class="up">Pricing</p>
+    <h2>Priced per team, not per seat</h2>
+    <p>Add as many people as you like. We would rather you used it than rationed it.</p>
+  </div>
+  <div class="toggle">
+    <span>Monthly</span>
+    <button class="sw" id="sw" aria-label="Toggle billing period"><i></i></button>
+    <span>Yearly</span><span class="save">save 20%</span>
+  </div>
+  <div class="plans" id="plans"></div>
+</section>
+
+<section class="wrap reveal" style="padding-bottom:clamp(40px,6vw,70px)">
+  <div class="close">
+    <h2>Ready in an afternoon</h2>
+    <p>Import from a spreadsheet, invite the team, and you are running. Most teams retire their old tool within a week.</p>
+    <a class="btn btn-lime" href="#" onclick="toast('Starting your trial...')">Start your free trial →</a>
+  </div>
+</section>
+
+<button class="back-to-top" id="back-to-top" aria-label="Scroll to top">↑</button>
+<div class="toast" id="toast"></div>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div>
+      <div class="logo" style="margin-bottom:12px"><i></i>Flowdesk</div>
+      <p style="max-width:32ch">Project tracking for teams who would rather be doing the work than reporting on it.</p>
+    </div>
+    <div><h4>Product</h4><a href="#">Features</a><a href="#">Pricing</a><a href="#">Integrations</a><a href="#">Changelog</a></div>
+    <div><h4>Resources</h4><a href="#">Docs</a><a href="#">API</a><a href="#">Status</a><a href="#">Blog</a></div>
+    <div><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Security</a><a href="#">Contact</a></div>
+  </div>
+  <div class="fbase"><span>© 2026 Flowdesk — a demo site built by Probin.</span><span>SOC 2 Type II · GDPR</span></div>
+</div></footer>
+
+<script>
+const TAB_DATA = {
+  Overview: {
+    kpis: [
+      { t: 'Open tasks', v: '248', c: '▼ 12% this week' },
+      { t: 'Cycle time', v: '3.2d', c: '▼ 0.8d' },
+      { t: 'On time', v: '94%', c: '▲ 6%' }
+    ],
+    chart: [38,52,44,66,58,74,62,86,71,94,80,100]
+  },
+  Projects: {
+    kpis: [
+      { t: 'Active Projects', v: '18', c: '▲ 2 new' },
+      { t: 'Completed', v: '142', c: 'this quarter' },
+      { t: 'Overdue', v: '1', c: 'high priority' }
+    ],
+    chart: [70,80,65,75,90,95,85,90,100,85,95,90]
+  },
+  Automations: {
+    kpis: [
+      { t: 'Active Rules', v: '34', c: 'running smoothly' },
+      { t: 'Triggers fired', v: '12.4k', c: '▲ 44%' },
+      { t: 'Hours saved', v: '48h', c: 'this month' }
+    ],
+    chart: [20,35,45,30,55,60,70,85,90,80,95,100]
+  },
+  Reports: {
+    kpis: [
+      { t: 'Delivered', v: '42', c: 'sent to clients' },
+      { t: 'Read rate', v: '98%', c: 'high engagement' },
+      { t: 'Avg. feedback', v: '4.8★', c: 'excellent rating' }
+    ],
+    chart: [85,88,90,92,95,93,96,98,99,97,99,100]
+  }
+};
+
+function renderMockupTab(tabName) {
+  const data = TAB_DATA[tabName];
+  const mainDiv = document.getElementById('mock-main');
+  
+  const kpisHtml = `
+    <div class="kpis">
+      ${data.kpis.map(k => `
+        <div class="kpi">
+          <span>${k.t}</span>
+          <b>${k.v}</b>
+          <em>${k.c}</em>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  
+  const chartHtml = `
+    <div class="chart">
+      ${data.chart.map((h, i) => `
+        <div style="height:${h}%; animation-delay:${i * 40}ms"></div>
+      `).join('')}
+    </div>
+  `;
+  
+  mainDiv.innerHTML = kpisHtml + chartHtml;
+}
+
+// Set up Mockup Nav Tab clicks
+document.getElementById('mock-nav').addEventListener('click', e => {
+  const target = e.target.closest('a');
+  if (!target) return;
+  
+  document.querySelectorAll('#mock-nav a').forEach(a => a.classList.remove('on'));
+  target.classList.add('on');
+  
+  renderMockupTab(target.dataset.tab);
+});
+
+// Render initial overview chart
+renderMockupTab('Overview');
+
+const FEATS = [
+  ['Boards that match your process','Kanban, list or timeline — switch views without migrating anything.','M4 5h6v14H4zM14 5h6v8h-6z'],
+  ['Automations without scripts','If this, then that. Fifteen triggers, no code, no consultant.','M13 2 4 14h7l-1 8 9-12h-7z'],
+  ['Reports people read','One page, the four numbers that matter, emailed every Monday.','M4 19V9m5 10V5m5 14v-7m5 7V7'],
+  ['Guest access done right','Share one board with a client. They see that board and nothing else.','M12 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-8 7a8 8 0 0 1 16 0'],
+  ['Works offline','Keep working on the train. It syncs when you surface.','M12 3v12m0 0-4-4m4 4 4-4M4 19h16'],
+  ['Import in one click','Bring in a CSV, Trello board or Asana project and keep the history.','M12 21V9m0 0-4 4m4-4 4 4M4 5h16']
+];
+document.getElementById('feats').innerHTML = FEATS.map(([t,d,p])=>`
+  <article class="feat">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${p}"/></svg></span>
+    <h3>${t}</h3><p>${d}</p>
+  </article>`).join('');
+
+const PLANS = [
+  { n:'Starter', m:0,  y:0,  hot:false, f:['Up to 3 projects','2 GB of files','Community support'], cta:'Start free', k:'btn-ghost' },
+  { n:'Team',    m:29, y:23, hot:true,  f:['Unlimited projects','Automations & guest access','Priority support','Weekly reports'], cta:'Start 14-day trial', k:'btn-fill' },
+  { n:'Business',m:79, y:63, hot:false, f:['Everything in Team','SSO & audit log','Custom fields','Dedicated manager'], cta:'Talk to sales', k:'btn-ghost' }
+];
+let yearly = false;
+const sw = document.getElementById('sw');
+sw.addEventListener('click', () => { yearly = !yearly; sw.classList.toggle('on', yearly); paint(); });
+
+function paint(){
+  document.getElementById('plans').innerHTML = PLANS.map(p => `
+    <div class="plan${p.hot ? ' hot' : ''}">
+      <h3>${p.n}</h3>
+      <div class="amt">$${yearly ? p.y : p.m}</div>
+      <p class="per">per month${p.m ? (yearly ? ', billed yearly' : ', billed monthly') : ' — free forever'}</p>
+      <ul>${p.f.map(f => `<li>${f}</li>`).join('')}</ul>
+      <button class="btn ${p.k}" onclick="toast('Proceeding with ${p.n} signup...')">${p.cta}</button>
+    </div>`).join('');
+}
+paint();
+
+// Mobile Navigation overlays toggler
+const burgerMenu = document.getElementById('burger-menu');
+const mobileOverlay = document.getElementById('mobile-overlay');
+
+function toggleMobileMenu() {
+  const isActive = mobileOverlay.classList.toggle('active');
+  burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
+  burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
+  burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
+}
+burgerMenu.addEventListener('click', toggleMobileMenu);
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => t.classList.remove('on'), 2600);
+}
+
+// Scroll Reveal Observer setup
+const revealElements = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+revealElements.forEach(el => observer.observe(el));
+
+// Back to Top button
+const backToTopBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    backToTopBtn.classList.add('active');
+  } else {
+    backToTopBtn.classList.remove('active');
+  }
+});
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>

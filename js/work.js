@@ -6,17 +6,57 @@
    in a frame so nothing has to be taken on trust.
    ═══════════════════════════════════════════════════════════ */
 
-import { PROJECTS } from './config.js';
+import { PROJECTS, DEMOS } from './config.js';
 
 export function initWork({ onSelf } = {}){
   const grid = document.getElementById('work-grid');
   if (!grid) return;
 
   PROJECTS.forEach((p, i) => grid.appendChild(card(p, i)));
+  renderDemos();
   initPeek({ onSelf });
-  initLiveShots();
+  initLiveShots();          // picks up client sites and demos in one pass
   glowTrack(grid, '.pcard');
   glowTrack(document, '.mcard');
+  glowTrack(document, '.dcard');
+}
+
+/* ── industry demo templates ────────────────────────────────
+   Same live-frame machinery as the client work, but labelled
+   honestly: these are starting points, not someone's site.
+   ─────────────────────────────────────────────────────────── */
+function renderDemos(){
+  const grid = document.getElementById('demo-grid');
+  if (!grid || !DEMOS?.length) return;
+
+  grid.innerHTML = DEMOS.map((d, i) => `
+    <article class="dcard reveal" data-x="article.dcard"
+             style="--pc:${d.accent};transition-delay:${Math.min(i * 60, 300)}ms">
+      <div class="dcard__stage">
+        <span class="dcard__kind">Template</span>
+        <div class="mini" style="--mini-bg:${d.bg}">
+          <div class="mini__bar"><i></i><i></i><i></i><b>${d.brand.toLowerCase().replace(/[^a-z]+/g, '')}.com</b></div>
+          <div class="mini__view">${miniLayout('grid')}</div>
+          <div class="mini__live" data-src="${d.file}"></div>
+        </div>
+      </div>
+      <div class="dcard__body">
+        <div class="dcard__top">
+          <h3>${d.title}</h3>
+          <span class="dcard__brand">${d.brand}</span>
+        </div>
+        <p class="dcard__desc">${d.desc}</p>
+        <div class="pcard__tags">${d.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <div class="pcard__acts">
+          <button class="btn btn--primary btn--sm" type="button" data-peek="${d.file}" data-title="${d.title}">
+            <span>Try it live</span><i class="btn__arrow">▸</i>
+          </button>
+          <a class="btn btn--ghost btn--sm" href="${d.file}" target="_blank" rel="noopener">
+            <span>New tab</span><i class="btn__arrow">↗</i>
+          </a>
+        </div>
+      </div>
+    </article>`).join('');
 }
 
 /* ── live thumbnails ────────────────────────────────────────

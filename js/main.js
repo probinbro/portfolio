@@ -26,9 +26,9 @@ function applyTheme(t){
   window.dispatchEvent(new Event('probin:theme'));
 }
 function initTheme(){
+  // Light is the house style; the toggle still remembers a visitor's choice.
   const saved = localStorage.getItem(THEME_KEY);
-  const sys = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  applyTheme(saved || sys);
+  applyTheme(saved || 'light');
   $('#btn-theme')?.addEventListener('click', () => {
     applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
     sfx('tick');
@@ -242,6 +242,7 @@ function initPalette({ xray, bot, arcade }){
 
   const COMMANDS = [
     { ic:'◆', label:'Go to Work',            hint:'section', run:go('#work') },
+    { ic:'▥', label:'Industry demo templates', hint:'section', run:go('#demos') },
     { ic:'◈', label:'Go to Live proof',      hint:'section', run:go('#proof') },
     { ic:'◇', label:'Go to Services',        hint:'section', run:go('#services') },
     { ic:'▤', label:'Go to Process',         hint:'section', run:go('#process') },

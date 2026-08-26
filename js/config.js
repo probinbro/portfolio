@@ -5,24 +5,32 @@
    ═══════════════════════════════════════════════════════════ */
 
 /* ───────────────────────────────────────────────────────────
-   ⚠ PLACEHOLDERS — replace these five lines before launch.
-   Nothing else in the site hard-codes contact details; every
-   mailto, footer link and the chatbot all read from here.
+   Contact details live here and nowhere else — every mailto,
+   footer link, palette command and chatbot reply reads from
+   this object, so one edit updates the whole site.
    ─────────────────────────────────────────────────────────── */
 export const PROFILE = {
   name:      'Probin',
   role:      'Full-stack web developer',
   years:     3,
-  email:     'hello@probin.dev',            // ← TODO: Probin's real address
+  email:     'probinmajumderr@gmail.com',
+  whatsapp:  '+8801634308360',
   location:  'Dhaka, Bangladesh · working remote worldwide',
   github:    'https://github.com/probinbro',
-  linkedin:  '#',                            // ← TODO: Probin's LinkedIn
-  // Leave FORM_ENDPOINT empty ('') and the contact form opens a pre-filled email
-  // instead. To get real inbox delivery, paste a Formspree / Web3Forms / Getform
-  // endpoint here — e.g. 'https://formspree.io/f/xxxxxxxx'
-  formEndpoint: '',
+  linkedin:  'https://www.linkedin.com/in/mrprobin/',
+
+  // Web3Forms delivers straight to the inbox above. The access key is meant to
+  // live in the browser — it can only post to Probin's own form, so it is safe
+  // in public source. Clear formEndpoint to fall back to a pre-filled email.
+  formEndpoint: 'https://api.web3forms.com/submit',
+  accessKey:    '9199740f-2163-43e9-b6fe-b3730a88f808',
   responseTime: '24 hours'
 };
+
+/* wa.me wants digits only — no plus, spaces or dashes */
+export const waLink = (msg = '') =>
+  `https://wa.me/${PROFILE.whatsapp.replace(/\D/g, '')}` +
+  (msg ? `?text=${encodeURIComponent(msg)}` : '');
 
 /* ── Hero ticker ────────────────────────────────────────── */
 export const TICKER = [
@@ -108,6 +116,71 @@ export const PROJECTS = [
     desc:   'Custom canvas hero, an x-ray mode that exposes the DOM, three hand-written games, a chatbot and a live performance readout — with no framework, no build step and no dependencies. If it runs this smoothly, your site will too.',
     tags:   ['0 dependencies', '3 games', 'Canvas', 'Robo Probin'],
     mini:   { bg:'#06070B', hero:'linear-gradient(120deg,#4FF0D6,#9080FF 60%,#0a0d18)', layout:'hero' }
+  }
+];
+
+/* ── Industry demo templates ────────────────────────────────
+   These are NOT client work — they are starting points Probin
+   built for this page, so a visitor can see their own industry
+   before commissioning anything. Every one is a real, working
+   page in /demos, framed live below.
+   Add another by dropping an HTML file in /demos and adding a
+   row here. Nothing else needs touching.
+   ─────────────────────────────────────────────────────────── */
+export const DEMOS = [
+  {
+    title:'Online store',
+    file:'demos/ecommerce.html',
+    bg:'#FBF7F2',
+    brand:'Aurelia',
+    accent:'#C4643B',
+    desc:'Product grid, live cart, categories and a newsletter capture. The version you commission gets real payments, stock and an admin.',
+    tags:['Cart', 'Product grid', 'Checkout-ready']
+  },
+  {
+    title:'Hospital & clinic',
+    file:'demos/hospital.html',
+    bg:'#F4F8FB',
+    brand:'Northside Medical',
+    accent:'#0E9E8F',
+    desc:'Department finder with live filtering, consultant profiles and an appointment request form that confirms on the page.',
+    tags:['Appointments', 'Departments', 'Doctor profiles']
+  },
+  {
+    title:'Restaurant & café',
+    file:'demos/restaurant.html',
+    bg:'#12100E',
+    brand:'Saffron & Smoke',
+    accent:'#D4A24C',
+    desc:'A tabbed menu with real prices, opening hours and a reservation form. Built dark and slow-moving, the way food sites should be.',
+    tags:['Menu tabs', 'Reservations', 'Gallery']
+  },
+  {
+    title:'Real estate',
+    file:'demos/realestate.html',
+    bg:'#FCFCFA',
+    brand:'Keystone Property',
+    accent:'#3E7C5F',
+    desc:'Search bar, filterable listings with beds/baths/area, saveable favourites and a valuation call-to-action.',
+    tags:['Listings', 'Filters', 'Saved homes']
+  },
+  {
+    title:'SaaS & startup',
+    file:'demos/saas.html',
+    bg:'#08090F',
+    brand:'Flowdesk',
+    accent:'#6D6BF6',
+    desc:'Dark landing page with an animated product dashboard, feature grid and pricing that switches between monthly and yearly.',
+    tags:['Pricing toggle', 'Product mock', 'Dark UI']
+  },
+  {
+    title:'School & academy',
+    file:'demos/school.html',
+    bg:'#FFFBF5',
+    brand:'Brightpath Academy',
+    accent:'#7A5BC4',
+    desc:'Programme cards by age group, news feed, an admissions pathway and an expanding FAQ. Built for anxious parents in a hurry.',
+    tags:['Admissions', 'Programmes', 'FAQ accordion']
   }
 ];
 
@@ -204,8 +277,8 @@ export const INTENTS = [
     id:'greet',
     keys:['hi','hello','hey','yo','salam','assalam','good morning','good evening','hola','namaste'],
     reply:[
-      "Hey! I'm <b>Robo Probin</b> — the automated half. The human one builds websites for a living and answers within 24 hours.<br><br>What brings you here?",
-      "Hello! Robo Probin here, standing in for the human. Ask me about work, pricing, timelines or the stack — or I can just take your details and pass them on."
+      "Hello! I'm <b>Robo Probin</b> — the automated half. The human one builds websites for a living and replies within 24 hours.<br><br>What can I help you with?",
+      "Hello, and welcome. Robo Probin here, standing in for the human. Do ask about the work, pricing, timelines or the stack — or I'm glad to simply take your details and pass them on."
     ],
     chips:['What does Probin do?','How much does a site cost?','Show me the work','I want to hire him']
   },
@@ -303,20 +376,20 @@ export const INTENTS = [
   {
     id:'hire',
     keys:['hire','start','work with','available','details','take my details','begin','engage','interested','need a website','want a site','build me','looking for'],
-    reply:"Good. Let's get you on the list — takes 30 seconds.<br><br>What's your <b>name</b>?",
+    reply:"Wonderful — thank you for considering him. This takes about thirty seconds, and nothing is binding.<br><br>May I start with your <b>name</b>?",
     action:'lead'
   },
   {
     id:'contact',
     keys:['contact','email','reach','phone','whatsapp','call','talk','message','get in touch'],
-    reply:`Fastest route: leave your details with me and the human replies within <b>${PROFILE.responseTime}</b>. Or email directly — <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>.`,
+    reply:`Whichever suits you best:<br>• <b>WhatsApp</b> — <a href="${waLink()}" target="_blank" rel="noopener">${PROFILE.whatsapp}</a>, usually the quickest<br>• <b>Email</b> — <a href="mailto:${PROFILE.email}">${PROFILE.email}</a><br>• Or leave your details with me and Probin will come back to you within <b>${PROFILE.responseTime}</b>.<br><br>No pressure either way — happy to just answer questions too.`,
     chips:['Take my details','Book a call','How much does a site cost?'],
     action:null
   },
   {
     id:'call',
     keys:['call','zoom','meet','meeting','book a call','video'],
-    reply:"A 20-minute intro call, free, no pitch deck. You describe the business, he asks the awkward questions early — budget, deadline, who signs off.<br><br>Give me your name and email and he'll send you times.",
+    reply:"A 20-minute intro call, free, and no pitch deck — you describe the business, and he asks the practical questions early: budget, deadline, who signs off.<br><br>If you'd like one, leave me your name and either an email or a WhatsApp number, and he'll send some times over.",
     action:'lead'
   },
   {
@@ -334,7 +407,7 @@ export const INTENTS = [
   {
     id:'wordpress',
     keys:['wordpress','wix','squarespace','shopify','template','theme','builder','webflow'],
-    reply:"He can work with them — but here's the honest version: page builders are fast to start and slow to live with. Plugin bloat, sluggish scores, and a redesign that means starting over.<br><br>Custom code costs a bit more up front and stops costing you after. If Shopify genuinely is right for your store, he'll say so rather than sell you a build.",
+    reply:"He's happy to work with them — and here's the honest view: page builders are quick to start and slower to live with. Plugin bloat, sluggish scores, and a redesign that often means starting over.<br><br>Custom code costs a little more up front and stops costing you afterwards. That said, if Shopify genuinely is the right answer for your store, he'll tell you so rather than sell you a build.",
     chips:['How much for custom?','Show me the work']
   },
   {

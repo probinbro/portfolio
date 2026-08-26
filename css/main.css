@@ -349,7 +349,74 @@ code{ font-family:var(--font-mono); font-size:.9em; color:var(--cyan); }
     radial-gradient(60% 50% at 15% 30%, rgba(144,128,255,.14), transparent 70%),
     radial-gradient(50% 45% at 88% 62%, rgba(79,240,214,.11), transparent 70%);
 }
-.hero__inner{ position:relative; z-index:2; }
+.hero__inner{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:1.12fr .88fr;
+  gap:clamp(20px,4vw,56px); align-items:center;
+}
+.hero__copy{ min-width:0; }
+
+/* ── portrait ───────────────────────────────────────────── */
+.hero__portrait{
+  position:relative; margin:0; justify-self:center; width:100%; max-width:440px;
+}
+/* Soft bloom so the cut-out isn't floating. Kept faint and heavily blurred:
+   at higher opacity its circular edge reads as a box around the portrait,
+   which is worse than no glow at all. Dark mode can take more. */
+.hero__portrait::before{
+  content:''; position:absolute; left:50%; bottom:4%; z-index:0;
+  width:124%; aspect-ratio:1/1; transform:translateX(-50%);
+  border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle at 50% 45%,
+    color-mix(in srgb,var(--cyan) 13%,transparent) 0%,
+    color-mix(in srgb,var(--violet) 9%,transparent) 40%,
+    transparent 72%);
+  filter:blur(34px);
+}
+[data-theme="dark"] .hero__portrait::before{
+  background:radial-gradient(circle at 50% 45%,
+    color-mix(in srgb,var(--cyan) 26%,transparent) 0%,
+    color-mix(in srgb,var(--violet) 20%,transparent) 42%,
+    transparent 72%);
+  filter:blur(26px);
+}
+.hero__portrait::after{           /* ground shadow */
+  content:''; position:absolute; left:50%; bottom:-2%; z-index:0;
+  width:62%; height:26px; transform:translateX(-50%);
+  border-radius:50%; background:rgba(10,20,40,.22); filter:blur(16px);
+}
+.hero__portrait picture{ position:relative; z-index:1; display:block; }
+.hero__portrait img{
+  width:100%; height:auto; display:block;
+  filter:drop-shadow(0 24px 40px rgba(12,24,46,.28));
+  animation:floaty 7s var(--ease) infinite;
+}
+@keyframes floaty{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-12px); } }
+
+.hero__portrait figcaption{
+  position:absolute; z-index:3; right:-4px; bottom:11%;
+  background:color-mix(in srgb,var(--bg-3) 88%,transparent);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--line-2); border-radius:14px; padding:10px 15px;
+  box-shadow:var(--shadow); animation:floaty 7s var(--ease) infinite; animation-delay:.5s;
+}
+.hero__portrait figcaption b{ display:block; font-family:var(--font-display); font-size:16px; letter-spacing:-.02em; }
+.hero__portrait figcaption span{ font-size:11.5px; color:var(--muted); font-family:var(--font-mono); }
+
+/* ── social row ─────────────────────────────────────────── */
+.hero__social{ display:flex; flex-wrap:wrap; gap:10px; margin:0 0 30px; }
+.hero__social a{
+  display:inline-flex; align-items:center; gap:9px;
+  padding:9px 16px 9px 14px; border-radius:99px;
+  border:1px solid var(--line); background:color-mix(in srgb,var(--bg-3) 55%,transparent);
+  font-size:14px; font-weight:600; color:var(--text-2);
+  transition:color .25s, border-color .25s, transform .3s var(--spring), background .25s;
+}
+.hero__social a:hover{
+  color:var(--cyan); border-color:var(--cyan);
+  background:color-mix(in srgb,var(--cyan) 8%,transparent); transform:translateY(-3px);
+}
+.hero__social svg{ width:17px; height:17px; flex:0 0 auto; }
 
 .hero__tag{
   display:inline-flex; align-items:center; gap:10px; margin-bottom:28px;
@@ -369,8 +436,8 @@ code{ font-family:var(--font-mono); font-size:.9em; color:var(--cyan); }
 }
 
 .hero__title{
-  font-size:clamp(42px,8.6vw,116px);
-  letter-spacing:-.045em; line-height:.96; margin-bottom:30px;
+  font-size:clamp(38px,6.4vw,84px);   /* sized for the two-column hero */
+  letter-spacing:-.045em; line-height:.96; margin-bottom:28px;
 }
 .hero__title .line{ display:block; overflow:hidden; padding-bottom:.06em; }
 .hero__title .w{
@@ -386,8 +453,6 @@ code{ font-family:var(--font-mono); font-size:.9em; color:var(--cyan); }
 }
 @keyframes gradSlide{ to{ background-position:220% 0; } }
 
-.hero__sub{ max-width:56ch; color:var(--text-2); font-size:clamp(15.5px,1.35vw,19px); margin-bottom:34px; }
-.hero__sub b{ color:var(--text); font-weight:700; }
 .hero__cta{ display:flex; flex-wrap:wrap; gap:13px; margin-bottom:26px; }
 .bot-dot{
   width:9px; height:9px; border-radius:50%; display:block;
@@ -518,8 +583,16 @@ code{ font-family:var(--font-mono); font-size:.9em; color:var(--cyan); }
   .nav__cta{ padding:11px 14px; }
   .nav__cta .btn__arrow{ font-size:18px; }
 }
+@media (max-width:940px){
+  /* headline first, portrait under it — the words do the selling */
+  .hero__inner{ grid-template-columns:1fr; gap:28px; }
+  .hero__title{ font-size:clamp(40px,9vw,68px); }
+  .hero__portrait{ max-width:330px; }
+  .hero__portrait figcaption{ right:-6px; bottom:8%; }
+}
 @media (max-width:760px){
   #btn-sound{ display:none; }
+  .hero__social a{ padding:8px 14px; font-size:13.5px; }
   .foot__inner{ grid-template-columns:1fr; gap:36px; }
   .foot__cols{ grid-template-columns:repeat(2,1fr); }
   .hero{ padding-top:96px; }

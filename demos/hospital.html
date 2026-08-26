@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Northside Medical — Hospital website demo</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+:root{
+  --bg:#F4F8FB; --card:#fff; --navy:#0E2A47; --ink:#16283A; --muted:#5E7185;
+  --line:#DCE6EF; --teal:#0E9E8F; --teal-dk:#0A7A6E; --red:#D8484C;
+}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.62 'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none;outline:none}
+h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:700;line-height:1.1;letter-spacing:-.015em}
+
+/* Scroll animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wrap{width:100%;max-width:1200px;margin-inline:auto;padding-inline:clamp(18px,4vw,40px)}
+.ribbon{position:fixed;right:-46px;top:22px;z-index:99;transform:rotate(45deg);background:var(--navy);color:#fff;
+  font:600 11px/1 'Source Sans 3',sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:8px 56px;box-shadow: 0 2px 10px rgba(0,0,0,0.1)}
+
+.back-to-portfolio{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:#fff;
+  transition:opacity 0.25s, transform 0.25s;
+}
+.back-to-portfolio:hover{
+  opacity:0.8;
+  transform:translateX(-3px);
+}
+
+.top{background:var(--navy);color:#C9DAE8;font-size:13.5px}
+.top-in{display:flex;justify-content:space-between;align-items:center;padding:9px 0;flex-wrap:wrap;gap:12px}
+.top .em{display:flex;align-items:center;gap:8px;color:#fff;font-weight:600}
+.top .em i{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blip 1.6s infinite}
+@keyframes blip{50%{opacity:.3}}
+
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:background 0.3s}
+.nav{display:flex;align-items:center;gap:26px;padding:14px 0}
+.brand{display:flex;align-items:center;gap:11px}
+.mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(140deg,var(--teal),var(--navy));display:grid;place-items:center}
+.mark svg{width:21px;height:21px}
+.brand b{font-family:Newsreader;font-size:20px;letter-spacing:-.02em;display:block;line-height:1.1}
+.brand span{font-size:11.5px;color:var(--muted);letter-spacing:.06em}
+.menu{display:flex;gap:20px;margin-left:auto;font-size:15px;font-weight:600}
+.menu a{color:var(--muted);padding:6px 0;border-bottom:2px solid transparent;transition:.2s}
+.menu a:hover,.menu a.on{color:var(--navy);border-color:var(--teal)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:8px;font-weight:700;font-size:15px;transition:.25s}
+.btn-fill{background:var(--teal);color:#fff}.btn-fill:hover{background:var(--teal-dk);transform:translateY(-1px);box-shadow: 0 4px 12px rgba(14,158,143,0.2)}
+.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:#08203a;transform:translateY(-1px)}
+.btn-line{border:1.5px solid var(--line);color:var(--navy)}.btn-line:hover{border-color:var(--teal);color:var(--teal);background:rgba(14,158,143,0.02)}
+
+/* Mobile Menu Toggle */
+.burger{display:none;flex-direction:column;gap:5px;width:24px;height:24px;justify-content:center;cursor:pointer;z-index:100}
+.burger span{display:block;width:100%;height:2px;background:var(--navy);transition:transform 0.3s, opacity 0.3s}
+
+.mobile-overlay{
+  position:fixed;inset:0;background:var(--bg);z-index:90;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;
+  opacity:0;pointer-events:none;transition:opacity 0.3s ease;padding:40px;
+}
+.mobile-overlay.active{opacity:1;pointer-events:auto}
+.mobile-overlay a{font-family:Newsreader;font-size:32px;color:var(--navy);transition:transform 0.3s}
+.mobile-overlay a:hover{color:var(--teal);transform:scale(1.05)}
+
+.hero{padding:clamp(36px,6vw,68px) 0}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(22px,3.5vw,44px);align-items:start}
+.hero-art{position:relative;border-radius:18px;overflow:hidden;min-height:420px;
+  padding:clamp(26px,4vw,44px);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;box-shadow: 0 10px 30px rgba(0,0,0,0.05)}
+.hero-art img{position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover}
+.hero-art::after{content:'';position:absolute;inset:0;background:linear-gradient(to top, rgba(14,42,71,0.9) 20%, rgba(14,42,71,0.4) 70%, transparent 100%)}
+.hero-art>*{position:relative;z-index:2}
+.tagline{font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:#8FE3D8;font-weight:700;margin-bottom:14px}
+.hero-art h1{font-size:clamp(30px,4.4vw,50px);margin-bottom:14px;font-weight:700}
+.hero-art p{color:#C9DAE8;max-width:40ch;margin-bottom:22px}
+.hero-art .cta{display:flex;gap:10px;flex-wrap:wrap}
+.hero-art .btn-line{border-color:rgba(255,255,255,0.45);color:#fff}
+.hero-art .btn-line:hover{background:#fff;color:var(--navy)}
+
+.book{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,3vw,28px);
+  box-shadow:0 24px 50px -34px rgba(14,42,71,.4)}
+.book h3{font-size:23px;margin-bottom:5px}
+.book>p{color:var(--muted);font-size:14px;margin-bottom:18px}
+.f{margin-bottom:13px}
+.f label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.f input,.f select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;transition:border-color 0.25s}
+.f input:focus,.f select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,158,143,.14)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.book .btn{width:100%;margin-top:6px}
+.ok{margin-top:12px;font-size:13.5px;color:var(--teal-dk);font-weight:600;display:none}
+.ok.on{display:block}
+.note{margin-top:12px;font-size:12.5px;color:var(--muted);text-align:center}
+
+.sec{padding:clamp(48px,7vw,84px) 0}
+.sec-head{max-width:640px;margin-bottom:32px}
+.sec-head .tagline{color:var(--teal)}
+.sec-head h2{font-size:clamp(26px,3.7vw,42px);margin-bottom:10px}
+.sec-head p{color:var(--muted)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tab{padding:9px 17px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;color:var(--muted);transition:.2s}
+.tab:hover{border-color:var(--teal);color:var(--teal)}
+.tab.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.deps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.dep{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;transition:.3s}
+.dep:hover{transform:translateY(-4px);border-color:var(--teal);box-shadow:0 18px 40px -30px rgba(14,42,71,.5)}
+.dep .ic{width:42px;height:42px;border-radius:11px;background:#E6F5F3;display:grid;place-items:center;margin-bottom:13px}
+.dep .ic svg{width:21px;height:21px;stroke:var(--teal)}
+.dep h3{font-size:17.5px;font-family:'Source Sans 3';font-weight:700;margin-bottom:5px}
+.dep p{font-size:13.5px;color:var(--muted)}
+.dep .cnt{margin-top:11px;font-size:12px;color:var(--teal);font-weight:700}
+
+.docs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:center;padding-bottom:18px;transition:.3s}
+.doc:hover{transform:translateY(-4px);box-shadow:0 18px 40px -30px rgba(14,42,71,.5)}
+.doc .av{height:160px;position:relative;background:#f0f4f8}
+.doc .av img{width:100%;height:100%;object-fit:cover}
+.doc h3{font-size:17px;font-family:'Source Sans 3';font-weight:700;margin-top:12px}
+.doc .sp{font-size:13px;color:var(--teal);font-weight:600;margin-bottom:4px}
+.doc .yr{font-size:12.5px;color:var(--muted)}
+
+.band{background:var(--navy);color:#fff;padding:clamp(34px,5vw,56px) 0}
+.band-in{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.band b{display:block;font-family:Newsreader;font-size:clamp(30px,4vw,44px);color:#8FE3D8}
+.band span{font-size:13.5px;color:#C9DAE8}
+
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:s}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative}
+.step::before{counter-increment:s;content:counter(s);position:absolute;top:-13px;left:22px;width:28px;height:28px;border-radius:50%;
+  background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.step h3{font-size:17px;font-family:'Source Sans 3';font-weight:700;margin:8px 0 6px}
+.step p{font-size:13.5px;color:var(--muted)}
+
+/* Back to top button */
+.back-to-top{
+  position:fixed;bottom:26px;right:26px;width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--line);
+  display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,0.05);z-index:45;cursor:pointer;
+  opacity:0;transform:translateY(10px);transition:all 0.3s ease;
+}
+.back-to-top.active{opacity:1;transform:translateY(0)}
+.back-to-top:hover{transform:translateY(-2px);border-color:var(--teal)}
+
+footer{background:#0A1E33;color:#9FB6C9;padding:clamp(40px,6vw,64px) 0 24px;font-size:14.5px}
+.fgrid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:28px;margin-bottom:32px}
+.fgrid h4{color:#fff;font-family:'Source Sans 3';font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:13px}
+.fgrid a{display:block;padding:4px 0}.fgrid a:hover{color:#8FE3D8}
+.fbase{border-top:1px solid #1C3550;padding-top:20px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
+
+@media(max-width:1000px){.deps,.docs,.path{grid-template-columns:repeat(2,1fr)}.menu{display:none}.burger{display:flex}}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}.band-in{grid-template-columns:repeat(2,1fr)}.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.deps,.docs,.path{grid-template-columns:1fr}.f2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="ribbon">Demo</div>
+
+<div class="top"><div class="wrap top-in">
+  <a href="../index.html#demos" class="back-to-portfolio">← Back to Portfolio</a>
+  <span>📍 118 Northside Road, Dhaka · Open 24 hours</span>
+  <span class="em"><i></i>Emergency: 10921</span>
+</div></div>
+
+<header><div class="wrap nav">
+  <div class="brand">
+    <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+    <span><b>Northside Medical</b><span>Hospital &amp; Diagnostics</span></span>
+  </div>
+  <nav class="menu"><a class="on" href="#">Home</a><a href="#deps">Departments</a><a href="#team">Doctors</a><a href="#visit">Patients</a><a href="#">Contact</a></nav>
+  <div style="display: flex; align-items: center; gap: 14px; margin-left: auto;">
+    <a class="btn btn-fill" href="#book">Book appointment</a>
+    <div class="burger" id="burger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div></header>
+
+<!-- Mobile Overlay Navigation -->
+<div class="mobile-overlay" id="mobile-overlay">
+  <a href="../index.html#demos" style="font-size: 16px; margin-bottom: 20px; font-family: 'Source Sans 3'; font-weight: 700;">← Back to Portfolio</a>
+  <a href="#" onclick="toggleMobileMenu()">Home</a>
+  <a href="#deps" onclick="toggleMobileMenu()">Departments</a>
+  <a href="#team" onclick="toggleMobileMenu()">Doctors</a>
+  <a href="#visit" onclick="toggleMobileMenu()">Patients</a>
+</div>
+
+<section class="hero wrap reveal" id="book">
+  <div class="hero-grid">
+    <div class="hero-art">
+      <img src="img/hero_hospital.jpg" alt="Northside Medical Facility" />
+      <p class="tagline">Accredited · 24/7 emergency</p>
+      <h1>Care that treats the person, not just the chart.</h1>
+      <p>Fourteen specialities, 96 beds and a diagnostics lab under one roof — so you are not sent across the city for a scan.</p>
+      <div class="cta">
+        <a class="btn btn-fill" href="#deps">Find a department</a>
+        <a class="btn btn-line" href="#team">Meet the doctors</a>
+      </div>
+    </div>
+
+    <form class="book" id="booking-form" onsubmit="event.preventDefault(); submitBooking()">
+      <h3>Book an appointment</h3>
+      <p>Confirmed by SMS within 2 hours.</p>
+      <div class="f"><label for="n">Patient name</label><input id="n" required placeholder="Full name" /></div>
+      <div class="f"><label for="ph">Phone</label><input id="ph" required placeholder="+880 1XXX-XXXXXX" /></div>
+      <div class="f"><label for="d">Department</label>
+        <select id="d"><option>Cardiology</option><option>Orthopaedics</option><option>Paediatrics</option>
+        <option>Neurology</option><option>General medicine</option><option>Diagnostics</option></select></div>
+      <div class="f f2">
+        <div><label for="dt">Date</label><input id="dt" type="date" required /></div>
+        <div><label for="tm">Time</label><select id="tm"><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div>
+      </div>
+      <button class="btn btn-navy" type="submit">Request appointment</button>
+      <p class="ok" id="ok">✓ Request received — our desk will call to confirm.</p>
+      <p class="note">Emergency? Call <b>10921</b> or come straight in.</p>
+    </form>
+  </div>
+</section>
+
+<section class="sec wrap reveal" id="deps">
+  <div class="sec-head">
+    <p class="tagline">Departments</p>
+    <h2>Fourteen specialities, one building</h2>
+    <p>Referrals move between departments internally — you should not have to carry your own file across town.</p>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="deps" id="deps-grid"></div>
+</section>
+
+<div class="band"><div class="wrap band-in">
+  <div><b data-target="96" class="stat-num">0</b><span>Inpatient beds</span></div>
+  <div><b data-target="14" class="stat-num">0</b><span>Specialist departments</span></div>
+  <div><b data-target="62" class="stat-num">0</b><span>Consultants &amp; surgeons</span></div>
+  <div><b data-val="24/7">24/7</b><span>Emergency &amp; diagnostics</span></div>
+</div></div>
+
+<section class="sec wrap reveal" id="team">
+  <div class="sec-head">
+    <p class="tagline">Our consultants</p>
+    <h2>The people you'll actually see</h2>
+    <p>Every consultant lists their clinic hours, so you can book the person rather than the slot.</p>
+  </div>
+  <div class="docs" id="docs"></div>
+</section>
+
+<section class="sec wrap reveal" id="visit" style="padding-top:0">
+  <div class="sec-head">
+    <p class="tagline">Your first visit</p>
+    <h2>What actually happens</h2>
+  </div>
+  <div class="path">
+    <div class="step"><h3>Book</h3><p>Online, by phone, or walk in. Bring any previous reports if you have them.</p></div>
+    <div class="step"><h3>Triage</h3><p>A nurse takes vitals and history, so your consultant starts with the full picture.</p></div>
+    <div class="step"><h3>Consult</h3><p>Twenty minutes minimum. Tests, if needed, are done in the same building that day.</p></div>
+    <div class="step"><h3>Follow-up</h3><p>Results by SMS and portal, with a review appointment booked before you leave.</p></div>
+  </div>
+</section>
+
+<button class="back-to-top" id="back-to-top" aria-label="Scroll to top">↑</button>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div>
+      <div class="brand" style="margin-bottom:12px">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        <span><b style="color:#fff">Northside Medical</b><span style="color:#9FB6C9">Hospital &amp; Diagnostics</span></span>
+      </div>
+      <p style="max-width:34ch">118 Northside Road, Dhaka 1216<br />Emergency 10921 · Reception +880 2 55XX XXXX</p>
+    </div>
+    <div><h4>Patients</h4><a href="#">Book appointment</a><a href="#">Visiting hours</a><a href="#">Insurance</a><a href="#">Test results</a></div>
+    <div><h4>Departments</h4><a href="#">Cardiology</a><a href="#">Orthopaedics</a><a href="#">Paediatrics</a><a href="#">Diagnostics</a></div>
+    <div><h4>Hospital</h4><a href="#">About us</a><a href="#">Careers</a><a href="#">Accreditation</a><a href="#">Contact</a></div>
+  </div>
+  <div class="fbase"><span>© 2026 Northside Medical — a demo site built by Probin.</span><span>Emergency 10921 · Open 24 hours</span></div>
+</div></footer>
+
+<script>
+const DEPS = [
+  { n:'Cardiology',       g:'Heart',    d:'Angiography, echo, pacemaker clinic and cardiac rehab.', c:9,  ic:'M12 21s-7-4.7-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.3-7 10-7 10Z' },
+  { n:'Orthopaedics',     g:'Bones',    d:'Joint replacement, sports injury and spine clinics.',   c:7,  ic:'M8 4v6m8-6v6M8 20v-6m8 6v-6M6 10h12v4H6z' },
+  { n:'Paediatrics',      g:'Children', d:'Newborn care, vaccination and childhood development.',  c:6,  ic:'M12 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-7 7a7 7 0 0 1 14 0' },
+  { n:'Neurology',        g:'Brain',    d:'Stroke unit, epilepsy monitoring and nerve conduction.', c:5, ic:'M9 4a3 3 0 0 0-3 3 3 3 0 0 0-1 5.8V16a4 4 0 0 0 8 0V7a3 3 0 0 0-3-3Zm6 0a3 3 0 0 1 3 3 3 3 0 0 1 1 5.8' },
+  { n:'General medicine', g:'Heart',    d:'Diabetes, hypertension and everyday adult care.',       c:11, ic:'M12 3v18M3 12h18' },
+  { n:'Obstetrics',       g:'Children', d:'Antenatal, delivery suite and postnatal follow-up.',    c:8,  ic:'M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm0-11v6' },
+  { n:'Diagnostics',      g:'Brain',    d:'MRI, CT, ultrasound and a same-day pathology lab.',     c:4,  ic:'M4 6h16v12H4zM8 10h8M8 14h5' },
+  { n:'Emergency',        g:'Heart',    d:'Round-the-clock trauma and acute care, no appointment.', c:14, ic:'M13 2 4 14h7l-1 8 9-12h-7z' }
+];
+const GROUPS = ['All', 'Heart', 'Bones', 'Children', 'Brain'];
+let active = 'All';
+
+const tabs = document.getElementById('tabs');
+tabs.innerHTML = GROUPS.map(g => `<button class="tab${g === 'All' ? ' on' : ''}" data-g="${g}">${g}</button>`).join('');
+tabs.addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  active = b.dataset.g;
+  [...tabs.children].forEach(t => t.classList.toggle('on', t === b));
+  render();
+});
+
+function render(){
+  const list = active === 'All' ? DEPS : DEPS.filter(d => d.g === active);
+  document.getElementById('deps-grid').innerHTML = list.map(d => `
+    <article class="dep">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${d.ic}"/></svg></span>
+      <h3>${d.n}</h3><p>${d.d}</p>
+      <p class="cnt">${d.c} consultants →</p>
+    </article>`).join('');
+}
+render();
+
+const DOCS = [
+  { n:'Dr. Farhana Haque', s:'Cardiology',   y:'18 years', img:'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Imran Chowdhury', s:'Orthopaedics', y:'14 years', img:'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Nabila Rahman', s:'Paediatrics',  y:'11 years', img:'https://images.unsplash.com/photo-1594824813573-246434de83fb?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Sabbir Ahmed',  s:'Neurology',    y:'21 years', img:'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=300&auto=format&fit=crop' }
+];
+
+document.getElementById('docs').innerHTML = DOCS.map(d => `
+  <article class="doc">
+    <div class="av">
+      <img src="${d.img}" alt="${d.n}" loading="lazy" />
+    </div>
+    <h3>${d.n}</h3><p class="sp">${d.s}</p><p class="yr">${d.y} experience</p>
+  </article>`).join('');
+
+// Mobile menu toggler
+const burgerMenu = document.getElementById('burger-menu');
+const mobileOverlay = document.getElementById('mobile-overlay');
+
+function toggleMobileMenu() {
+  const isActive = mobileOverlay.classList.toggle('active');
+  burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
+  burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
+  burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
+}
+burgerMenu.addEventListener('click', toggleMobileMenu);
+
+// Interactive Booking Success Flow
+window.submitBooking = function() {
+  const submitButton = document.querySelector('#booking-form button');
+  submitButton.textContent = 'Registering...';
+  submitButton.disabled = true;
+  
+  setTimeout(() => {
+    document.getElementById('ok').classList.add('on');
+    submitButton.textContent = 'Request appointment';
+    submitButton.disabled = false;
+    document.getElementById('booking-form').reset();
+    setTimeout(() => {
+      document.getElementById('ok').classList.remove('on');
+    }, 5000);
+  }, 1000);
+};
+
+// Scroll Reveal
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Back to Top Button
+const backToTopBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    backToTopBtn.classList.add('active');
+  } else {
+    backToTopBtn.classList.remove('active');
+  }
+});
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Stats Counting Animation
+const statNumbers = document.querySelectorAll('.stat-num');
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const targetValue = parseInt(el.dataset.target, 10);
+      let currentValue = 0;
+      const duration = 1200; // ms
+      const stepTime = Math.abs(Math.floor(duration / targetValue));
+      
+      const counter = setInterval(() => {
+        currentValue += 1;
+        el.textContent = currentValue;
+        if (currentValue === targetValue) {
+          clearInterval(counter);
+        }
+      }, stepTime);
+      countObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.8 });
+statNumbers.forEach(num => countObserver.observe(num));
+</script>
+</body>
+</html>

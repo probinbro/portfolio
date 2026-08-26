@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Saffron &amp; Smoke — Restaurant website demo</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+:root{
+  --night:#12100E; --night2:#1B1815; --cream:#F3EBDD; --muted:#9B9085;
+  --gold:#D4A24C; --rust:#B4552F; --line:rgba(212,162,76,.22);
+}
+body{background:var(--night);color:var(--cream);font:300 16px/1.7 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;outline:none}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;line-height:1.06;letter-spacing:.01em}
+
+/* Scroll reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wrap{width:100%;max-width:1140px;margin-inline:auto;padding-inline:clamp(18px,4vw,40px)}
+.ribbon{position:fixed;right:-46px;top:22px;z-index:99;transform:rotate(45deg);background:var(--gold);color:var(--night);
+  font:600 11px/1 Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:8px 56px;box-shadow:0 4px 10px rgba(0,0,0,0.2)}
+.up{font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:400}
+
+.back-to-portfolio{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  color:var(--gold);
+  transition:opacity 0.25s, transform 0.25s;
+}
+.back-to-portfolio:hover{
+  opacity:0.8;
+  transform:translateX(-3px);
+}
+
+header{position:absolute;top:0;left:0;right:0;z-index:40}
+.nav{display:flex;align-items:center;gap:26px;padding:26px 0}
+.logo{font-family:'Cormorant Garamond';font-size:27px;letter-spacing:.06em}
+.logo i{color:var(--gold);font-style:normal}
+.menu{display:flex;gap:26px;margin-left:auto;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+.menu a{color:var(--muted);transition:color .25s}.menu a:hover{color:var(--gold)}
+
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 27px;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid var(--gold);color:var(--gold);transition:.3s;font-weight:400}
+.btn:hover{background:var(--gold);color:var(--night);box-shadow: 0 4px 15px rgba(212,162,76,0.2)}
+.btn-solid{background:var(--gold);color:var(--night)}
+.btn-solid:hover{background:var(--cream);border-color:var(--cream)}
+
+/* Mobile navigation controls */
+.burger{display:none;flex-direction:column;gap:5px;width:24px;height:24px;justify-content:center;cursor:pointer;z-index:100}
+.burger span{display:block;width:100%;height:1px;background:var(--gold);transition:transform 0.3s, opacity 0.3s}
+
+.mobile-overlay{
+  position:fixed;inset:0;background:var(--night);z-index:90;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;
+  opacity:0;pointer-events:none;transition:opacity 0.3s ease;padding:40px;
+}
+.mobile-overlay.active{opacity:1;pointer-events:auto}
+.mobile-overlay a{font-family:'Cormorant Garamond';font-size:32px;color:var(--cream);transition:transform 0.3s}
+.mobile-overlay a:hover{color:var(--gold);transform:scale(1.05)}
+
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;padding:120px 0 70px}
+.hero img.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;opacity:0.3;mix-blend-mode:luminosity}
+.hero::before{content:'';position:absolute;inset:0;z-index:2;
+  background:radial-gradient(70% 55% at 50% 42%,rgba(58,42,24,0.7),transparent 72%),
+             linear-gradient(to bottom, var(--night) 5%, transparent 40%, transparent 70%, var(--night) 95%)}
+.hero-in{position:relative;z-index:3}
+.hero h1{font-size:clamp(52px,11vw,132px);line-height:.92;margin:20px 0 18px;font-weight:300}
+.hero h1 em{font-style:italic;color:var(--gold);display:block;font-weight:300}
+.hero p{color:var(--muted);max-width:46ch;margin:0 auto 32px}
+.hero .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.rule{width:70px;height:1px;background:var(--gold);margin:0 auto}
+
+.sec{padding:clamp(64px,10vw,124px) 0}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,70px);align-items:center}
+.split h2{font-size:clamp(32px,5vw,58px);margin:16px 0 18px}
+.split p{color:var(--muted);margin-bottom:16px}
+.plate{aspect-ratio:1/1;border-radius:50%;position:relative;
+  background:conic-gradient(from 40deg,#B4552F,#D4A24C,#7A4A22,#B4552F);padding:16px;
+  animation:rotate-plate 25s linear infinite;box-shadow: 0 10px 40px rgba(0,0,0,0.4)}
+@keyframes rotate-plate {
+  100% {transform: rotate(360deg)}
+}
+.plate span{position:absolute;inset:16px;border-radius:50%;background:var(--night2);display:grid;place-items:center;
+  border:1px solid var(--line);text-align:center;padding:30px;transform: rotate(0deg);animation: counter-rotate-plate 25s linear infinite}
+@keyframes counter-rotate-plate {
+  100% {transform: rotate(-360deg)}
+}
+.plate b{font-family:'Cormorant Garamond';font-size:clamp(22px,3vw,34px);font-weight:300;line-height:1.2}
+.plate i{display:block;font-style:normal;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-top:10px}
+
+.menu-sec{background:var(--night2);border-block:1px solid var(--line)}
+.m-head{text-align:center;margin-bottom:40px}
+.m-head h2{font-size:clamp(32px,5vw,56px);margin:14px 0 10px}
+.m-head p{color:var(--muted)}
+.m-tabs{display:flex;gap:34px;justify-content:center;margin-bottom:38px;flex-wrap:wrap}
+.m-tab{font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding-bottom:8px;border-bottom:1px solid transparent;transition:.25s}
+.m-tab:hover{color:var(--cream)}
+.m-tab.on{color:var(--gold);border-color:var(--gold)}
+.m-list{display:grid;grid-template-columns:1fr 1fr;gap:8px 48px;max-width:900px;margin-inline:auto}
+.item{display:flex;align-items:baseline;gap:12px;padding:15px 0;border-bottom:1px dashed rgba(212,162,76,.16);animation:fade .45s ease backwards}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.item .nm{font-family:'Cormorant Garamond';font-size:22px}
+.item .nm small{display:block;font-family:Jost;font-size:12.5px;color:var(--muted);letter-spacing:.04em}
+.item .dots{flex:1;border-bottom:1px dotted rgba(212,162,76,.35);transform:translateY(-4px)}
+.item .pr{font-family:'Cormorant Garamond';font-size:21px;color:var(--gold)}
+.veg{font-size:10px;letter-spacing:.16em;color:#8FBF6B;border:1px solid rgba(143,191,107,.4);padding:1px 6px;border-radius:3px}
+
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gal div{aspect-ratio:1/1.2;border-radius:6px;overflow:hidden;transition:transform 0.5s;box-shadow: 0 10px 20px rgba(0,0,0,0.3)}
+.gal div img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
+.gal div:hover{transform:scale(1.03)}
+.gal div:hover img{transform:scale(1.08)}
+
+.res{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(28px,5vw,64px);align-items:center}
+.res h2{font-size:clamp(32px,5vw,54px);margin:14px 0 16px}
+.res p{color:var(--muted);margin-bottom:22px}
+.hours{border:1px solid var(--line);padding:22px 24px}
+.hours div{display:flex;justify-content:space-between;padding:8px 0;font-size:14.5px;border-bottom:1px solid rgba(212,162,76,.1)}
+.hours div:last-child{border:none}
+.hours span:last-child{color:var(--gold)}
+.rform{border:1px solid var(--line);padding:clamp(22px,3.4vw,34px);background:rgba(212,162,76,.03)}
+.rf{margin-bottom:14px}
+.rf label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.rf input,.rf select{width:100%;padding:12px 14px;background:transparent;border:1px solid var(--line);color:var(--cream);font:inherit;transition:border-color 0.25s}
+.rf input:focus,.rf select:focus{outline:none;border-color:var(--gold)}
+.rf select option{background:var(--night2)}
+.rf3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.rform .btn{width:100%;justify-content:center;margin-top:8px}
+.done{margin-top:14px;font-size:13.5px;color:var(--gold);display:none;text-align:center}
+.done.on{display:block}
+
+/* Back to Top button */
+.back-to-top{
+  position:fixed;bottom:26px;right:26px;width:44px;height:44px;border-radius:50%;background:var(--night2);border:1px solid var(--line);
+  display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:45;cursor:pointer;
+  opacity:0;transform:translateY(10px);transition:all 0.3s ease;
+}
+.back-to-top.active{opacity:1;transform:translateY(0)}
+.back-to-top:hover{transform:translateY(-2px);border-color:var(--gold)}
+
+footer{border-top:1px solid var(--line);padding:44px 0 26px;font-size:13.5px;color:var(--muted)}
+.fin{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+@media(max-width:900px){.split,.res{grid-template-columns:1fr}.m-list{grid-template-columns:1fr}.menu{display:none}
+  .gal{grid-template-columns:repeat(2,1fr)}.burger{display:flex}}
+@media(max-width:560px){.rf3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="ribbon">Demo</div>
+
+<header><div class="wrap nav">
+  <a href="../index.html#demos" class="back-to-portfolio">← Back to Portfolio</a>
+  <div class="logo" style="margin-left: auto;">Saffron <i>&amp;</i> Smoke</div>
+  <nav class="menu" style="margin-left: auto;"><a href="#story">Story</a><a href="#menu">Menu</a><a href="#gallery">Gallery</a><a href="#book">Reserve</a></nav>
+  <div style="display: flex; align-items: center; gap: 14px; margin-left: auto;">
+    <a class="btn" href="#book">Book a table</a>
+    <div class="burger" id="burger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div></header>
+
+<!-- Mobile Navigation Overlay -->
+<div class="mobile-overlay" id="mobile-overlay">
+  <a href="../index.html#demos" style="font-size: 16px; margin-bottom: 20px; font-family: 'Cormorant Garamond'; letter-spacing: 0.1em; color: var(--gold);">← Back to Portfolio</a>
+  <a href="#story" onclick="toggleMobileMenu()">Story</a>
+  <a href="#menu" onclick="toggleMobileMenu()">Menu</a>
+  <a href="#gallery" onclick="toggleMobileMenu()">Gallery</a>
+  <a href="#book" onclick="toggleMobileMenu()">Reserve</a>
+</div>
+
+<section class="hero">
+  <img class="hero-bg" src="img/hero_restaurant.jpg" alt="Atmospheric kitchen" />
+  <div class="wrap hero-in">
+    <div class="rule"></div>
+    <p class="up" style="margin-top:18px">Est. 2019 · Gulshan, Dhaka</p>
+    <h1>Charcoal, spice<em>and patience.</em></h1>
+    <p>A twelve-seat kitchen cooking over live fire. One menu, changed monthly, written the morning the produce arrives.</p>
+    <div class="cta">
+      <a class="btn btn-solid" href="#book">Reserve a table</a>
+      <a class="btn" href="#menu">See the menu</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap reveal" id="story">
+  <div class="split">
+    <div class="plate"><span><b>"The best fire cooking<br />in the city."</b><i>Dhaka Food Review</i></span></div>
+    <div>
+      <p class="up">Our kitchen</p>
+      <h2>No gas. No shortcuts.</h2>
+      <p>Everything passes over charcoal or it doesn't leave the pass. Bread is baked to order, the yoghurt is hung overnight, and the spice blends are ground in-house every Tuesday.</p>
+      <p>We buy from four farms and one fisherman. When they have a bad week, the menu changes — which is rather the point.</p>
+      <a class="btn" href="#menu" style="margin-top:10px">Read the menu</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec menu-sec reveal" id="menu">
+  <div class="wrap">
+    <div class="m-head">
+      <p class="up">The menu</p>
+      <h2>November</h2>
+      <p>Served 6pm till late. Kitchen closes at 10:30.</p>
+    </div>
+    <div class="m-tabs" id="mt"></div>
+    <div class="m-list" id="ml"></div>
+  </div>
+</section>
+
+<section class="sec wrap reveal" id="gallery">
+  <div class="m-head" style="text-align:left;margin-bottom:26px">
+    <p class="up">The room</p>
+    <h2 style="font-size:clamp(28px,4vw,44px)">Low light, loud kitchen</h2>
+  </div>
+  <div class="gal">
+    <div><img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop" alt="Grill Cooking" loading="lazy" /></div>
+    <div><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=400&auto=format&fit=crop" alt="Spiced Main dish" loading="lazy" /></div>
+    <div><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=400&auto=format&fit=crop" alt="Cozy seating room" loading="lazy" /></div>
+    <div><img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?q=80&w=400&auto=format&fit=crop" alt="Chef at fire grill" loading="lazy" /></div>
+  </div>
+</section>
+
+<section class="sec wrap reveal" id="book" style="padding-top:0">
+  <div class="res">
+    <div>
+      <p class="up">Reservations</p>
+      <h2>Twelve seats, twice a night.</h2>
+      <p>Bookings open on the 1st of each month. Walk-ins are welcome at the bar, and we hold two seats back every night for people who chance it.</p>
+      <div class="hours">
+        <div><span>Tuesday – Thursday</span><span>6:00 – 11:00 pm</span></div>
+        <div><span>Friday – Saturday</span><span>5:30 – 12:00 am</span></div>
+        <div><span>Sunday</span><span>12:00 – 4:00 pm</span></div>
+        <div><span>Monday</span><span>Closed</span></div>
+      </div>
+    </div>
+    <form class="rform" onsubmit="event.preventDefault(); submitReservation()">
+      <div class="rf"><label for="rn">Name</label><input id="rn" required placeholder="Your name" /></div>
+      <div class="rf"><label for="re">Phone or email</label><input id="re" required placeholder="How we confirm" /></div>
+      <div class="rf rf3">
+        <div><label for="rg">Guests</label><select id="rg"><option>2</option><option>3</option><option>4</option><option>6</option></select></div>
+        <div><label for="rd">Date</label><input id="rd" type="date" required /></div>
+        <div><label for="rt">Time</label><select id="rt"><option>6:00</option><option>8:30</option></select></div>
+      </div>
+      <button class="btn btn-solid" type="submit">Request a table</button>
+      <p class="done" id="done">✓ Request sent — we'll confirm by phone today.</p>
+    </form>
+  </div>
+</section>
+
+<button class="back-to-top" id="back-to-top" aria-label="Scroll to top">↑</button>
+
+<footer><div class="wrap fin">
+  <span>Saffron &amp; Smoke · Road 11, Gulshan, Dhaka · +880 1XXX-XXXXXX</span>
+  <span>A demo site built by Probin</span>
+</div></footer>
+
+<script>
+const MENU = {
+  Starters: [
+    ['Charred aubergine', 'burnt garlic yoghurt, pomegranate', 480, 1],
+    ['Smoked bone marrow', 'parsley, capers, sourdough', 620, 0],
+    ['Tandoori beetroot', 'whipped feta, dukkah', 440, 1],
+    ['Fire-roasted prawns', 'kashmiri butter, lime', 780, 0]
+  ],
+  Mains: [
+    ['Charcoal lamb shoulder', 'six hours, cumin salt, flatbread', 1680, 0],
+    ['Whole river fish', 'green chilli, mustard oil, banana leaf', 1420, 0],
+    ['Smoked paneer steak', 'black lentil, brown butter', 940, 1],
+    ['Duck seekh', 'pickled onion, mint chutney', 1240, 0]
+  ],
+  Desserts: [
+    ['Burnt basbousa', 'orange blossom, clotted cream', 420, 1],
+    ['Charcoal ice cream', 'salted date caramel', 380, 1],
+    ['Cardamom custard tart', 'toasted pistachio', 440, 1]
+  ]
+};
+const mt = document.getElementById('mt'), ml = document.getElementById('ml');
+mt.innerHTML = Object.keys(MENU).map((k, i) => `<button class="m-tab${i ? '' : ' on'}" data-k="${k}">${k}</button>`).join('');
+mt.addEventListener('click', e => {
+  const b = e.target.closest('.m-tab'); if (!b) return;
+  [...mt.children].forEach(t => t.classList.toggle('on', t === b));
+  render(b.dataset.k);
+});
+function render(k){
+  ml.innerHTML = MENU[k].map(([n, d, p, v], i) => `
+    <div class="item" style="animation-delay:${i * 45}ms">
+      <span class="nm">${n} ${v ? '<span class="veg">VEG</span>' : ''}<small>${d}</small></span>
+      <span class="dots"></span><span class="pr">৳${p}</span>
+    </div>`).join('');
+}
+render('Starters');
+
+// Mobile Overlay Menu Toggler
+const burgerMenu = document.getElementById('burger-menu');
+const mobileOverlay = document.getElementById('mobile-overlay');
+
+function toggleMobileMenu() {
+  const isActive = mobileOverlay.classList.toggle('active');
+  burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
+  burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
+  burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
+}
+burgerMenu.addEventListener('click', toggleMobileMenu);
+
+// Interactive Table Reservation Success Flow
+window.submitReservation = function() {
+  const submitButton = document.querySelector('.rform button');
+  submitButton.textContent = 'Submitting...';
+  submitButton.disabled = true;
+  
+  setTimeout(() => {
+    document.getElementById('done').classList.add('on');
+    submitButton.textContent = 'Request a table';
+    submitButton.disabled = false;
+    document.querySelector('.rform').reset();
+    setTimeout(() => {
+      document.getElementById('done').classList.remove('on');
+    }, 5000);
+  }, 1000);
+};
+
+// Scroll Reveal Observer
+const revealElements = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+revealElements.forEach(el => observer.observe(el));
+
+// Back to Top button
+const backToTopBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    backToTopBtn.classList.add('active');
+  } else {
+    backToTopBtn.classList.remove('active');
+  }
+});
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
