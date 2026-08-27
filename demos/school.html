@@ -179,6 +179,75 @@ footer{background:#2B1A4D;color:#C6B8DE;padding:clamp(40px,6vw,64px) 0 24px;marg
 .fgrid a{display:block;padding:4px 0}.fgrid a:hover{color:var(--amber)}
 .fbase{border-top:1px solid #43305F;padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
 
+/* ── Year finder ──────────────────────────────────────── */
+.finder{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 24px;margin-bottom:26px;
+  display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.finder .lab{font-size:14.5px;font-weight:600}
+.finder .ages{display:flex;gap:7px;flex-wrap:wrap}
+.agebtn{width:42px;height:38px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14px;font-weight:600;transition:.2s}
+.agebtn:hover{border-color:var(--purple2)}
+.agebtn.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.finder .out{font-size:14px;color:var(--muted);margin-left:auto;text-align:right;min-width:210px}
+.finder .out b{color:var(--purple)}
+.prog.hit{border-color:var(--purple2);box-shadow:0 0 0 3px rgba(122,91,196,.18)}
+
+/* ── Fee calculator ───────────────────────────────────── */
+.fees{display:grid;grid-template-columns:1fr .95fr;gap:clamp(22px,3vw,40px);background:var(--card);
+  border:1px solid var(--line);border-radius:20px;padding:clamp(22px,3vw,34px);margin-top:30px}
+.fees h3{font-size:24px;margin-bottom:6px}
+.fees .sub{color:var(--muted);font-size:14.5px;margin-bottom:20px}
+.frow{margin-bottom:16px}
+.frow > span{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px}
+.fopts{display:flex;gap:8px;flex-wrap:wrap}
+.fopt{padding:9px 15px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:13.5px;font-weight:600;transition:.2s}
+.fopt:hover{border-color:var(--purple2)}
+.fopt.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.fcheck{display:flex;gap:10px;align-items:center;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:13.5px;cursor:pointer;transition:.2s}
+.fcheck:hover{border-color:var(--purple2)}
+.fcheck input{accent-color:var(--purple);width:16px;height:16px}
+.fcheck span.p{margin-left:auto;color:var(--muted);font-size:12.5px}
+.fout{border:1px solid var(--line);border-radius:16px;padding:22px;background:linear-gradient(180deg,rgba(122,91,196,.08),transparent)}
+.fout .line{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;color:var(--muted)}
+.fout .line b{color:var(--ink)}
+.fout .line.off b{color:var(--mint)}
+.fout .tot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:12px;padding-top:14px}
+.fout .tot span{font-size:14px;color:var(--muted)}
+.fout .tot b{font-size:clamp(24px,3.4vw,32px);color:var(--purple)}
+.fout .per{font-size:13px;color:var(--muted);margin-top:6px}
+.fout .fine{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
+
+/* ── Tour booking modal ───────────────────────────────── */
+.tk-overlay{position:fixed;inset:0;background:rgba(36,28,59,.5);z-index:120;opacity:0;pointer-events:none;transition:opacity .3s}
+.tk-overlay.on{opacity:1;pointer-events:auto}
+.tk{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%);z-index:121;width:min(480px,94vw);max-height:92vh;overflow:auto;
+  background:var(--card);border-radius:20px;padding:clamp(22px,3vw,32px);opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .3s cubic-bezier(.16,1,.3,1);box-shadow:0 40px 90px -30px rgba(36,28,59,.5)}
+.tk.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.tk h3{font-size:25px;margin-bottom:6px}
+.tk .sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+.tk .tdays{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px}
+.tk .tday{min-width:74px;flex-shrink:0;border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;background:#fff;transition:.2s}
+.tk .tday:hover{border-color:var(--purple2)}
+.tk .tday.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.tk .tday u{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;opacity:.8}
+.tk .tday b{display:block;font-size:18px;font-family:Lora,Georgia,serif}
+.tk .tday s{display:block;font-size:10.5px;text-decoration:none;opacity:.75}
+.tk .fld{margin-bottom:12px}
+.tk label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:6px}
+.tk input,.tk select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:14.5px}
+.tk input:focus,.tk select:focus{outline:none;border-color:var(--purple2)}
+.tk .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tk .err{font-size:12px;color:#C2410C;margin-top:5px;display:none}
+.tk .fld.bad input{border-color:#C2410C}
+.tk .fld.bad .err{display:block}
+.tk .btn{width:100%;margin-top:6px}
+.tk .fine{font-size:12px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.6}
+.tk-close{position:absolute;right:16px;top:14px;font-size:18px;color:var(--muted)}
+.tk-done{text-align:center}
+.tk-done .tick{width:54px;height:54px;border-radius:50%;background:var(--mint);color:#fff;display:grid;place-items:center;font-size:25px;margin:0 auto 14px}
+.tk-done .ref{display:inline-block;margin-top:12px;border:1px dashed var(--line);border-radius:10px;padding:8px 15px;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+
+@media(max-width:860px){ .fees{grid-template-columns:1fr} .finder .out{margin-left:0;text-align:left} }
 @media(max-width:960px){.hero-grid,.adm{grid-template-columns:1fr}.progs,.news{grid-template-columns:1fr}
   .band-in{grid-template-columns:repeat(2,1fr)}.menu{display:none}.fgrid{grid-template-columns:1fr 1fr}.burger{display:flex}}
 </style>
@@ -247,8 +316,15 @@ footer{background:#2B1A4D;color:#C6B8DE;padding:clamp(40px,6vw,64px) 0 24px;marg
     <h2>Three stages, one philosophy</h2>
     <p>Children move up when they are ready, not when the calendar says so.</p>
   </div>
+  <!-- Parents think in "my child is nine", not "middle school" -->
+  <div class="finder reveal">
+    <span class="lab">How old is your child?</span>
+    <div class="ages" id="ages"></div>
+    <p class="out" id="age-out">Tap an age and we will show the stage, the year group and the fee.</p>
+  </div>
+
   <div class="progs">
-    <article class="prog">
+    <article class="prog" data-stage="Primary">
       <div class="cap">
         <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=400&auto=format&fit=crop" alt="Primary Schooling" />
         <span>Ages 5–10</span>
@@ -259,9 +335,9 @@ footer{background:#2B1A4D;color:#C6B8DE;padding:clamp(40px,6vw,64px) 0 24px;marg
         <div class="meta"><span>6 year groups</span><span>Max 22 per class</span></div>
       </div>
     </article>
-    <article class="prog">
+    <article class="prog" data-stage="Middle school">
       <div class="cap">
-        <img src="https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?q=80&w=400&auto=format&fit=crop" alt="Middle Schooling" />
+        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=400&auto=format&fit=crop" alt="Middle Schooling" />
         <span>Ages 11–14</span>
       </div>
       <div class="pb">
@@ -270,9 +346,9 @@ footer{background:#2B1A4D;color:#C6B8DE;padding:clamp(40px,6vw,64px) 0 24px;marg
         <div class="meta"><span>4 year groups</span><span>14 subjects</span></div>
       </div>
     </article>
-    <article class="prog">
+    <article class="prog" data-stage="Senior">
       <div class="cap">
-        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=400&auto=format&fit=crop" alt="Senior school" />
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=400&auto=format&fit=crop" alt="Senior school" />
         <span>Ages 15–18</span>
       </div>
       <div class="pb">
@@ -342,10 +418,88 @@ footer{background:#2B1A4D;color:#C6B8DE;padding:clamp(40px,6vw,64px) 0 24px;marg
     </div>
     <div>
       <div class="faq" id="faq"></div>
-      <button class="btn btn-fill" style="width:100%;margin-top:18px" onclick="toast('Booking Tour request initiated...')">Book a tour &amp; Apply</button>
+      <button class="btn btn-fill" style="width:100%;margin-top:18px" onclick="openTour()">Book a tour &amp; apply</button>
     </div>
   </div>
 </section>
+
+<section class="sec wrap reveal" id="fees" style="padding-top:0">
+  <!-- Fees are the first thing a parent looks for and the last thing
+       most school sites publish. This one answers it in three taps. -->
+  <div class="fees">
+    <div>
+      <h3>What would it cost?</h3>
+      <p class="sub">No enquiry form in the way. Choose the year group and see the real figure, including the discounts we actually apply.</p>
+
+      <div class="frow">
+        <span>Year group</span>
+        <div class="fopts" id="fee-stage"></div>
+      </div>
+      <div class="frow">
+        <span>How many children</span>
+        <div class="fopts" id="fee-kids"></div>
+      </div>
+      <div class="frow">
+        <span>Payment plan</span>
+        <div class="fopts" id="fee-plan"></div>
+      </div>
+      <div class="frow">
+        <span>Optional extras</span>
+        <div class="fopts" style="flex-direction:column;align-items:stretch">
+          <label class="fcheck"><input type="checkbox" id="x-bus" /> School bus, both ways <span class="p">৳4,500 / month</span></label>
+          <label class="fcheck"><input type="checkbox" id="x-lunch" /> Hot lunch <span class="p">৳3,200 / month</span></label>
+          <label class="fcheck"><input type="checkbox" id="x-club" /> After-school clubs <span class="p">৳2,000 / month</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="fout" id="fee-out"></div>
+  </div>
+</section>
+
+<!-- Tour booking: Tuesdays and Thursdays in term time, as the copy says -->
+<div class="tk-overlay" id="tk-overlay" onclick="closeTour()"></div>
+<div class="tk" id="tk" role="dialog" aria-modal="true" aria-label="Book a school tour">
+  <button class="tk-close" onclick="closeTour()" aria-label="Close">✕</button>
+  <div id="tk-form">
+    <h3>Book a tour</h3>
+    <p class="sub">Tours run on ordinary teaching days — Tuesday and Thursday mornings, 9:30 and 11:00.</p>
+
+    <div class="fld">
+      <label>Choose a morning</label>
+      <div class="tdays" id="tk-days"></div>
+    </div>
+    <div class="fld">
+      <label for="tk-time">Time</label>
+      <select id="tk-time"><option>9:30 am</option><option>11:00 am</option></select>
+    </div>
+    <div class="two">
+      <div class="fld">
+        <label for="tk-name">Parent name</label>
+        <input id="tk-name" placeholder="Full name" autocomplete="name" />
+        <span class="err">We need a name for the visitor book.</span>
+      </div>
+      <div class="fld">
+        <label for="tk-phone">Phone</label>
+        <input id="tk-phone" placeholder="+880 1XXX-XXXXXX" autocomplete="tel" />
+        <span class="err">A number to confirm on.</span>
+      </div>
+    </div>
+    <div class="two">
+      <div class="fld">
+        <label for="tk-year">Year group of interest</label>
+        <select id="tk-year"></select>
+      </div>
+      <div class="fld">
+        <label for="tk-when">Starting</label>
+        <select id="tk-when"><option>2027 intake</option><option>2028 intake</option><option>Mid-year transfer</option></select>
+      </div>
+    </div>
+    <button class="btn btn-fill" onclick="confirmTour()">Confirm the visit</button>
+    <p class="fine">Demo only — no booking is made and nothing is sent.</p>
+  </div>
+  <div id="tk-done" style="display:none"></div>
+</div>
 
 <button class="back-to-top" id="back-to-top" aria-label="Scroll to top">↑</button>
 <div class="toast" id="toast"></div>
@@ -366,11 +520,194 @@ footer{background:#2B1A4D;color:#C6B8DE;padding:clamp(40px,6vw,64px) 0 24px;marg
 </div></footer>
 
 <script>
+/* ═══════════════════════════════════════════════════════════
+   Brightpath Academy — demo logic.
+   An age finder that maps a child to a year group, a fee
+   calculator that publishes the number instead of hiding it
+   behind an enquiry form, and tour booking on the two mornings
+   the school actually runs them.
+   ═══════════════════════════════════════════════════════════ */
+const STAGES = [
+  { id:'Primary',      label:'Primary',        ages:[5,10],  years:'Years 1–6',   fee:186000, note:'two teachers in every room' },
+  { id:'Middle school',label:'Middle school',  ages:[11,14], years:'Years 7–10',  fee:224000, note:'subject specialists and the first labs' },
+  { id:'Senior',       label:'Senior & A-level', ages:[15,18], years:'Years 11–13', fee:268000, note:'O and A-levels with university counselling' }
+];
+const EXTRAS = { bus:4500, lunch:3200, club:2000 };
+const SIBLING = [0, 0, 0.10, 0.15, 0.20];         // discount by number of children
+const PLANS = [
+  { id:'annual', label:'Annual, in advance', mul:0.95, per:1,  hint:'5% off for paying up front' },
+  { id:'term',   label:'Three terms',        mul:1,    per:3,  hint:'the usual arrangement' },
+  { id:'month',  label:'Ten monthly instalments', mul:1.03, per:10, hint:'3% handling charge' }
+];
+
+let fee = { stage:'Primary', kids:1, plan:'term' };
+
+const taka = n => '৳' + Math.round(n).toLocaleString('en-IN');
+
+/* ── age finder ────────────────────────────────────────── */
+const stageForAge = a => STAGES.find(s => a >= s.ages[0] && a <= s.ages[1]);
+
+document.getElementById('ages').innerHTML =
+  Array.from({ length: 14 }, (_, i) => i + 5)
+    .map(a => `<button class="agebtn" data-age="${a}">${a}</button>`).join('');
+
+document.getElementById('ages').addEventListener('click', e => {
+  const b = e.target.closest('[data-age]'); if (!b) return;
+  const age = +b.dataset.age;
+  [...document.querySelectorAll('.agebtn')].forEach(x => x.classList.toggle('on', x === b));
+
+  const st = stageForAge(age);
+  document.querySelectorAll('.prog').forEach(c =>
+    c.classList.toggle('hit', st && c.dataset.stage === (st.id === 'Senior' ? 'Senior' : st.id)));
+
+  const yr = age - 4;
+  document.getElementById('age-out').innerHTML = st
+    ? `At ${age}, that is <b>${st.label}</b> — year ${yr}, ${taka(st.fee)} a year.
+       <button class="fopt" style="margin-left:8px" onclick="jumpFees('${st.id}')">See the full cost →</button>`
+    : `We take children from 5 to 18. Ring the office and we will point you somewhere good.`;
+
+  fee.stage = st ? st.id : fee.stage;
+  paintFees();
+});
+
+window.jumpFees = function(stage){
+  fee.stage = stage; paintFees();
+  document.getElementById('fees').scrollIntoView({ behavior:'smooth', block:'center' });
+};
+
+/* ── fee calculator ────────────────────────────────────── */
+function chipRow(el, items, active, attr){
+  document.getElementById(el).innerHTML = items.map(i =>
+    `<button class="fopt ${i.id === active ? 'on' : ''}" data-${attr}="${i.id}">${i.label}</button>`).join('');
+}
+
+function paintOptions(){
+  chipRow('fee-stage', STAGES.map(s => ({ id:s.id, label:s.years })), fee.stage, 'stage');
+  chipRow('fee-kids', [1,2,3,4].map(n => ({ id:String(n), label:n === 1 ? 'One child' : n + ' children' })), String(fee.kids), 'kids');
+  chipRow('fee-plan', PLANS.map(p => ({ id:p.id, label:p.label })), fee.plan, 'plan');
+}
+
+function paintFees(){
+  paintOptions();
+  const st = STAGES.find(s => s.id === fee.stage);
+  const plan = PLANS.find(p => p.id === fee.plan);
+
+  const extrasMonthly =
+    (document.getElementById('x-bus').checked ? EXTRAS.bus : 0) +
+    (document.getElementById('x-lunch').checked ? EXTRAS.lunch : 0) +
+    (document.getElementById('x-club').checked ? EXTRAS.club : 0);
+
+  const tuition = st.fee * fee.kids;
+  const discount = tuition * SIBLING[Math.min(fee.kids, 4)];
+  const extras = extrasMonthly * 10 * fee.kids;         // ten school months
+  const year = (tuition - discount + extras) * plan.mul;
+  const instal = year / plan.per;
+
+  document.getElementById('fee-out').innerHTML = `
+    <div class="line"><span>Tuition, ${fee.kids} ${fee.kids === 1 ? 'child' : 'children'}</span><b>${taka(tuition)}</b></div>
+    ${discount ? `<div class="line off"><span>Sibling discount, ${(SIBLING[Math.min(fee.kids,4)] * 100)}%</span><b>− ${taka(discount)}</b></div>` : ''}
+    ${extras ? `<div class="line"><span>Bus, lunch and clubs</span><b>${taka(extras)}</b></div>` : ''}
+    <div class="line"><span>${plan.label} <em style="font-style:normal;opacity:.7">(${plan.hint})</em></span><b>${plan.mul === 1 ? '—' : (plan.mul < 1 ? '− 5%' : '+ 3%')}</b></div>
+    <div class="tot">
+      <span>${plan.per === 1 ? 'Once a year' : plan.per === 3 ? 'Each term' : 'Each month'}</span>
+      <b>${taka(instal)}</b>
+    </div>
+    <p class="per">${taka(year)} across the full year${fee.kids > 1 ? `, for all ${fee.kids} children` : ''}.</p>
+    <p class="fine">Includes books, exam entry and one uniform set. Trips and external exam re-sits are billed
+      separately. Twelve scholarships each year cover between 25% and 100% of tuition —
+      <button class="fopt" style="padding:4px 10px;font-size:12.5px" onclick="openTour()">ask on a tour</button>.</p>`;
+}
+
+['fee-stage','fee-kids','fee-plan'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => {
+    const b = e.target.closest('[data-stage],[data-kids],[data-plan]'); if (!b) return;
+    if (b.dataset.stage) fee.stage = b.dataset.stage;
+    if (b.dataset.kids)  fee.kids  = +b.dataset.kids;
+    if (b.dataset.plan)  fee.plan  = b.dataset.plan;
+    paintFees();
+  });
+});
+['x-bus','x-lunch','x-club'].forEach(id => document.getElementById(id).addEventListener('change', paintFees));
+
+/* ── tour booking ──────────────────────────────────────── */
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+let tourDay = null;
+
+function tourDates(){
+  const out = [], d = new Date();
+  d.setHours(0,0,0,0);
+  for (let i = 1; out.length < 6; i++){
+    const day = new Date(d);
+    day.setDate(d.getDate() + i);
+    if (day.getDay() === 2 || day.getDay() === 4) out.push(day);   // Tue, Thu
+  }
+  return out;
+}
+
+function paintTourDays(){
+  document.getElementById('tk-days').innerHTML = tourDates().map((d, i) => `
+    <button class="tday ${tourDay && d.toDateString() === tourDay.toDateString() ? 'on' : ''}" data-t="${d.toISOString()}">
+      <u>${DOW[d.getDay()]}</u><b>${d.getDate()}</b><s>${MON[d.getMonth()]}</s>
+    </button>`).join('');
+}
+document.getElementById('tk-days').addEventListener('click', e => {
+  const b = e.target.closest('[data-t]'); if (!b) return;
+  tourDay = new Date(b.dataset.t);
+  paintTourDays();
+});
+
+document.getElementById('tk-year').innerHTML =
+  STAGES.map(s => `<option>${s.label} · ${s.years}</option>`).join('');
+
+window.openTour = function(){
+  if (!tourDay) tourDay = tourDates()[0];
+  paintTourDays();
+  document.getElementById('tk').classList.add('on');
+  document.getElementById('tk-overlay').classList.add('on');
+};
+window.closeTour = function(){
+  document.getElementById('tk').classList.remove('on');
+  document.getElementById('tk-overlay').classList.remove('on');
+};
+
+window.confirmTour = function(){
+  const n = document.getElementById('tk-name'), ph = document.getElementById('tk-phone');
+  let ok = true;
+  const mark = (el, good) => { el.closest('.fld').classList.toggle('bad', !good); return good; };
+  ok = mark(n, n.value.trim().length > 1) && ok;
+  ok = mark(ph, ph.value.replace(/\D/g, '').length >= 7) && ok;
+  if (!ok) return;
+
+  const ref = 'BP-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+  const when = `${DOW[tourDay.getDay()]} ${tourDay.getDate()} ${MON[tourDay.getMonth()]}`;
+  document.getElementById('tk-form').style.display = 'none';
+  const done = document.getElementById('tk-done');
+  done.style.display = 'block';
+  done.innerHTML = `
+    <div class="tk-done">
+      <div class="tick">✓</div>
+      <h3>See you on ${when}</h3>
+      <p class="sub">${document.getElementById('tk-time').value}, main reception.
+        Ask for the admissions office — allow about an hour, and do bring your child.</p>
+      <div style="text-align:left;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px">
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span>Parent</span><b style="color:var(--ink)">${n.value.trim()}</b></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span>Year group</span><b style="color:var(--ink)">${document.getElementById('tk-year').value.split(' · ')[0]}</b></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span>Starting</span><b style="color:var(--ink)">${document.getElementById('tk-when').value}</b></div>
+      </div>
+      <span class="ref">${ref}</span>
+      <p class="fine">Demo only — nothing was booked and no message was sent.</p>
+      <button class="btn btn-line" style="margin-top:16px;width:100%" onclick="location.reload()">Close</button>
+    </div>`;
+};
+
+/* ── FAQ ───────────────────────────────────────────────── */
 const FAQ = [
   ['When do applications close?', 'The 2027 intake closes on 28 February. Late applications join a waiting list and are considered if places open in June.'],
   ['Is there an entrance exam?', 'For years 4 and up there is a short assessment in English and maths. It is pitched at the year the child is finishing, not the one they are joining.'],
   ['Do you offer scholarships?', 'Twelve each year — six academic, four for music or sport, and two hardship places assessed on household income.'],
-  ['Can we visit before applying?', 'Please do. Tours run every Tuesday and Thursday morning during term, on ordinary teaching days.']
+  ['Can we visit before applying?', 'Please do. Tours run every Tuesday and Thursday morning during term, on ordinary teaching days.'],
+  ['What is included in the fee?', 'Books, exam entry, one uniform set and all in-school activities. The bus, hot lunch and after-school clubs are optional and priced in the calculator above.']
 ];
 document.getElementById('faq').innerHTML = FAQ.map(([q, a], i) => `
   <button class="q" data-i="${i}">${q}<span>+</span></button>
@@ -383,17 +720,17 @@ document.getElementById('faq').addEventListener('click', e => {
   panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0';
 });
 
-// Mobile Nav Overlay
+/* ── chrome ────────────────────────────────────────────── */
 const burgerMenu = document.getElementById('burger-menu');
 const mobileOverlay = document.getElementById('mobile-overlay');
-
-function toggleMobileMenu() {
+function toggleMobileMenu(){
   const isActive = mobileOverlay.classList.toggle('active');
   burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
   burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
   burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
 }
 burgerMenu.addEventListener('click', toggleMobileMenu);
+window.toggleMobileMenu = toggleMobileMenu;
 
 function toast(msg){
   const t = document.getElementById('toast');
@@ -401,55 +738,37 @@ function toast(msg){
   clearTimeout(window._tt);
   window._tt = setTimeout(() => t.classList.remove('on'), 2600);
 }
+window.toast = toast;
 
-// Scroll Reveal
-const revealElements = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTour(); });
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('active'); });
 }, { threshold: 0.1 });
-revealElements.forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// Back to Top button
 const backToTopBtn = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backToTopBtn.classList.add('active');
-  } else {
-    backToTopBtn.classList.remove('active');
-  }
-});
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+window.addEventListener('scroll', () => backToTopBtn.classList.toggle('active', window.scrollY > 400));
+backToTopBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
 
-// Number Counter animators
-const statNumbers = document.querySelectorAll('.stat-num');
-const countObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      const targetValue = parseInt(el.dataset.target, 10);
-      let currentValue = 0;
-      const duration = 1500; // ms
-      const stepTime = Math.abs(Math.floor(duration / targetValue));
-      
-      const counter = setInterval(() => {
-        currentValue += Math.ceil(targetValue / 50);
-        if (currentValue >= targetValue) {
-          currentValue = targetValue;
-          clearInterval(counter);
-        }
-        el.textContent = currentValue.toLocaleString();
-      }, 30);
-      countObserver.unobserve(el);
-    }
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    const el = en.target, target = parseInt(el.dataset.target, 10);
+    let v = 0;
+    const timer = setInterval(() => {
+      v += Math.max(1, Math.round(target / 40));
+      if (v >= target){ v = target; clearInterval(timer); }
+      el.textContent = v.toLocaleString();
+    }, 30);
+    countObserver.unobserve(el);
   });
 }, { threshold: 0.8 });
-statNumbers.forEach(num => countObserver.observe(num));
+document.querySelectorAll('.stat-num').forEach(n => countObserver.observe(n));
+
+/* boot */
+paintFees();
+paintTourDays();
 </script>
 </body>
 </html>

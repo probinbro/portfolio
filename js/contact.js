@@ -319,5 +319,32 @@ export function initContact(){
     form[n]?.addEventListener('input', () => setErr(form[n], ''));
   });
 
-  return { calc, getScope: () => calc() };
+  /* ── quick vs full brief ────────────────────────────────
+     Most visitors want to say one thing and get on with their
+     day; a wall of fields is how you lose them. Quick is the
+     default, and the configurator waits for anyone who
+     actually wants a number before they send.
+     ─────────────────────────────────────────────────────── */
+  const section = document.getElementById('contact');
+  const modeBtns = [...document.querySelectorAll('[data-cmode]')];
+
+  function setMode(mode){
+    section?.classList.toggle('is-quick', mode === 'quick');
+    modeBtns.forEach(b => {
+      const on = b.dataset.cmode === mode;
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    window.dispatchEvent(new CustomEvent('probin:blip'));
+  }
+
+  modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.cmode)));
+  document.querySelectorAll('[data-cmode-jump]').forEach(b => {
+    b.addEventListener('click', () => {
+      setMode(b.dataset.cmodeJump);
+      document.querySelector('.configurator')?.scrollIntoView({ behavior:'smooth', block:'center' });
+    });
+  });
+
+  return { calc, getScope: () => calc(), setMode };
 }

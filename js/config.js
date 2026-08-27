@@ -134,8 +134,8 @@ export const DEMOS = [
     bg:'#FBF7F2',
     brand:'Aurelia',
     accent:'#C4643B',
-    desc:'Product grid, live cart, categories and a newsletter capture. The version you commission gets real payments, stock and an admin.',
-    tags:['Cart', 'Product grid', 'Checkout-ready']
+    desc:'Filter and search the catalogue, open a product, pick a size, and check out. The bag survives a refresh and the order ends with a real reference number.',
+    tags:['Quick view', 'Saved cart', 'Checkout flow']
   },
   {
     title:'Hospital & clinic',
@@ -143,8 +143,8 @@ export const DEMOS = [
     bg:'#F4F8FB',
     brand:'Northside Medical',
     accent:'#0E9E8F',
-    desc:'Department finder with live filtering, consultant profiles and an appointment request form that confirms on the page.',
-    tags:['Appointments', 'Departments', 'Doctor profiles']
+    desc:'Type a symptom and it finds the department. Then book properly: consultant, day, and a slot grid where the taken times are already gone.',
+    tags:['Slot booking', 'Symptom finder', 'Consultants']
   },
   {
     title:'Restaurant & café',
@@ -152,8 +152,8 @@ export const DEMOS = [
     bg:'#12100E',
     brand:'Saffron & Smoke',
     accent:'#D4A24C',
-    desc:'A tabbed menu with real prices, opening hours and a reservation form. Built dark and slow-moving, the way food sites should be.',
-    tags:['Menu tabs', 'Reservations', 'Gallery']
+    desc:'Filter the card by diet, tap a dish for the kitchen’s note, then book a table — party size, evening, and the seats actually left on each sitting.',
+    tags:['Dietary filters', 'Live sittings', 'Reservations']
   },
   {
     title:'Real estate',
@@ -161,8 +161,8 @@ export const DEMOS = [
     bg:'#FCFCFA',
     brand:'Keystone Property',
     accent:'#3E7C5F',
-    desc:'Search bar, filterable listings with beds/baths/area, saveable favourites and a valuation call-to-action.',
-    tags:['Listings', 'Filters', 'Saved homes']
+    desc:'Filter by budget and bedrooms, open a listing for the gallery and spec, and drag the deposit and term to see the monthly repayment. Saved homes compare side by side.',
+    tags:['Repayment calculator', 'Compare saved', 'Viewings']
   },
   {
     title:'SaaS & startup',
@@ -170,8 +170,8 @@ export const DEMOS = [
     bg:'#08090F',
     brand:'Flowdesk',
     accent:'#6D6BF6',
-    desc:'Dark landing page with an animated product dashboard, feature grid and pricing that switches between monthly and yearly.',
-    tags:['Pricing toggle', 'Product mock', 'Dark UI']
+    desc:'Drag your team size and every plan reprices, including the extra seats. Then work out whether it pays for itself, and sign up for a workspace.',
+    tags:['Seat pricing', 'ROI calculator', 'Signup flow']
   },
   {
     title:'School & academy',
@@ -179,8 +179,8 @@ export const DEMOS = [
     bg:'#FFFBF5',
     brand:'Brightpath Academy',
     accent:'#7A5BC4',
-    desc:'Programme cards by age group, news feed, an admissions pathway and an expanding FAQ. Built for anxious parents in a hurry.',
-    tags:['Admissions', 'Programmes', 'FAQ accordion']
+    desc:'Tap your child’s age to find the year group, price the whole year with sibling discounts and the bus, then book a tour on a morning the school actually runs them.',
+    tags:['Fee calculator', 'Age finder', 'Tour booking']
   }
 ];
 
@@ -266,6 +266,92 @@ export const CFG = {
   ]
 };
 
+/* ── Industries the bot can talk about ──────────────────
+   The old bot could answer "how much" and "what does he do", but
+   fell over on the question people actually ask: "can you build a
+   ___ site?". This is that answer — what the build usually needs,
+   which of the six demos is the nearest starting point, and which
+   CFG type it prices as, so the figure always agrees with the
+   configurator further up the page.
+
+   keys  : matched as whole words; the first entry that hits wins,
+           so keep the specific ones above the general ones
+   demo  : `title` of a DEMOS entry, or null when none is close
+   type  : `id` of a CFG.types entry, used for the price band
+   ─────────────────────────────────────────────────────── */
+export const INDUSTRIES = [
+  {
+    id:'gym', label:'gym or fitness studio', type:'business', demo:'SaaS & startup',
+    keys:['gym','gyms','fitness','crossfit','yoga','pilates','martial arts','karate','boxing','personal trainer','personal training','workout','health club','bodybuilding'],
+    needs:'a class timetable that is readable on a phone at the door, membership tiers with real prices, trainer profiles, a free-trial form that lands in your inbox, and reviews sitting right next to the join button'
+  },
+  {
+    id:'salon', label:'salon, spa or barber shop', type:'business', demo:'Restaurant & café',
+    keys:['salon','spa','barber','barbershop','beauty','hair','nails','massage','parlour','parlor','grooming'],
+    needs:'a service menu with prices and durations, stylist profiles, a booking form that knows your opening hours, and a gallery that still loads fast on mobile data'
+  },
+  {
+    id:'clinic', label:'clinic or medical practice', type:'business', demo:'Hospital & clinic',
+    keys:['clinic','hospital','medical','doctor','doctors','dental','dentist','physio','physiotherapy','therapist','healthcare','health care','diagnostic','pharmacy','veterinary'],
+    needs:'a department or treatment finder, consultant profiles with credentials visible, an appointment request that confirms on the page, and directions that work for someone in a hurry'
+  },
+  {
+    id:'restaurant', label:'restaurant, café or bakery', type:'business', demo:'Restaurant & café',
+    keys:['restaurant','cafe','café','coffee shop','bakery','bistro','diner','catering','food truck','takeaway','pizzeria','kitchen'],
+    needs:'a menu you can change yourself without ringing anyone, dietary filters, table reservations with real time slots, opening hours that are never wrong, and photographs that do the food justice'
+  },
+  {
+    id:'school', label:'school, academy or coaching centre', type:'business', demo:'School & academy',
+    keys:['school','academy','college','university','coaching','tuition','institute','madrasa','kindergarten','nursery','education','training centre','training center','courses'],
+    needs:'programmes split by age or level, an admissions pathway a parent can follow in one sitting, fees stated plainly, a news feed the office can post to, and a prospectus worth downloading'
+  },
+  {
+    id:'property', label:'estate agency or property business', type:'app', demo:'Real estate',
+    keys:['real estate','realestate','property','properties','estate agent','realtor','apartment','apartments','flats','housing','rental','rentals','landlord'],
+    needs:'listings with beds, baths and area filters, an area guide or map, saved favourites, a viewing request on every property, and an admin screen so your team adds listings without touching code'
+  },
+  {
+    id:'shop', label:'online store', type:'shop', demo:'Online store',
+    keys:['store','shop','ecommerce','e-commerce','online store','boutique','clothing brand','jewellery','jewelry','grocery','retail','dropshipping','sell online','selling online'],
+    needs:'a catalogue with variants and stock, a cart that survives a refresh, real payments, order emails, and an admin where you add products without ringing a developer'
+  },
+  {
+    id:'saas', label:'SaaS or startup product', type:'app', demo:'SaaS & startup',
+    keys:['saas','startup','start-up','software','dashboard','platform','web app','webapp','crm','erp','subscription','mvp','marketplace'],
+    needs:'a landing page that explains the product in one screen, pricing that survives comparison, sign-up and accounts, a real dashboard behind the login, and billing wired to Stripe'
+  },
+  {
+    id:'law', label:'law firm or professional practice', type:'business', demo:'SaaS & startup',
+    keys:['law','lawyer','legal','solicitor','attorney','advocate','accountant','accounting','consultancy','consulting','architect','insurance'],
+    needs:'practice areas laid out plainly, profiles that build trust quickly, case results or testimonials, and an enquiry form that does not feel like a form'
+  },
+  {
+    id:'travel', label:'travel or tour business', type:'business', demo:'Real estate',
+    keys:['travel','tour','tours','tourism','trip','holiday','hotel','resort','hostel','guest house','airline','visa service'],
+    needs:'packages with dates and prices, a filterable search, an enquiry or booking form, a photo-led design, and reviews close to the price'
+  },
+  {
+    id:'ngo', label:'NGO, charity or community organisation', type:'business', demo:'School & academy',
+    keys:['ngo','charity','nonprofit','non-profit','foundation','mosque','church','temple','community','volunteer','donation','donations','fundraising'],
+    needs:'the cause in one sentence, programmes and impact numbers, donations that actually go through, volunteer sign-up, and reports the trustees can upload themselves'
+  },
+  {
+    id:'event', label:'events or wedding business', type:'business', demo:'Restaurant & café',
+    keys:['event','events','wedding','weddings','conference','venue','party','festival','photographer','photography','videographer','dj','band','musician'],
+    needs:'a portfolio that loads instantly, packages with prices, availability by date, an enquiry form that captures the date first, and reviews from past clients'
+  },
+  {
+    id:'trades', label:'trade or local services business', type:'business', demo:'SaaS & startup',
+    keys:['plumber','plumbing','electrician','builder','construction','contractor','cleaning','landscaping','interior','carpenter','mechanic','garage','car repair','moving','logistics','courier','delivery'],
+    needs:'the services and the areas you cover, before-and-after photographs, a quote request that captures the job details, and a phone number never more than a thumb away'
+  },
+  {
+    id:'portfolio', label:'personal portfolio or brand site', type:'landing', demo:null,
+    keys:['portfolio','personal site','personal website','resume','cv','freelance','artist','designer','writer','author','influencer','blog','blogging','podcast','youtube'],
+    needs:'a clear opening statement, selected work rather than everything, a way to get in touch that is not a mailto link, and somewhere to publish that you control'
+  }
+];
+
 /* ── Robo Probin: intents ───────────────────────────────
    Matched on keyword hits. First best score wins.
    reply  : string OR array (one is picked at random)
@@ -340,6 +426,13 @@ export const INTENTS = [
     reply:"Five live client sites — <b>DJ JAI</b> (Sydney events), <b>Physio Rehab Point</b> (clinic, 30+ pages), <b>Sujit Roy</b> (research portfolio), <b>Muhammad Yousuf</b> (motion designer) and <b>Pratik Mojumder</b> (published research).<br><br>Scrolling you there now — hit <b>Peek</b> on any card to load the real site inside this page.",
     chips:['Which was hardest?','How much?','Hire him'],
     action:'goto:#work'
+  },
+  {
+    id:'demos',
+    keys:['demo','demos','that demo','closest demo','industry demo','starting point','starting points','sample site','mock site','six sites'],
+    reply:"Six of them, one per industry — a store, a clinic, a restaurant, an estate agency, a SaaS product and a school. They were built for this page rather than for clients, so nothing is pretending to be someone else's site.<br><br>Every one is live: open the cart, filter the listings, book the appointment. Scrolling you there now.",
+    chips:['Can you build one for my industry?','How much?','Take my details'],
+    action:'goto:#demos'
   },
   {
     id:'hardest',

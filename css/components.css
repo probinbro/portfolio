@@ -438,8 +438,39 @@
 .botband__cta{ display:flex; flex-wrap:wrap; gap:12px; }
 
 /* ── CONTACT ────────────────────────────────────────────── */
+/* Two paths into the same form. Quick is the default: the
+   configurator and the optional fields stay out of the way until
+   someone actually asks for them. */
+.cmodes{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:clamp(20px,2.8vw,30px); }
+@media (max-width:620px){ .cmodes{ grid-template-columns:1fr; } }
+.cmode{
+  display:grid; gap:4px; text-align:left; padding:16px 20px;
+  border:1px solid var(--line); border-radius:var(--r); background:var(--surface);
+  color:var(--text); transition:border-color .3s, background .3s, transform .4s var(--ease-out);
+}
+.cmode:hover{ border-color:var(--line-2); transform:translateY(-2px); }
+.cmode:focus-visible{ outline:none; box-shadow:var(--ring); }
+.cmode b{ font-size:15px; font-weight:700; }
+.cmode em{ font-style:normal; font-size:12.5px; color:var(--muted); }
+.cmode.is-on{
+  border-color:color-mix(in srgb,var(--cyan) 55%,transparent);
+  background:color-mix(in srgb,var(--cyan) 9%,transparent);
+}
+.cmode.is-on b::after{ content:'✓'; margin-left:8px; color:var(--cyan); font-size:12px; }
+
 .contact__grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(18px,2.6vw,32px); align-items:start; }
 @media (max-width:920px){ .contact__grid{ grid-template-columns:1fr; } }
+
+.contact.is-quick .configurator{ display:none; }
+.contact.is-quick .contact__grid{ grid-template-columns:1fr; max-width:700px; }
+.contact.is-quick [data-brief-only]{ display:none; }
+/* the name/company row loses half its content in quick mode, so it
+   closes up rather than leaving a hole beside the name */
+.contact.is-quick .cform__row:has([data-brief-only]){ grid-template-columns:1fr; }
+.contact:not(.is-quick) [data-quick-only]{ display:none; }
+.cform__switch{
+  font-size:13px; color:var(--muted); margin:-6px 0 18px;
+}
 
 .configurator{
   padding:clamp(24px,3vw,34px); border-radius:var(--r-lg); border:1px solid var(--line);

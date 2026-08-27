@@ -494,13 +494,75 @@ code{ font-family:var(--font-mono); font-size:.9em; color:var(--cyan); }
 
 /* ── MANIFESTO ──────────────────────────────────────────── */
 .manifesto{ padding:clamp(90px,14vw,180px) 0; }
+
+/* The statement panel — a framed callout with a title bar, so the
+   paragraph reads as a deliberate exhibit instead of loose text
+   stranded in the middle of an empty section. */
+.mfx{
+  border:1px solid var(--line); border-radius:var(--r-lg);
+  background:var(--surface); overflow:hidden;
+  margin-bottom:clamp(38px,5.5vw,66px);
+  box-shadow:var(--shadow);
+}
+.mfx__bar{
+  display:flex; align-items:center; gap:14px;
+  padding:12px 18px; border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--muted);
+}
+.mfx__dots{ display:flex; gap:6px; }
+.mfx__dots i{ width:9px; height:9px; border-radius:50%; background:var(--line-2); }
+.mfx__dots i:first-child{ background:color-mix(in srgb,var(--rose) 70%,transparent); }
+.mfx__dots i:nth-child(2){ background:color-mix(in srgb,var(--amber) 70%,transparent); }
+.mfx__dots i:last-child{ background:color-mix(in srgb,var(--cyan) 70%,transparent); }
+.mfx__file{ color:var(--text-2); }
+.mfx__meta{ margin-left:auto; }
+@media (max-width:560px){ .mfx__meta{ display:none; } }
+
+.mfx__body{
+  display:grid; grid-template-columns:minmax(0,1.55fr) minmax(240px,.95fr);
+  gap:clamp(24px,3.4vw,46px);
+  padding:clamp(26px,3.6vw,46px);
+}
+@media (max-width:900px){ .mfx__body{ grid-template-columns:1fr; } }
+
 .kinetic{
   font-family:var(--font-display); font-weight:600;
-  font-size:clamp(23px,3.5vw,44px); line-height:1.28; letter-spacing:-.025em;
-  max-width:22ch; margin-bottom:clamp(50px,7vw,90px);
+  font-size:clamp(21px,2.6vw,33px); line-height:1.36; letter-spacing:-.02em;
+  max-width:30ch; margin:0;
 }
 .kinetic .k{ color:color-mix(in srgb,var(--muted) 45%,transparent); transition:color .35s var(--ease); }
 .kinetic .k.lit{ color:var(--text); }
+
+/* The rail: every claim in the paragraph, as a thing you can press. */
+.mfx__try{
+  border-left:1px solid var(--line); padding-left:clamp(20px,2.4vw,32px);
+  align-self:start;
+}
+@media (max-width:900px){
+  .mfx__try{ border-left:0; border-top:1px solid var(--line); padding:24px 0 0; }
+}
+.mfx__try h3{
+  font-family:var(--font-mono); font-size:10.5px; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--muted);
+  margin-bottom:14px;
+}
+.mfx__try ul{ list-style:none; display:grid; gap:8px; }
+.mfx__try li > *{
+  width:100%; display:grid; grid-template-columns:auto 1fr; gap:3px 12px; align-items:center;
+  padding:11px 13px; border:1px solid var(--line); border-radius:var(--r);
+  background:transparent; text-align:left; color:var(--text);
+  transition:border-color .3s, background .3s, transform .4s var(--ease-out);
+}
+.mfx__try li > *:hover{
+  border-color:color-mix(in srgb,var(--cyan) 45%,var(--line));
+  background:var(--surface-2); transform:translateX(3px);
+}
+.mfx__try li > *:focus-visible{ outline:none; box-shadow:var(--ring); }
+.mfx__try kbd{ grid-row:span 2; min-width:34px; text-align:center; font-size:11px; }
+.mfx__try b{ font-size:14px; font-weight:700; }
+.mfx__try em{ font-style:normal; font-size:12px; color:var(--muted); }
+.mfx__foot{ margin-top:14px; font-size:12px; color:var(--muted); line-height:1.6; }
 
 .manifesto__cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
 .mcard{

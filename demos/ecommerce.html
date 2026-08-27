@@ -200,6 +200,102 @@ footer{background:var(--ink);color:#BDB2A9;padding:clamp(40px,6vw,64px) 0 26px;f
 .back-to-top.active{opacity:1;transform:translateY(0)}
 .back-to-top:hover{transform:translateY(-2px);border-color:var(--ink)}
 
+/* ── Shop toolbar ─────────────────────────────────────── */
+.shop-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:24px}
+.search{position:relative;flex:1;min-width:210px}
+.search input{width:100%;padding:12px 16px 12px 40px;border:1px solid var(--line);border-radius:99px;background:#fff;font:inherit;font-size:14px}
+.search input:focus{outline:none;border-color:var(--clay)}
+.search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);opacity:.45}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chipf{padding:9px 16px;border:1px solid var(--line);border-radius:99px;font-size:13.5px;font-weight:500;background:#fff;transition:all .25s}
+.chipf:hover{border-color:var(--ink)}
+.chipf.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.sortbox{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.sortbox select{padding:10px 14px;border:1px solid var(--line);border-radius:99px;background:#fff;font:inherit;font-size:13.5px;cursor:pointer}
+.sortbox select:focus{outline:none;border-color:var(--clay)}
+.count{font-size:13px;color:var(--muted);margin-bottom:18px}
+.count b{color:var(--ink)}
+.empty-grid{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-grid b{display:block;font-family:Fraunces;font-size:22px;color:var(--ink);margin-bottom:8px}
+
+/* ── Card extras ──────────────────────────────────────── */
+.shot .quick{position:absolute;left:12px;right:12px;bottom:12px;padding:10px;border-radius:99px;background:color-mix(in srgb,var(--paper) 94%,transparent);
+  backdrop-filter:blur(6px);font-size:13px;font-weight:600;opacity:0;transform:translateY(8px);transition:all .3s;z-index:2}
+.card:hover .shot .quick{opacity:1;transform:translateY(0)}
+.card:hover .shot img{transform:scale(1.05)}
+.swatches{display:flex;gap:5px;margin-top:2px}
+.sw{width:13px;height:13px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+.stock-note{font-size:12px;color:var(--clay);font-weight:600}
+.badge.sale{background:var(--clay)}
+
+/* ── Quick view ───────────────────────────────────────── */
+.qv-overlay{position:fixed;inset:0;background:rgba(26,22,20,.45);z-index:110;opacity:0;pointer-events:none;transition:opacity .35s}
+.qv-overlay.active{opacity:1;pointer-events:auto}
+.qv{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%) scale(.97);z-index:111;width:min(880px,94vw);max-height:92vh;overflow:auto;
+  background:var(--paper);border-radius:20px;display:grid;grid-template-columns:1fr 1fr;opacity:0;pointer-events:none;
+  transition:opacity .35s,transform .35s cubic-bezier(.16,1,.3,1);box-shadow:0 40px 90px -30px rgba(0,0,0,.5)}
+.qv.active{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.qv-img{position:relative;min-height:320px;background:#EFE7DF}
+.qv-img img{width:100%;height:100%;object-fit:cover;border-radius:20px 0 0 20px}
+.qv-body{padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px}
+.qv-body h3{font-family:Fraunces;font-size:30px;font-weight:600}
+.qv-cat{font-size:13px;color:var(--muted)}
+.qv-price{display:flex;align-items:baseline;gap:10px}
+.qv-price b{font-family:Fraunces;font-size:27px}
+.qv-price s{color:var(--muted)}
+.qv-desc{font-size:14.5px;color:var(--muted);line-height:1.65}
+.opt-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:8px}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{min-width:42px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:13.5px;font-weight:600;transition:all .2s}
+.opt:hover{border-color:var(--ink)}
+.opt.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.opt.col{width:32px;height:32px;min-width:0;padding:0;border-radius:50%}
+.opt.col.on{box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--ink);border-color:transparent}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:99px;background:#fff;overflow:hidden}
+.qty button{width:36px;height:38px;font-size:17px;transition:background .2s}
+.qty button:hover{background:var(--line)}
+.qty span{min-width:34px;text-align:center;font-weight:600;font-size:14.5px}
+.qv-close{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:50%;background:var(--paper);display:grid;place-items:center;font-size:17px;z-index:3;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.qv-note{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+
+/* ── Cart extras ──────────────────────────────────────── */
+.ship-bar{padding:14px 24px;border-top:1px solid var(--line);background:var(--paper)}
+.ship-bar p{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.ship-bar p b{color:var(--ink)}
+.ship-track{height:5px;border-radius:99px;background:var(--line);overflow:hidden}
+.ship-track i{display:block;height:100%;width:0;background:var(--sage);transition:width .5s cubic-bezier(.16,1,.3,1)}
+.ship-track i.done{background:var(--clay)}
+.cart-item-opts{font-size:11.5px;color:var(--muted);margin-top:2px}
+.cart-item .qty{transform:scale(.82);transform-origin:left center;margin-top:6px}
+.cart-line-x{background:none;font-size:12px;color:var(--muted);text-decoration:underline;margin-left:8px}
+.cart-line-x:hover{color:var(--clay)}
+
+/* ── Checkout ─────────────────────────────────────────── */
+.co{position:absolute;inset:0;background:var(--paper);z-index:5;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.co.active{transform:translateX(0)}
+.co-body{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:14px}
+.co-body label{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.co-body input{width:100%;padding:12px 15px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:14.5px}
+.co-body input:focus{outline:none;border-color:var(--clay)}
+.co-body .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.co-err{font-size:12px;color:#B3402B;margin-top:5px;display:none}
+.field.bad input{border-color:#B3402B}
+.field.bad .co-err{display:block}
+.co-sum{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;font-size:13.5px}
+.co-sum div{display:flex;justify-content:space-between;padding:4px 0;color:var(--muted)}
+.co-sum div.total{color:var(--ink);font-weight:700;font-size:16px;border-top:1px solid var(--line);margin-top:8px;padding-top:10px}
+.co-back{font-size:13px;color:var(--muted);text-decoration:underline;align-self:flex-start}
+.co-done{text-align:center;padding:50px 26px}
+.co-done .tick{width:58px;height:58px;border-radius:50%;background:var(--sage);color:#fff;display:grid;place-items:center;font-size:26px;margin:0 auto 18px}
+.co-done h3{font-family:Fraunces;font-size:26px;margin-bottom:10px}
+.co-done p{color:var(--muted);font-size:14.5px;line-height:1.7}
+.co-done .ref{display:inline-block;margin-top:14px;font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#fff;border:1px dashed var(--line);border-radius:8px;padding:8px 14px}
+
+@media(max-width:760px){
+  .qv{grid-template-columns:1fr;width:94vw}
+  .qv-img{min-height:220px}
+  .qv-img img{border-radius:20px 20px 0 0}
+}
 @media(max-width:900px){
   .hero-grid,.promo{grid-template-columns:1fr}
   .grid{grid-template-columns:repeat(2,1fr)}
@@ -260,12 +356,58 @@ footer{background:var(--ink);color:#BDB2A9;padding:clamp(40px,6vw,64px) 0 26px;f
   <div class="cart-items" id="cart-drawer-items">
     <p class="empty-cart-msg">Your shopping bag is empty.</p>
   </div>
+  <div class="ship-bar">
+    <p id="ship-msg">Spend <b>$120</b> for free shipping.</p>
+    <div class="ship-track"><i id="ship-fill"></i></div>
+  </div>
   <div class="cart-foot">
     <div class="cart-total">
       <span>Subtotal</span>
       <span id="cart-subtotal">$0</span>
     </div>
-    <button class="cart-checkout" onclick="checkout()">Proceed to Checkout</button>
+    <button class="cart-checkout" onclick="openCheckout()">Proceed to Checkout</button>
+  </div>
+
+  <!-- Checkout slides over the bag rather than leaving the page -->
+  <div class="co" id="checkout">
+    <div class="cart-head">
+      <h3 id="co-title">Checkout</h3>
+      <button class="cart-close" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="co-body" id="co-body">
+      <div class="field">
+        <label for="co-name">Full name</label>
+        <input type="text" id="co-name" placeholder="Jane Doe" autocomplete="name" />
+        <span class="co-err">We need a name for the parcel.</span>
+      </div>
+      <div class="field">
+        <label for="co-email">Email</label>
+        <input type="email" id="co-email" placeholder="jane@email.com" autocomplete="email" />
+        <span class="co-err">That address looks incomplete.</span>
+      </div>
+      <div class="field">
+        <label for="co-addr">Delivery address</label>
+        <input type="text" id="co-addr" placeholder="12 Rundle Street, Adelaide" autocomplete="street-address" />
+        <span class="co-err">Where should it go?</span>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="co-post">Postcode</label>
+          <input type="text" id="co-post" placeholder="5000" autocomplete="postal-code" />
+          <span class="co-err">Required.</span>
+        </div>
+        <div class="field">
+          <label for="co-card">Card (demo)</label>
+          <input type="text" id="co-card" placeholder="4242 4242 4242 4242" inputmode="numeric" />
+          <span class="co-err">16 digits, any numbers you like.</span>
+        </div>
+      </div>
+      <div class="co-sum" id="co-sum"></div>
+      <button class="co-back" type="button" onclick="closeCheckout()">← Back to bag</button>
+    </div>
+    <div class="cart-foot">
+      <button class="cart-checkout" onclick="placeOrder()" id="co-pay">Pay $0</button>
+    </div>
   </div>
 </div>
 
@@ -290,19 +432,19 @@ footer{background:var(--ink);color:#BDB2A9;padding:clamp(40px,6vw,64px) 0 26px;f
 
 <section class="cats reveal">
   <div class="wrap cats-in">
-    <a class="cat" href="#shop">
+    <a class="cat" href="#shop" data-jump="Clothing">
       <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=600&auto=format&fit=crop" alt="Clothing" />
       Clothing
     </a>
-    <a class="cat" href="#shop">
+    <a class="cat" href="#shop" data-jump="Home">
       <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=600&auto=format&fit=crop" alt="Homeware" />
       Homeware
     </a>
-    <a class="cat" href="#shop">
+    <a class="cat" href="#shop" data-jump="Ceramics">
       <img src="https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?q=80&w=600&auto=format&fit=crop" alt="Ceramics" />
       Ceramics
     </a>
-    <a class="cat" href="#shop">
+    <a class="cat" href="#shop" data-jump="Bags">
       <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=600&auto=format&fit=crop" alt="Gifting" />
       Gifting
     </a>
@@ -312,8 +454,30 @@ footer{background:var(--ink);color:#BDB2A9;padding:clamp(40px,6vw,64px) 0 26px;f
 <section class="sec wrap reveal" id="shop">
   <div class="sec-head">
     <h2>This week's favourites</h2>
-    <a href="#">View all 84 pieces</a>
+    <a href="#" onclick="event.preventDefault();resetFilters()">Clear filters</a>
   </div>
+
+  <!-- Search, category filter and sort all drive one render() pass -->
+  <div class="shop-tools">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <circle cx="11" cy="11" r="7" /><path d="m20 20-3.6-3.6" />
+      </svg>
+      <input type="search" id="q" placeholder="Search linen, ceramics, wool…" aria-label="Search products" />
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="sortbox">
+      <label for="sort">Sort</label>
+      <select id="sort">
+        <option value="feat">Featured</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+  </div>
+
+  <p class="count" id="count-line"></p>
   <div class="grid" id="grid"></div>
 </section>
 
@@ -362,49 +526,252 @@ footer{background:var(--ink);color:#BDB2A9;padding:clamp(40px,6vw,64px) 0 26px;f
   </div>
 </footer>
 
+<!-- Quick view -->
+<div class="qv-overlay" id="qv-overlay" onclick="closeQV()"></div>
+<div class="qv" id="qv" role="dialog" aria-modal="true" aria-label="Product quick view">
+  <div class="qv-img">
+    <button class="qv-close" onclick="closeQV()" aria-label="Close">✕</button>
+    <img id="qv-img" alt="" />
+  </div>
+  <div class="qv-body">
+    <div>
+      <h3 id="qv-name"></h3>
+      <p class="qv-cat" id="qv-cat"></p>
+    </div>
+    <div class="qv-price"><b id="qv-price"></b><s id="qv-was"></s></div>
+    <p class="qv-desc" id="qv-desc"></p>
+    <div id="qv-sizes"></div>
+    <div id="qv-cols"></div>
+    <div>
+      <p class="opt-label">Quantity</p>
+      <div class="qty">
+        <button onclick="qvQty(-1)" aria-label="Fewer">−</button>
+        <span id="qv-qty">1</span>
+        <button onclick="qvQty(1)" aria-label="More">+</button>
+      </div>
+    </div>
+    <button class="btn btn-fill" style="justify-content:center" onclick="qvAdd()">Add to bag</button>
+    <p class="qv-note" id="qv-stock"></p>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <button class="back-to-top" id="back-to-top" aria-label="Scroll to top">↑</button>
 
 <script>
+/* ═══════════════════════════════════════════════════════════
+   Aurelia — demo shop logic.
+   Catalogue, filtering, quick view, a cart that survives a
+   refresh, and a checkout that validates and issues an order
+   number. No framework, no build step; the commissioned build
+   swaps the array for a database and the fake card field for
+   Stripe.
+   ═══════════════════════════════════════════════════════════ */
 const PRODUCTS = [
-  { n:'The Linen Coat',      c:'Outerwear · 4 colours', p:248, was:290, tag:'New',  img:'img/product_1.jpg' },
-  { n:'Stoneware Mug Set',   c:'Ceramics · Set of 4',   p:64,  tag:'',     img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=600&auto=format&fit=crop' },
-  { n:'Merino Crew',         c:'Knitwear · 6 colours',  p:118, tag:'',     img:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=600&auto=format&fit=crop' },
-  { n:'Waxed Tote',          c:'Bags · One size',       p:156, was:180, tag:'Sale', img:'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop' },
-  { n:'Hand-thrown Vase',    c:'Ceramics · Tall',       p:92,  tag:'',     img:'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?q=80&w=600&auto=format&fit=crop' },
-  { n:'Wool Throw',          c:'Home · 130×180cm',      p:184, tag:'New',  img:'https://images.unsplash.com/photo-1580301762395-21ce84d00bc6?q=80&w=600&auto=format&fit=crop' }
+  { n:'The Linen Coat', cat:'Clothing', c:'Outerwear · Belted', p:248, was:290, tag:'New', stock:6,
+    img:'img/product_1.jpg', sizes:['XS','S','M','L','XL'], cols:['#C4643B','#D8CBBB','#1A1614','#6F7A5A'],
+    d:'Heavyweight Belgian linen, cut long and unlined so it moves. Softens with every wash and is meant to be worn, not hung.' },
+  { n:'Stoneware Mug Set', cat:'Ceramics', c:'Set of 4 · 320ml', p:64, tag:'', stock:14,
+    img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=600&auto=format&fit=crop', sizes:[], cols:['#D8CBBB','#7A6E66'],
+    d:'Thrown and glazed in a workshop outside Seto. No two are identical, which is the point of buying them.' },
+  { n:'Merino Crew', cat:'Clothing', c:'Knitwear · 6 colours', p:118, tag:'', stock:3,
+    img:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=600&auto=format&fit=crop', sizes:['S','M','L','XL'], cols:['#1A1614','#6F7A5A','#C4643B'],
+    d:'Fine-gauge merino from a mill in Biella. Warm without bulk, and it holds its shape after a season of daily wear.' },
+  { n:'Waxed Tote', cat:'Bags', c:'One size · 14L', p:156, was:180, tag:'Sale', stock:8,
+    img:'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop', sizes:[], cols:['#7A6E66','#1A1614'],
+    d:'Waxed cotton canvas with a bridle leather base. Rewax it once a year and it will outlast the decade.' },
+  { n:'Hand-thrown Vase', cat:'Ceramics', c:'Tall · 28cm', p:92, tag:'', stock:5,
+    img:'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?q=80&w=600&auto=format&fit=crop', sizes:[], cols:['#D8CBBB'],
+    d:'A single stem or a whole armful of eucalyptus — the neck is narrow enough for both. Watertight, unglazed outside.' },
+  { n:'Wool Throw', cat:'Home', c:'130 × 180cm', p:184, tag:'New', stock:4,
+    img:'https://images.unsplash.com/photo-1580301762395-21ce84d00bc6?q=80&w=600&auto=format&fit=crop', sizes:[], cols:['#D8CBBB','#6F7A5A','#1A1614'],
+    d:'Lambswool woven in Donegal, finished with a hand-knotted fringe. Heavy enough to stay put on a sofa.' },
+  { n:'Everyday Denim', cat:'Clothing', c:'Straight leg · Rigid', p:138, tag:'', stock:11,
+    img:'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=600&auto=format&fit=crop', sizes:['26','28','30','32','34'], cols:['#1A1614','#7A6E66'],
+    d:'Unwashed 13.5oz selvedge that fades to your own shape. Buy true to size; it gives about half an inch in a fortnight.' },
+  { n:'Linen Table Set', cat:'Home', c:'4 napkins · 1 runner', p:76, tag:'', stock:9,
+    img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=600&auto=format&fit=crop', sizes:[], cols:['#D8CBBB','#6F7A5A'],
+    d:'Stonewashed linen that goes straight from the machine to the table without an iron in sight.' },
+  { n:'Serving Bowl', cat:'Ceramics', c:'Wide · 26cm', p:58, was:72, tag:'Sale', stock:2,
+    img:'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=600&auto=format&fit=crop', sizes:[], cols:['#D8CBBB','#7A6E66'],
+    d:'Oven to table to dishwasher. The glaze pools darker at the base, so every bowl reads slightly differently.' },
+  { n:'Field Jacket', cat:'Clothing', c:'Outerwear · 4 pockets', p:268, tag:'', stock:7,
+    img:'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=600&auto=format&fit=crop', sizes:['S','M','L','XL'], cols:['#6F7A5A','#1A1614','#7A6E66'],
+    d:'Cotton twill with a corduroy collar and pockets big enough for a paperback. Cut roomy for a jumper underneath.' }
 ];
 
+const CATS = ['All', 'Clothing', 'Ceramics', 'Home', 'Bags'];
+/* the four dyes the whole range is finished in — named so the bag
+   and the confirmation email read like English, not hex */
+const COLOURS = { '#C4643B':'Clay', '#D8CBBB':'Sand', '#1A1614':'Ink', '#6F7A5A':'Sage', '#7A6E66':'Stone' };
+const colName = hex => COLOURS[hex] || 'Natural';
+const FREE_SHIP = 120;
+const STORE_KEY = 'aurelia.bag';
+
 let cartList = [];
+let view = { cat:'All', q:'', sort:'feat' };
+let qv = { i:null, size:null, col:null, qty:1 };
 
-// Render grid
-document.getElementById('grid').innerHTML = PRODUCTS.map((p, i) => `
-  <article class="card">
-    <div class="shot">
-      ${p.tag ? `<span class="badge">${p.tag}</span>` : ''}
-      <img src="${p.img}" alt="${p.n}" loading="lazy" />
-    </div>
-    <div class="card-b">
-      <h3>${p.n}</h3>
-      <p class="m">${p.c}</p>
-      <div class="price"><b>$${p.p}</b>${p.was ? `<s>$${p.was}</s>` : ''}</div>
-      <button class="add" data-i="${i}">Add to cart</button>
-    </div>
-  </article>`).join('');
-
-// Navigation Interactions
-const burgerMenu = document.getElementById('burger-menu');
-const mobileOverlay = document.getElementById('mobile-overlay');
-
-function toggleMobileMenu() {
-  const isActive = mobileOverlay.classList.toggle('active');
-  burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
-  burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
-  burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
+/* ── persistence ───────────────────────────────────────────
+   A bag that empties on refresh is the fastest way to lose an
+   order, so it lives in localStorage. */
+function saveCart(){
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(cartList)); } catch(e){}
 }
-burgerMenu.addEventListener('click', toggleMobileMenu);
+function loadCart(){
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) cartList = JSON.parse(raw) || [];
+  } catch(e){ cartList = []; }
+}
 
-// Cart drawer state management
+/* ── catalogue ─────────────────────────────────────────── */
+const money = n => '$' + n.toLocaleString('en-US');
+
+function visible(){
+  const q = view.q.trim().toLowerCase();
+  let list = PRODUCTS.map((p, i) => ({ ...p, i }));
+  if (view.cat !== 'All') list = list.filter(p => p.cat === view.cat);
+  if (q) list = list.filter(p => (p.n + ' ' + p.c + ' ' + p.cat + ' ' + p.d).toLowerCase().includes(q));
+  if (view.sort === 'low')  list.sort((a,b) => a.p - b.p);
+  if (view.sort === 'high') list.sort((a,b) => b.p - a.p);
+  if (view.sort === 'name') list.sort((a,b) => a.n.localeCompare(b.n));
+  return list;
+}
+
+function render(){
+  const list = visible();
+  const grid = document.getElementById('grid');
+  document.getElementById('count-line').innerHTML =
+    `Showing <b>${list.length}</b> of ${PRODUCTS.length} pieces` +
+    (view.cat !== 'All' ? ` in <b>${view.cat}</b>` : '') +
+    (view.q ? ` matching “<b>${view.q}</b>”` : '');
+
+  if (!list.length){
+    grid.innerHTML = `<div class="empty-grid"><b>Nothing matches that.</b>
+      Try a different word, or <button class="chipf" onclick="resetFilters()">clear the filters</button></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => `
+    <article class="card">
+      <div class="shot">
+        ${p.tag ? `<span class="badge ${p.tag === 'Sale' ? 'sale' : ''}">${p.tag}</span>` : ''}
+        <img src="${p.img}" alt="${p.n}" loading="lazy" />
+        <button class="quick" data-qv="${p.i}">Quick view</button>
+      </div>
+      <div class="card-b">
+        <h3>${p.n}</h3>
+        <p class="m">${p.c}</p>
+        <div class="swatches">${p.cols.map(c => `<i class="sw" style="background:${c}"></i>`).join('')}</div>
+        ${p.stock <= 3 ? `<p class="stock-note">Only ${p.stock} left</p>` : ''}
+        <div class="price"><b>${money(p.p)}</b>${p.was ? `<s>${money(p.was)}</s>` : ''}</div>
+        <button class="add" data-i="${p.i}">Add to bag</button>
+      </div>
+    </article>`).join('');
+}
+
+function buildFilters(){
+  document.getElementById('filters').innerHTML = CATS.map(c =>
+    `<button class="chipf ${c === view.cat ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('');
+}
+
+window.resetFilters = function(){
+  view = { cat:'All', q:'', sort:'feat' };
+  document.getElementById('q').value = '';
+  document.getElementById('sort').value = 'feat';
+  buildFilters(); render();
+};
+
+document.getElementById('filters').addEventListener('click', e => {
+  const b = e.target.closest('[data-cat]');
+  if (!b) return;
+  view.cat = b.dataset.cat;
+  buildFilters(); render();
+});
+document.getElementById('q').addEventListener('input', e => { view.q = e.target.value; render(); });
+document.getElementById('sort').addEventListener('change', e => { view.sort = e.target.value; render(); });
+
+/* ── quick view ────────────────────────────────────────── */
+function optionRow(title, items, kind){
+  if (!items.length) return '';
+  return `<p class="opt-label">${title}</p><div class="opts">` + items.map((v, i) =>
+    kind === 'col'
+      ? `<button class="opt col ${i === 0 ? 'on' : ''}" data-${kind}="${v}" style="background:${v}" title="${colName(v)}" aria-label="${colName(v)}"></button>`
+      : `<button class="opt ${i === 0 ? 'on' : ''}" data-${kind}="${v}">${v}</button>`
+  ).join('') + '</div>';
+}
+
+window.openQV = function(i){
+  const p = PRODUCTS[i];
+  qv = { i, size:p.sizes[0] || null, col:p.cols[0] || null, qty:1 };
+  document.getElementById('qv-img').src = p.img;
+  document.getElementById('qv-img').alt = p.n;
+  document.getElementById('qv-name').textContent = p.n;
+  document.getElementById('qv-cat').textContent = p.cat + ' · ' + p.c;
+  document.getElementById('qv-price').textContent = money(p.p);
+  document.getElementById('qv-was').textContent = p.was ? money(p.was) : '';
+  document.getElementById('qv-desc').textContent = p.d;
+  document.getElementById('qv-sizes').innerHTML = optionRow('Size', p.sizes, 'size');
+  document.getElementById('qv-cols').innerHTML = optionRow('Colour', p.cols, 'col');
+  document.getElementById('qv-qty').textContent = '1';
+  document.getElementById('qv-stock').textContent =
+    p.stock <= 3 ? `Only ${p.stock} left in this batch — the next run is six weeks out.`
+                 : `In stock · dispatched within two working days · free returns for 30 days.`;
+  document.getElementById('qv').classList.add('active');
+  document.getElementById('qv-overlay').classList.add('active');
+};
+
+window.closeQV = function(){
+  document.getElementById('qv').classList.remove('active');
+  document.getElementById('qv-overlay').classList.remove('active');
+};
+
+document.getElementById('qv').addEventListener('click', e => {
+  const b = e.target.closest('[data-size],[data-col]');
+  if (!b) return;
+  const kind = b.dataset.size ? 'size' : 'col';
+  b.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('on'));
+  b.classList.add('on');
+  qv[kind === 'size' ? 'size' : 'col'] = b.dataset[kind];
+});
+
+window.qvQty = function(step){
+  const p = PRODUCTS[qv.i];
+  qv.qty = Math.max(1, Math.min(p.stock, qv.qty + step));
+  document.getElementById('qv-qty').textContent = qv.qty;
+};
+
+window.qvAdd = function(){
+  addToBag(qv.i, qv.qty, qv.size, qv.col);
+  closeQV();
+  openCart();
+};
+
+/* ── bag ───────────────────────────────────────────────── */
+function addToBag(i, qty = 1, size = null, col = null){
+  const p = PRODUCTS[i];
+  size = size || p.sizes[0] || null;
+  col  = col  || p.cols[0]  || null;
+  const key = i + '|' + size + '|' + col;
+  const line = cartList.find(l => l.key === key);
+  if (line) line.quantity = Math.min(p.stock, line.quantity + qty);
+  else cartList.push({ key, i, n:p.n, p:p.p, img:p.img, size, col, quantity:Math.min(p.stock, qty) });
+  saveCart(); updateCartUI();
+  toast(`${p.n} added to your bag.`);
+}
+
+document.getElementById('grid').addEventListener('click', e => {
+  const quick = e.target.closest('[data-qv]');
+  if (quick){ openQV(+quick.dataset.qv); return; }
+
+  const b = e.target.closest('.add');
+  if (!b) return;
+  addToBag(+b.dataset.i);
+  b.textContent = 'Added ✓'; b.classList.add('on');
+  setTimeout(() => { b.textContent = 'Add to bag'; b.classList.remove('on'); }, 1400);
+});
+
 const cartTrigger = document.getElementById('cart-trigger');
 const cartDrawer = document.getElementById('cart-drawer');
 const cartOverlay = document.getElementById('cart-overlay');
@@ -413,81 +780,164 @@ const cartDrawerItems = document.getElementById('cart-drawer-items');
 const cartSubtotalElement = document.getElementById('cart-subtotal');
 const countElement = document.getElementById('count');
 
-function updateCartUI() {
-  const totalItemsCount = cartList.reduce((acc, curr) => acc + curr.quantity, 0);
-  countElement.textContent = totalItemsCount;
+const subtotal = () => cartList.reduce((a, l) => a + l.p * l.quantity, 0);
 
-  if (cartList.length === 0) {
+function updateCartUI(){
+  countElement.textContent = cartList.reduce((a, l) => a + l.quantity, 0);
+
+  if (!cartList.length){
     cartDrawerItems.innerHTML = `<p class="empty-cart-msg">Your shopping bag is empty.</p>`;
     cartSubtotalElement.textContent = '$0';
-    return;
+  } else {
+    cartDrawerItems.innerHTML = cartList.map((l, idx) => `
+      <div class="cart-item">
+        <div class="cart-item-img"><img src="${l.img}" alt="${l.n}" /></div>
+        <div class="cart-item-info">
+          <h4>${l.n}</h4>
+          <p class="cart-item-opts">${[l.size, l.col ? colName(l.col) : null].filter(Boolean).join(' · ') || 'One size'}</p>
+          <div class="qty">
+            <button onclick="lineQty(${idx},-1)" aria-label="Fewer">−</button>
+            <span>${l.quantity}</span>
+            <button onclick="lineQty(${idx},1)" aria-label="More">+</button>
+          </div>
+          <button class="cart-line-x" onclick="removeFromCart(${idx})">Remove</button>
+        </div>
+        <div class="cart-item-price">${money(l.p * l.quantity)}</div>
+      </div>`).join('');
+    cartSubtotalElement.textContent = money(subtotal());
   }
 
-  cartDrawerItems.innerHTML = cartList.map((item, index) => `
-    <div class="cart-item">
-      <div class="cart-item-img">
-        <img src="${item.img}" alt="${item.n}" />
-      </div>
-      <div class="cart-item-info">
-        <h4>${item.n}</h4>
-        <p>${item.c}</p>
-        <span class="cart-item-remove" onclick="removeFromCart(${index})">Remove</span>
-      </div>
-      <div class="cart-item-price">
-        $${item.p} <small style="color:var(--muted)">x${item.quantity}</small>
-      </div>
-    </div>
-  `).join('');
+  /* free-shipping progress — the one nudge worth having */
+  const left = FREE_SHIP - subtotal();
+  const fill = document.getElementById('ship-fill');
+  const msg  = document.getElementById('ship-msg');
+  const pct  = Math.min(100, (subtotal() / FREE_SHIP) * 100);
+  fill.style.width = pct + '%';
+  fill.classList.toggle('done', left <= 0);
+  msg.innerHTML = left > 0
+    ? `Add <b>${money(left)}</b> more for free shipping.`
+    : `<b>Free shipping unlocked.</b> Nicely done.`;
 
-  const subtotal = cartList.reduce((acc, curr) => acc + (curr.p * curr.quantity), 0);
-  cartSubtotalElement.textContent = `$${subtotal}`;
+  const pay = document.getElementById('co-pay');
+  if (pay) pay.textContent = 'Pay ' + money(total());
+  renderSummary();
 }
 
-window.removeFromCart = function(index) {
-  cartList.splice(index, 1);
-  updateCartUI();
-  toast('Item removed from cart');
+window.lineQty = function(idx, step){
+  const l = cartList[idx];
+  const max = PRODUCTS[l.i].stock;
+  l.quantity += step;
+  if (l.quantity < 1) cartList.splice(idx, 1);
+  else l.quantity = Math.min(max, l.quantity);
+  saveCart(); updateCartUI();
 };
 
-document.getElementById('grid').addEventListener('click', e => {
-  const b = e.target.closest('.add');
-  if (!b) return;
-  const productIndex = parseInt(b.dataset.i, 10);
-  const selectedProduct = PRODUCTS[productIndex];
-  
-  const existingItemIndex = cartList.findIndex(item => item.n === selectedProduct.n);
-  if (existingItemIndex > -1) {
-    cartList[existingItemIndex].quantity += 1;
-  } else {
-    cartList.push({ ...selectedProduct, quantity: 1 });
-  }
+window.removeFromCart = function(idx){
+  cartList.splice(idx, 1);
+  saveCart(); updateCartUI();
+  toast('Removed from your bag.');
+};
 
-  b.textContent = 'Added ✓'; b.classList.add('on');
-  setTimeout(() => { b.textContent = 'Add to cart'; b.classList.remove('on'); }, 1400);
-  toast(`${selectedProduct.n} added to bag.`);
-  updateCartUI();
-});
-
-cartTrigger.addEventListener('click', () => {
+function openCart(){
   cartDrawer.classList.add('active');
   cartOverlay.classList.add('active');
-});
-
+}
 const closeCart = () => {
   cartDrawer.classList.remove('active');
   cartOverlay.classList.remove('active');
+  closeCheckout();
 };
-
+cartTrigger.addEventListener('click', openCart);
 cartClose.addEventListener('click', closeCart);
 cartOverlay.addEventListener('click', closeCart);
 
-window.checkout = function() {
-  if (cartList.length === 0) {
-    toast("Add some items first!");
-    return;
-  }
-  toast("Directing you to checkout... (Demo only)");
+/* ── checkout ──────────────────────────────────────────── */
+const shipping = () => (subtotal() >= FREE_SHIP || subtotal() === 0) ? 0 : 12;
+const total = () => subtotal() + shipping();
+
+function renderSummary(){
+  const box = document.getElementById('co-sum');
+  if (!box) return;
+  box.innerHTML = `
+    <div><span>Subtotal</span><span>${money(subtotal())}</span></div>
+    <div><span>Shipping</span><span>${shipping() ? money(shipping()) : 'Free'}</span></div>
+    <div class="total"><span>Total</span><span>${money(total())}</span></div>`;
+}
+
+window.openCheckout = function(){
+  if (!cartList.length){ toast('Your bag is empty — add something first.'); return; }
+  renderSummary();
+  document.getElementById('checkout').classList.add('active');
 };
+window.closeCheckout = function(){
+  document.getElementById('checkout').classList.remove('active');
+};
+
+function badField(el, ok){
+  el.closest('.field').classList.toggle('bad', !ok);
+  return ok;
+}
+
+window.placeOrder = function(){
+  const name = document.getElementById('co-name');
+  const mail = document.getElementById('co-email');
+  const addr = document.getElementById('co-addr');
+  const post = document.getElementById('co-post');
+  const card = document.getElementById('co-card');
+
+  let ok = true;
+  ok = badField(name, name.value.trim().length > 1) && ok;
+  ok = badField(mail, /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail.value.trim())) && ok;
+  ok = badField(addr, addr.value.trim().length > 4) && ok;
+  ok = badField(post, post.value.trim().length >= 3) && ok;
+  ok = badField(card, card.value.replace(/\D/g, '').length === 16) && ok;
+  if (!ok){ toast('A couple of fields need a second look.'); return; }
+
+  const ref = 'AUR-' + Math.random().toString(36).slice(2, 7).toUpperCase();
+  const paid = money(total());
+  const first = name.value.trim().split(' ')[0];
+
+  document.getElementById('co-title').textContent = 'Order confirmed';
+  document.getElementById('co-body').innerHTML = `
+    <div class="co-done">
+      <div class="tick">✓</div>
+      <h3>Thank you, ${first}.</h3>
+      <p>Your order of <b>${paid}</b> is confirmed and a receipt is on its way to
+      ${mail.value.trim()}. Dispatch is within two working days.</p>
+      <span class="ref">${ref}</span>
+      <p style="margin-top:18px;font-size:13px">
+        This is a demo — no payment was taken and no email was sent. The real build
+        runs on Stripe with stock, order emails and an admin.</p>
+    </div>`;
+  document.querySelector('#checkout .cart-foot').innerHTML =
+    `<button class="cart-checkout" onclick="location.reload()">Back to the shop</button>`;
+
+  cartList = []; saveCart(); updateCartUI();
+};
+
+/* ── chrome ────────────────────────────────────────────── */
+const burgerMenu = document.getElementById('burger-menu');
+const mobileOverlay = document.getElementById('mobile-overlay');
+
+function toggleMobileMenu(){
+  const isActive = mobileOverlay.classList.toggle('active');
+  burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
+  burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
+  burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
+}
+burgerMenu.addEventListener('click', toggleMobileMenu);
+window.toggleMobileMenu = toggleMobileMenu;
+
+/* category tiles double as filters */
+document.querySelectorAll('[data-jump]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    view.cat = a.dataset.jump; view.q = '';
+    document.getElementById('q').value = '';
+    buildFilters(); render();
+    document.getElementById('shop').scrollIntoView({ behavior:'smooth' });
+  });
+});
 
 function toast(msg){
   const t = document.getElementById('toast');
@@ -496,30 +946,27 @@ function toast(msg){
   window._tt = setTimeout(() => t.classList.remove('on'), 2600);
 }
 
-// Scroll Reveal Observer
-const revealElements = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  closeQV(); closeCart();
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
 }, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-revealElements.forEach(el => observer.observe(el));
-
-// Back to Top functionality
 const backToTopBtn = document.getElementById('back-to-top');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backToTopBtn.classList.add('active');
-  } else {
-    backToTopBtn.classList.remove('active');
-  }
+  backToTopBtn.classList.toggle('active', window.scrollY > 400);
 });
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+backToTopBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+/* boot */
+loadCart();
+buildFilters();
+render();
+updateCartUI();
 </script>
 </body>
 </html>

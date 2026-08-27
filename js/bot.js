@@ -6,11 +6,56 @@
    monthly bill — which is exactly the point he likes to make.
    ═══════════════════════════════════════════════════════════ */
 
-import { INTENTS, FALLBACKS, GREETING, PROFILE, waLink } from './config.js';
+import { INTENTS, FALLBACKS, GREETING, PROFILE, INDUSTRIES, CFG, waLink } from './config.js';
 import { sendBrief } from './contact.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const SKIP_RE  = /^(skip|pass|later|rather not|prefer not|no thanks|not sure|no idea|dunno)/i;
+
+/* ── project requests ──────────────────────────────────────
+   "I wanna build a gym website, share it with Probin" is the
+   single most useful sentence a visitor can type, and the intent
+   table answered it with a paragraph about Probin's CV. These
+   three tests read it properly: is this a build request, which
+   trade is it for, and do they want it passed on.
+   ─────────────────────────────────────────────────────────── */
+const BUILD_RE = /\b(build|building|built|make|making|create|creating|design|designing|develop|launch|need|needs|needed|want|wants|wanna|require|looking for|after|start|set ?up|redo|rebuild|revamp|redesign|own)\b/;
+const THING_RE = /\b(website|web ?site|sites|site|page|pages|webpage|web ?app|app|store|shop|platform|portal|blog|landing|presence|online)\b/;
+const SHARE_RE = /\b(share|shared|send|sends|forward|pass|passed|tell|inform|notify|let him know|hand)\b/;
+const WHO_RE   = /\b(probin|him|he|you|the human|details|it|this|over|through|along)\b/;
+/* questions about money or time belong to the intent table, even
+   when they mention a trade — "how much for a gym site?" */
+const ASKING_RE = /\b(how much|how long|cost|costs|price|pricing|charge|budget|quote|timeline|when can|do you have|is there|can i see|show me)\b/;
+
+function findIndustry(q){
+  for (const ind of INDUSTRIES){
+    for (const k of ind.keys){
+      const esc = k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      if (new RegExp('(^|[^a-z])' + esc + '([^a-z]|$)', 'i').test(q)) return ind;
+    }
+  }
+  return null;
+}
+
+/* Returns null when this isn't a build request at all. */
+function readProject(raw){
+  const q = ' ' + raw.toLowerCase().replace(/[^\w\s'-]/g, ' ').replace(/\s+/g, ' ') + ' ';
+  const ind      = findIndustry(q);
+  const isBuild  = BUILD_RE.test(q);
+  const isThing  = THING_RE.test(q);
+  const wantsShare = SHARE_RE.test(q) && WHO_RE.test(q);
+
+  /* a bare "a gym" is an answer to our own question, so a short
+     line that names nothing but a trade counts as a request too */
+  const terse = q.trim().split(' ').length <= 4;
+
+  if (ASKING_RE.test(q) && !wantsShare) return null;      // let the intents answer
+  if (ind && (isBuild || isThing || terse)) return { ind, wantsShare, raw };
+  if (isBuild && isThing)                   return { ind:null, wantsShare, raw };
+  return null;
+}
+
+const money = n => '$' + n.toLocaleString('en-US');
 
 export function initBot({ onAction } = {}){
   const panel    = document.getElementById('bot');
@@ -25,7 +70,7 @@ export function initBot({ onAction } = {}){
 
   let started = false;
   let lead = null;              // null when not in the capture flow
-  const memory = { name:null, asked:new Set() };
+  const memory = { name:null, asked:new Set(), project:null };
 
   /* ── rendering ─────────────────────────────────────────── */
   function bubble(html, who = 'bot'){
@@ -117,6 +162,19 @@ export function initBot({ onAction } = {}){
         await say("Sorry, I didn't quite catch that one. An email like <i>you@company.com</i>, or a phone number with the country code — either is fine.");
         return;
       }
+      /* If they already told us what they want, don't make them
+         type it twice — read it back and move on. */
+      if (lead.message){
+        lead.step = 'budget';
+        await say(
+          `Thank you. I have your brief as: <i>${esc(lead.message)}</i><br><br>` +
+          `One last question, entirely optional: <b>do you have a budget in mind?</b> It genuinely helps — ` +
+          `Probin shapes the scope around your number rather than quoting past it.`,
+          ['Under $500', '$500 – $1.5k', '$1.5k – $4k', '$4k+', "I'd rather not say"]
+        );
+        return;
+      }
+
       lead.step = 'brief';
       await say(
         `Thank you. And roughly <b>what are you hoping to build</b>? A sentence is plenty, and do mention a date if you have one in mind.`,
@@ -186,6 +244,17 @@ export function initBot({ onAction } = {}){
       return;
     }
 
+    /* Build requests get answered before the keyword table sees
+       them, so "a gym website" doesn't score as "about Probin". */
+    const proj = readProject(v);
+    if (proj){ await projectReply(proj); return; }
+
+    /* "send it to him" on its own, once we know what they're after */
+    if (memory.project && SHARE_RE.test(v.toLowerCase()) && WHO_RE.test(v.toLowerCase())){
+      await startLead(memory.project.raw);
+      return;
+    }
+
     const it = match(v);
     if (!it){
       await say(pick(FALLBACKS), ['How much does a site cost?','Show me the work','How long does it take?','I want to hire him']);
@@ -207,6 +276,51 @@ export function initBot({ onAction } = {}){
     await say(pick(it.reply), it.chips);
 
     if (it.action && onAction) onAction(it.action);
+  }
+
+  /* ── build requests ────────────────────────────────────── */
+  async function startLead(brief){
+    lead = { step: memory.name ? 'contact' : 'name', message: brief || '' };
+    if (memory.name){
+      lead.step = 'contact';
+      await say(`Right you are, <b>${esc(memory.name)}</b> — what's the easiest way for him to reach you? An <b>email</b> or a <b>WhatsApp number</b>, either is plenty.`);
+    } else {
+      await say(`Happy to pass this straight to him. May I start with your <b>name</b>?`);
+    }
+  }
+
+  async function projectReply({ ind, wantsShare, raw }){
+    memory.project = { ind, raw };
+
+    if (!ind){
+      await say(
+        `Yes — that's the job. To point you at something useful: <b>what's the business?</b> ` +
+        `A shop, a clinic, a restaurant, a gym, a school, a property agency, something else entirely?<br><br>` +
+        `Tell me the trade and I'll say what that build usually needs and roughly what it runs to.`,
+        ['A gym', 'A restaurant', 'An online store', 'Just take my details']
+      );
+      return;
+    }
+
+    const t = CFG.types.find(x => x.id === ind.type) || CFG.types[1];
+    const demoLine = ind.demo
+      ? `The closest starting point on this page is the <b>${ind.demo}</b> demo — same shape, different trade. Probin rebuilds it around your brand rather than handing you a template.`
+      : `There's no template for it on this page, which is rather the point — yours would be drawn from scratch around what you actually do.`;
+
+    const priceLine = `Something like this usually prices as a <b>${t.label.toLowerCase()}</b> — <b>${money(t.min)}–${money(t.max)}</b>, about <b>${t.weeks} weeks</b>, before any extras. The configurator further down will price your exact list.`;
+
+    const body =
+      `A <b>${ind.label}</b> — yes, he builds those.<br><br>` +
+      `What that one usually needs: ${ind.needs}.<br><br>` +
+      `${demoLine}<br><br>${priceLine}`;
+
+    if (wantsShare){
+      await say(body);
+      await startLead(raw);
+      return;
+    }
+
+    await say(body, ['Send this to Probin', 'Show me that demo', 'How much exactly?', 'How long would it take?']);
   }
 
   /* ── open / close ──────────────────────────────────────── */

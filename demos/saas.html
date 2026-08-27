@@ -171,6 +171,83 @@ footer{border-top:1px solid var(--line);margin-top:clamp(50px,7vw,90px);padding:
 .fgrid a{display:block;padding:4px 0}.fgrid a:hover{color:var(--ink)}
 .fbase{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
 
+/* ── Seat slider ──────────────────────────────────────── */
+.seats{max-width:520px;margin:0 auto 26px;border:1px solid var(--line);border-radius:14px;padding:18px 22px;background:var(--card)}
+.seats .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.seats .top span{font-size:13px;color:var(--muted)}
+.seats .top b{font-size:19px;color:var(--lime)}
+.seats input[type=range]{width:100%;accent-color:var(--indigo)}
+.seats .rec{font-size:13px;color:var(--muted);margin-top:10px;text-align:center}
+.seats .rec b{color:var(--ink)}
+.plan .amt small{font-size:14px;color:var(--muted);font-weight:400}
+.plan .tot{font-size:13px;color:var(--lime);margin-top:-6px;margin-bottom:12px}
+.plan.rec-plan{outline:1px dashed rgba(182,240,74,.5);outline-offset:5px}
+
+/* ── Comparison table ─────────────────────────────────── */
+.cmp-wrap{overflow-x:auto;margin-top:34px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+table.cmp{width:100%;border-collapse:collapse;font-size:14.5px;min-width:560px}
+table.cmp th,table.cmp td{padding:13px 18px;text-align:left;border-bottom:1px solid var(--line)}
+table.cmp thead th{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+table.cmp td:not(:first-child),table.cmp th:not(:first-child){text-align:center;width:120px}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp .yes{color:var(--lime);font-weight:700}
+table.cmp .no{color:var(--muted);opacity:.6}
+table.cmp tbody tr:hover{background:rgba(255,255,255,.02)}
+
+/* ── ROI calculator ───────────────────────────────────── */
+.roi{display:grid;grid-template-columns:1fr .9fr;gap:clamp(20px,3vw,36px);border:1px solid var(--line);
+  border-radius:18px;padding:clamp(22px,3vw,34px);background:var(--card);margin-top:34px}
+.roi h3{font-size:23px;margin-bottom:6px}
+.roi .sub{color:var(--muted);font-size:14.5px;margin-bottom:20px}
+.roi .row{margin-bottom:16px}
+.roi .row label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+.roi .row label b{color:var(--ink)}
+.roi input[type=range]{width:100%;accent-color:var(--lime)}
+.roi-out{border:1px solid var(--line);border-radius:14px;padding:22px;background:rgba(109,107,246,.08);display:flex;flex-direction:column;justify-content:center;gap:8px}
+.roi-out .big{font-size:clamp(30px,5vw,44px);font-weight:800;color:var(--lime);line-height:1.05}
+.roi-out .lbl{font-size:13px;color:var(--muted)}
+.roi-out .split{display:flex;justify-content:space-between;font-size:13.5px;padding-top:10px;margin-top:6px;border-top:1px solid var(--line)}
+.roi-out .verdict{font-size:13.5px;margin-top:8px;line-height:1.6}
+.roi-out .verdict b{color:var(--lime)}
+
+/* ── FAQ ──────────────────────────────────────────────── */
+.faq{max-width:760px;margin:34px auto 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card)}
+.qa{border-bottom:1px solid var(--line)}
+.qa:last-child{border-bottom:none}
+.qa button{width:100%;text-align:left;padding:17px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;font-size:15.5px;font-weight:600;transition:background .2s}
+.qa button:hover{background:rgba(255,255,255,.03)}
+.qa button i{font-style:normal;color:var(--indigo);transition:transform .3s;flex-shrink:0}
+.qa.open button i{transform:rotate(45deg)}
+.qa .a{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.16,1,.3,1)}
+.qa.open .a{max-height:230px}
+.qa .a p{padding:0 22px 18px;color:var(--muted);font-size:14.5px;line-height:1.7}
+
+/* ── Signup modal ─────────────────────────────────────── */
+.su-overlay{position:fixed;inset:0;background:rgba(4,5,10,.72);z-index:120;opacity:0;pointer-events:none;transition:opacity .3s}
+.su-overlay.on{opacity:1;pointer-events:auto}
+.su{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%);z-index:121;width:min(430px,94vw);
+  background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,3vw,30px);
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .3s cubic-bezier(.16,1,.3,1);box-shadow:0 40px 90px -30px #000}
+.su.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.su h3{font-size:24px;margin-bottom:6px}
+.su .sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+.su .fld{margin-bottom:13px}
+.su label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.su input,.su select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.04);color:var(--ink);font:inherit;font-size:14.5px}
+.su input:focus,.su select:focus{outline:none;border-color:var(--indigo)}
+.su select option{background:var(--bg2)}
+.su .slug{font-size:12.5px;color:var(--muted);margin-top:6px}
+.su .slug b{color:var(--lime)}
+.su .btn{width:100%;margin-top:6px}
+.su .err{font-size:12px;color:var(--pink);margin-top:5px;display:none}
+.su .fld.bad input{border-color:var(--pink)}
+.su .fld.bad .err{display:block}
+.su .fine{font-size:12px;color:var(--muted);margin-top:12px;text-align:center}
+.su-close{position:absolute;right:14px;top:12px;font-size:18px;color:var(--muted)}
+.su-done{text-align:center}
+.su-done .tick{width:52px;height:52px;border-radius:50%;background:var(--lime);color:#08090F;display:grid;place-items:center;font-size:25px;margin:0 auto 14px}
+
+@media(max-width:820px){ .roi{grid-template-columns:1fr} }
 @media(max-width:940px){.feats,.plans{grid-template-columns:1fr}
   .appbody{grid-template-columns:1fr}
   .side{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line)}
@@ -210,7 +287,7 @@ footer{border-top:1px solid var(--line);margin-top:clamp(50px,7vw,90px);padding:
     <h1>Your team's work,<br /><span>finally in one place.</span></h1>
     <p>Flowdesk replaces the spreadsheet, the group chat and the three tools nobody logs into. Set it up in an afternoon, not a quarter.</p>
     <div class="cta">
-      <a class="btn btn-lime" href="#pricing">Start free — 14 days</a>
+      <a class="btn btn-lime" href="#pricing" onclick="event.preventDefault();openSignup('Team')">Start free — 14 days</a>
       <a class="btn btn-ghost" href="#features">See how it works</a>
     </div>
     <p class="fineprint">No card required · Cancel in one click · SOC 2 Type II</p>
@@ -266,18 +343,91 @@ footer{border-top:1px solid var(--line);margin-top:clamp(50px,7vw,90px);padding:
     <button class="sw" id="sw" aria-label="Toggle billing period"><i></i></button>
     <span>Yearly</span><span class="save">save 20%</span>
   </div>
+  <!-- Seats drive the totals: the per-team headline is honest only
+       if you can see what your team actually pays. -->
+  <div class="seats">
+    <div class="top">
+      <span>How big is your team?</span>
+      <b id="seat-val">8 people</b>
+    </div>
+    <input type="range" id="seat" min="1" max="60" value="8" />
+    <p class="rec" id="seat-rec"></p>
+  </div>
+
   <div class="plans" id="plans"></div>
+
+  <div class="cmp-wrap">
+    <table class="cmp" id="cmp"></table>
+  </div>
+
+  <!-- Worth-it calculator: the objection every SaaS page dodges -->
+  <div class="roi">
+    <div>
+      <h3>Is it worth it?</h3>
+      <p class="sub">Two honest numbers and you have your answer. We would rather you worked it out than took our word.</p>
+      <div class="row">
+        <label for="r-hours">Hours each person loses to chasing, per week <b id="r-hours-val">2.5</b></label>
+        <input type="range" id="r-hours" min="0.5" max="8" step="0.5" value="2.5" />
+      </div>
+      <div class="row">
+        <label for="r-rate">Average cost of an hour <b id="r-rate-val">$25</b></label>
+        <input type="range" id="r-rate" min="5" max="120" step="5" value="25" />
+      </div>
+      <div class="row">
+        <label for="r-cut">How much of that Flowdesk removes <b id="r-cut-val">60%</b></label>
+        <input type="range" id="r-cut" min="10" max="90" step="5" value="60" />
+      </div>
+    </div>
+    <div class="roi-out">
+      <span class="lbl">Recovered every month</span>
+      <span class="big" id="r-save">$0</span>
+      <div class="split"><span>Flowdesk, same month</span><b id="r-cost">$0</b></div>
+      <p class="verdict" id="r-verdict"></p>
+    </div>
+  </div>
+
+  <div class="faq" id="faq"></div>
 </section>
 
 <section class="wrap reveal" style="padding-bottom:clamp(40px,6vw,70px)">
   <div class="close">
     <h2>Ready in an afternoon</h2>
     <p>Import from a spreadsheet, invite the team, and you are running. Most teams retire their old tool within a week.</p>
-    <a class="btn btn-lime" href="#" onclick="toast('Starting your trial...')">Start your free trial →</a>
+    <a class="btn btn-lime" href="#" onclick="event.preventDefault();openSignup('Team')">Start your free trial →</a>
   </div>
 </section>
 
 <button class="back-to-top" id="back-to-top" aria-label="Scroll to top">↑</button>
+<!-- Sign-up: a real form with validation rather than a toast -->
+<div class="su-overlay" id="su-overlay" onclick="closeSignup()"></div>
+<div class="su" id="su" role="dialog" aria-modal="true" aria-label="Start your trial">
+  <button class="su-close" onclick="closeSignup()" aria-label="Close">✕</button>
+  <div id="su-form">
+    <h3 id="su-title">Start your free trial</h3>
+    <p class="sub" id="su-sub">Fourteen days, no card. Cancel with one click.</p>
+    <div class="fld">
+      <label for="su-email">Work email</label>
+      <input id="su-email" type="email" placeholder="you@company.com" autocomplete="email" />
+      <span class="err">That does not look like a work email yet.</span>
+    </div>
+    <div class="fld">
+      <label for="su-team">Workspace name</label>
+      <input id="su-team" placeholder="Northwind" />
+      <span class="err">Give the workspace a name.</span>
+      <p class="slug">Your team will live at <b id="su-slug">northwind.flowdesk.io</b></p>
+    </div>
+    <div class="fld">
+      <label for="su-size">Team size</label>
+      <select id="su-size">
+        <option>Just me</option><option selected>2–10</option><option>11–25</option><option>26–60</option><option>60+</option>
+      </select>
+    </div>
+    <button class="btn btn-lime" onclick="createWorkspace()">Create workspace</button>
+    <p class="fine">Demo only — nothing is created and no email is sent.</p>
+  </div>
+  <div id="su-done" style="display:none"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <footer><div class="wrap">
@@ -385,25 +535,161 @@ document.getElementById('feats').innerHTML = FEATS.map(([t,d,p])=>`
   </article>`).join('');
 
 const PLANS = [
-  { n:'Starter', m:0,  y:0,  hot:false, f:['Up to 3 projects','2 GB of files','Community support'], cta:'Start free', k:'btn-ghost' },
-  { n:'Team',    m:29, y:23, hot:true,  f:['Unlimited projects','Automations & guest access','Priority support','Weekly reports'], cta:'Start 14-day trial', k:'btn-fill' },
-  { n:'Business',m:79, y:63, hot:false, f:['Everything in Team','SSO & audit log','Custom fields','Dedicated manager'], cta:'Talk to sales', k:'btn-ghost' }
+  { n:'Starter', m:0,  y:0,  seatCap:3,  hot:false, f:['Up to 3 projects','2 GB of files','Community support'], cta:'Start free', k:'btn-ghost' },
+  { n:'Team',    m:29, y:23, seatCap:25, hot:true,  f:['Unlimited projects','Automations & guest access','Priority support','Weekly reports'], cta:'Start 14-day trial', k:'btn-fill' },
+  { n:'Business',m:79, y:63, seatCap:999,hot:false, f:['Everything in Team','SSO & audit log','Custom fields','Dedicated manager'], cta:'Talk to sales', k:'btn-ghost' }
 ];
-let yearly = false;
+
+/* Priced per team, but the extra-seat charge is what people
+   actually want to know — so show both. */
+const SEAT_FEE = { Starter:0, Team:4, Business:3 };
+let yearly = false, seats = 8;
+
 const sw = document.getElementById('sw');
 sw.addEventListener('click', () => { yearly = !yearly; sw.classList.toggle('on', yearly); paint(); });
 
-function paint(){
-  document.getElementById('plans').innerHTML = PLANS.map(p => `
-    <div class="plan${p.hot ? ' hot' : ''}">
-      <h3>${p.n}</h3>
-      <div class="amt">$${yearly ? p.y : p.m}</div>
-      <p class="per">per month${p.m ? (yearly ? ', billed yearly' : ', billed monthly') : ' — free forever'}</p>
-      <ul>${p.f.map(f => `<li>${f}</li>`).join('')}</ul>
-      <button class="btn ${p.k}" onclick="toast('Proceeding with ${p.n} signup...')">${p.cta}</button>
-    </div>`).join('');
+const seatInput = document.getElementById('seat');
+seatInput.addEventListener('input', e => { seats = +e.target.value; paint(); roi(); });
+
+function planFor(n){
+  return PLANS.find(p => n <= p.seatCap) || PLANS[PLANS.length - 1];
 }
+function monthly(p){
+  const base = yearly ? p.y : p.m;
+  if (!base) return 0;
+  const extra = Math.max(0, seats - 10) * SEAT_FEE[p.n];
+  return base + extra;
+}
+const money = n => '$' + n.toLocaleString('en-US');
+
+function paint(){
+  const rec = planFor(seats);
+  document.getElementById('seat-val').textContent = seats + (seats === 1 ? ' person' : ' people');
+  document.getElementById('seat-rec').innerHTML =
+    `For ${seats} ${seats === 1 ? 'person' : 'people'} we would put you on <b>${rec.n}</b>` +
+    (rec.n === 'Starter' ? ' — free, and genuinely enough at that size.' : '.');
+
+  document.getElementById('plans').innerHTML = PLANS.map(p => {
+    const m = monthly(p);
+    const over = Math.max(0, seats - 10);
+    return `<div class="plan${p.hot ? ' hot' : ''}${p === rec ? ' rec-plan' : ''}">
+      <h3>${p.n}</h3>
+      <div class="amt">${money(m)}<small>/mo</small></div>
+      <p class="per">${p.m ? (yearly ? 'billed yearly' : 'billed monthly') : 'free forever'}</p>
+      ${p.m ? `<p class="tot">${money(m * 12)} a year${over ? ` · includes ${over} extra seats` : ''}${yearly ? ` · saves ${money((p.m - p.y) * 12)}` : ''}</p>` : '<p class="tot">Up to 3 projects, no card</p>'}
+      <ul>${p.f.map(f => `<li>${f}</li>`).join('')}</ul>
+      <button class="btn ${p.k}" onclick="openSignup('${p.n}')">${p.cta}</button>
+    </div>`;
+  }).join('');
+}
+
+/* ── comparison table ──────────────────────────────────── */
+const CMP = [
+  ['Projects', '3', 'Unlimited', 'Unlimited'],
+  ['File storage', '2 GB', '100 GB', '1 TB'],
+  ['Automation rules', false, '15 active', 'Unlimited'],
+  ['Guest board access', false, true, true],
+  ['Weekly report email', false, true, true],
+  ['Custom fields', false, false, true],
+  ['SSO and audit log', false, false, true],
+  ['Support', 'Community', 'Priority, 1 day', 'Named manager']
+];
+const cell = v => v === true ? '<span class="yes">✓</span>'
+                 : v === false ? '<span class="no">—</span>' : v;
+document.getElementById('cmp').innerHTML = `
+  <thead><tr><th>Everything, side by side</th><th>Starter</th><th>Team</th><th>Business</th></tr></thead>
+  <tbody>${CMP.map(r => `<tr><td>${r[0]}</td><td>${cell(r[1])}</td><td>${cell(r[2])}</td><td>${cell(r[3])}</td></tr>`).join('')}</tbody>`;
+
+/* ── worth-it calculator ───────────────────────────────── */
+function roi(){
+  const hours = +document.getElementById('r-hours').value;
+  const rate  = +document.getElementById('r-rate').value;
+  const cut   = +document.getElementById('r-cut').value;
+  document.getElementById('r-hours-val').textContent = hours;
+  document.getElementById('r-rate-val').textContent = money(rate);
+  document.getElementById('r-cut-val').textContent = cut + '%';
+
+  const saved = hours * 4.33 * rate * seats * (cut / 100);
+  const cost  = monthly(planFor(seats));
+  document.getElementById('r-save').textContent = money(Math.round(saved));
+  document.getElementById('r-cost').textContent = cost ? money(cost) : 'Free';
+
+  const v = document.getElementById('r-verdict');
+  if (!cost) v.innerHTML = `At ${seats} people you are on the free plan, so everything you recover is <b>yours</b>.`;
+  else if (saved > cost * 3){
+    const days = 30 * cost / saved;
+    v.innerHTML = `That is <b>${(saved / cost).toFixed(1)}×</b> what it costs — it has paid for itself ` +
+      (days < 1.5 ? `<b>by the second of the month</b>.` : `<b>${Math.round(days)} days</b> into the month.`);
+  }
+  else if (saved > cost) v.innerHTML = `Ahead, but not dramatically. Worth a trial before you commit — and if it does not land, cancel.`;
+  else v.innerHTML = `On those numbers it does <b>not</b> pay for itself. Stay on the free plan until the chasing gets worse.`;
+}
+['r-hours','r-rate','r-cut'].forEach(id => document.getElementById(id).addEventListener('input', roi));
+
+/* ── FAQ ───────────────────────────────────────────────── */
+const FAQ = [
+  ['Can we import from Trello or Asana?', 'Yes — a CSV, a Trello board or an Asana project, and the history comes with it. Most imports finish in under a minute; a large Asana workspace takes about ten.'],
+  ['What happens when the trial ends?', 'Nothing disappears. The workspace drops to the free plan, and everything above the free limits goes read-only until you upgrade or tidy up.'],
+  ['Do you charge for guests and clients?', 'No. Guest board access is free on Team and Business, however many clients you invite. You only pay for people on your side.'],
+  ['Is our data actually ours?', 'Yes, and exportable at any time as CSV or JSON, without asking us. Deleting the workspace deletes it — thirty days in cold backup, then gone.'],
+  ['Do you offer a discount for non-profits?', 'Fifty per cent, permanently. Email us from your organisation domain and we will apply it the same day.']
+];
+document.getElementById('faq').innerHTML = FAQ.map(([q, a], i) => `
+  <div class="qa${i === 0 ? ' open' : ''}">
+    <button onclick="this.parentElement.classList.toggle('open')">${q}<i>+</i></button>
+    <div class="a"><p>${a}</p></div>
+  </div>`).join('');
+
+/* ── signup ────────────────────────────────────────────── */
+window.openSignup = function(plan){
+  document.getElementById('su-title').textContent =
+    plan === 'Business' ? 'Talk to sales' : plan === 'Starter' ? 'Create your free workspace' : 'Start your free trial';
+  document.getElementById('su-sub').textContent =
+    plan === 'Business' ? 'Tell us where to reach you and a human replies the same day.'
+                        : 'Fourteen days, no card. Cancel with one click.';
+  document.getElementById('su').dataset.plan = plan;
+  document.getElementById('su').classList.add('on');
+  document.getElementById('su-overlay').classList.add('on');
+};
+window.closeSignup = function(){
+  document.getElementById('su').classList.remove('on');
+  document.getElementById('su-overlay').classList.remove('on');
+};
+document.getElementById('su-team').addEventListener('input', e => {
+  const slug = e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'yourteam';
+  document.getElementById('su-slug').textContent = slug + '.flowdesk.io';
+});
+
+window.createWorkspace = function(){
+  const mail = document.getElementById('su-email'), team = document.getElementById('su-team');
+  let ok = true;
+  const mark = (el, good) => { el.closest('.fld').classList.toggle('bad', !good); return good; };
+  ok = mark(mail, /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail.value.trim())) && ok;
+  ok = mark(team, team.value.trim().length > 1) && ok;
+  if (!ok) return;
+
+  const plan = document.getElementById('su').dataset.plan || 'Team';
+  const slug = document.getElementById('su-slug').textContent;
+  document.getElementById('su-form').style.display = 'none';
+  const done = document.getElementById('su-done');
+  done.style.display = 'block';
+  done.innerHTML = `
+    <div class="su-done">
+      <div class="tick">✓</div>
+      <h3>Workspace ready</h3>
+      <p class="sub" style="margin-bottom:16px">
+        <b style="color:var(--lime)">${slug}</b> is set up on the <b>${plan}</b> plan,
+        and a magic link is on its way to ${mail.value.trim()}.</p>
+      <button class="btn btn-ghost" onclick="closeSignup()">Close</button>
+      <p class="fine">Demo only — no workspace was created and no email was sent.
+        The commissioned build wires this to your auth provider and Stripe.</p>
+    </div>`;
+};
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSignup(); });
+
 paint();
+roi();
 
 // Mobile Navigation overlays toggler
 const burgerMenu = document.getElementById('burger-menu');

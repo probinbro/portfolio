@@ -167,6 +167,82 @@ footer{background:#0A1E33;color:#9FB6C9;padding:clamp(40px,6vw,64px) 0 24px;font
 .fgrid a{display:block;padding:4px 0}.fgrid a:hover{color:#8FE3D8}
 .fbase{border-top:1px solid #1C3550;padding-top:20px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
 
+/* ── Booking flow ─────────────────────────────────────── */
+.steps{display:flex;gap:6px;margin-bottom:16px}
+.steps i{flex:1;height:3px;border-radius:2px;background:var(--line);transition:background .35s}
+.steps i.on{background:var(--teal)}
+.step-label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.pane{display:none}
+.pane.on{display:block;animation:slideIn .35s cubic-bezier(.16,1,.3,1)}
+@keyframes slideIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+
+.picks{display:grid;gap:8px;max-height:290px;overflow-y:auto;padding-right:4px;margin-bottom:14px}
+.pick{display:flex;gap:12px;align-items:center;text-align:left;width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;transition:.2s}
+.pick:hover{border-color:var(--teal);background:rgba(14,158,143,.04)}
+.pick.on{border-color:var(--teal);background:rgba(14,158,143,.08);box-shadow:0 0 0 3px rgba(14,158,143,.12)}
+.pick img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.pick .pi{width:36px;height:36px;border-radius:9px;background:#E6F5F3;display:grid;place-items:center;flex-shrink:0}
+.pick .pi svg{width:18px;height:18px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pick b{display:block;font-size:14.5px;font-weight:700}
+.pick span{display:block;font-size:12.5px;color:var(--muted)}
+.pick .free{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--teal);white-space:nowrap}
+
+.days{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px}
+.day{min-width:60px;padding:9px 6px;border:1px solid var(--line);border-radius:10px;background:#fff;text-align:center;transition:.2s;flex-shrink:0}
+.day:hover:not(:disabled){border-color:var(--teal)}
+.day.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.day:disabled{opacity:.38;cursor:not-allowed}
+.day u{display:block;font-size:10.5px;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.day b{display:block;font-size:18px;font-weight:700;line-height:1.25}
+.day s{display:block;font-size:10.5px;text-decoration:none;opacity:.75}
+
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}
+.slot{padding:9px 4px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:13px;font-weight:600;transition:.2s}
+.slot:hover:not(:disabled){border-color:var(--teal);color:var(--teal)}
+.slot.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.slot:disabled{opacity:.34;cursor:not-allowed;text-decoration:line-through}
+.slot-legend{font-size:12px;color:var(--muted);margin-bottom:14px}
+
+.summary{background:#F0F7FA;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px;font-size:13.5px}
+.summary div{display:flex;justify-content:space-between;gap:10px;padding:3px 0}
+.summary div span{color:var(--muted)}
+.summary div b{text-align:right}
+.back-step{font-size:13px;color:var(--muted);text-decoration:underline;margin-top:10px;display:inline-block}
+.bad input{border-color:var(--red)!important}
+.err{font-size:12px;color:var(--red);margin-top:5px;display:none}
+.bad .err{display:block}
+
+.confirmed{text-align:center;padding:14px 0}
+.confirmed .tick{width:54px;height:54px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-size:25px;margin:0 auto 14px}
+.confirmed h4{font-family:Newsreader;font-size:22px;margin-bottom:8px}
+.confirmed p{font-size:14px;color:var(--muted);line-height:1.65}
+.confirmed .ref{display:inline-block;margin-top:12px;font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#F0F7FA;border:1px dashed var(--line);border-radius:8px;padding:8px 14px}
+
+/* ── Symptom finder ───────────────────────────────────── */
+.finder{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:22px}
+.finder h3{font-family:'Source Sans 3';font-size:16px;font-weight:700;margin-bottom:4px}
+.finder p{font-size:13.5px;color:var(--muted);margin-bottom:12px}
+.finder-in{position:relative}
+.finder-in input{width:100%;padding:12px 15px 12px 40px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14.5px}
+.finder-in input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,158,143,.14)}
+.finder-in svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.4}
+.hints{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.hint{padding:6px 13px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:12.5px;color:var(--muted);transition:.2s}
+.hint:hover{border-color:var(--teal);color:var(--teal)}
+.finder-out{margin-top:13px;font-size:14px;display:none}
+.finder-out.on{display:block}
+.finder-out b{color:var(--teal-dk)}
+.dep.hit{border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,158,143,.16)}
+
+/* ── Department & doctor cards ────────────────────────── */
+.dep{cursor:pointer;text-align:left;width:100%;font:inherit;color:inherit}
+.dep .cnt{display:flex;justify-content:space-between;align-items:center}
+.dep .next{color:var(--muted);font-weight:600}
+.doc .av .badge{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.94);border-radius:99px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--teal-dk)}
+.doc .bookdoc{margin-top:10px;padding:8px 16px;border:1.5px solid var(--line);border-radius:8px;font-size:13px;font-weight:700;color:var(--navy);transition:.2s}
+.doc .bookdoc:hover{border-color:var(--teal);color:var(--teal);background:rgba(14,158,143,.04)}
+
+@media(max-width:560px){ .slots{grid-template-columns:repeat(3,1fr)} }
 @media(max-width:1000px){.deps,.docs,.path{grid-template-columns:repeat(2,1fr)}.menu{display:none}.burger{display:flex}}
 @media(max-width:860px){.hero-grid{grid-template-columns:1fr}.band-in{grid-template-columns:repeat(2,1fr)}.fgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.deps,.docs,.path{grid-template-columns:1fr}.f2{grid-template-columns:1fr}}
@@ -219,22 +295,55 @@ footer{background:#0A1E33;color:#9FB6C9;padding:clamp(40px,6vw,64px) 0 24px;font
       </div>
     </div>
 
-    <form class="book" id="booking-form" onsubmit="event.preventDefault(); submitBooking()">
+    <!-- Four panes, one form: department → clinician → slot → details.
+         Each pane validates before the next appears, which is how a real
+         booking desk avoids half-filled requests. -->
+    <div class="book" id="booking">
       <h3>Book an appointment</h3>
-      <p>Confirmed by SMS within 2 hours.</p>
-      <div class="f"><label for="n">Patient name</label><input id="n" required placeholder="Full name" /></div>
-      <div class="f"><label for="ph">Phone</label><input id="ph" required placeholder="+880 1XXX-XXXXXX" /></div>
-      <div class="f"><label for="d">Department</label>
-        <select id="d"><option>Cardiology</option><option>Orthopaedics</option><option>Paediatrics</option>
-        <option>Neurology</option><option>General medicine</option><option>Diagnostics</option></select></div>
-      <div class="f f2">
-        <div><label for="dt">Date</label><input id="dt" type="date" required /></div>
-        <div><label for="tm">Time</label><select id="tm"><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div>
+      <p id="book-sub">Choose a department to see who is free this week.</p>
+
+      <div class="steps" id="steps"><i class="on"></i><i></i><i></i><i></i></div>
+
+      <div class="pane on" data-pane="0">
+        <p class="step-label">Step 1 · Department</p>
+        <div class="picks" id="pick-dep"></div>
       </div>
-      <button class="btn btn-navy" type="submit">Request appointment</button>
-      <p class="ok" id="ok">✓ Request received — our desk will call to confirm.</p>
+
+      <div class="pane" data-pane="1">
+        <p class="step-label">Step 2 · Consultant</p>
+        <div class="picks" id="pick-doc"></div>
+        <button class="back-step" onclick="goStep(0)">← Change department</button>
+      </div>
+
+      <div class="pane" data-pane="2">
+        <p class="step-label">Step 3 · Date &amp; time</p>
+        <div class="days" id="days"></div>
+        <div class="slots" id="slots"></div>
+        <p class="slot-legend" id="slot-legend">Crossed-out times are already taken.</p>
+        <button class="back-step" onclick="goStep(1)">← Change consultant</button>
+      </div>
+
+      <div class="pane" data-pane="3">
+        <p class="step-label">Step 4 · Your details</p>
+        <div class="summary" id="summary"></div>
+        <div class="f"><label for="n">Patient name</label>
+          <input id="n" placeholder="Full name" autocomplete="name" />
+          <span class="err">We need a name for the appointment card.</span></div>
+        <div class="f"><label for="ph">Phone</label>
+          <input id="ph" placeholder="+880 1XXX-XXXXXX" autocomplete="tel" />
+          <span class="err">A number the desk can reach you on.</span></div>
+        <div class="f"><label for="rn">Reason for visit <span style="font-weight:400">(optional)</span></label>
+          <input id="rn" placeholder="Chest tightness when walking uphill" /></div>
+        <button class="btn btn-navy" type="button" onclick="confirmBooking()">Confirm appointment</button>
+        <button class="back-step" onclick="goStep(2)">← Change time</button>
+      </div>
+
+      <div class="pane" data-pane="4">
+        <div class="confirmed" id="confirmed"></div>
+      </div>
+
       <p class="note">Emergency? Call <b>10921</b> or come straight in.</p>
-    </form>
+    </div>
   </div>
 </section>
 
@@ -244,6 +353,21 @@ footer{background:#0A1E33;color:#9FB6C9;padding:clamp(40px,6vw,64px) 0 24px;font
     <h2>Fourteen specialities, one building</h2>
     <p>Referrals move between departments internally — you should not have to carry your own file across town.</p>
   </div>
+  <!-- Nobody searches for "Otorhinolaryngology" — they search for
+       "sore throat". This maps the second to the first. -->
+  <div class="finder reveal">
+    <h3>Not sure which department?</h3>
+    <p>Describe it the way you would to a friend. We will point you to the right desk.</p>
+    <div class="finder-in">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <circle cx="11" cy="11" r="7" /><path d="m20 20-3.6-3.6" />
+      </svg>
+      <input id="symptom" type="search" placeholder="chest pain, broken wrist, fever in a toddler…" aria-label="Describe your symptom" />
+    </div>
+    <div class="hints" id="hints"></div>
+    <p class="finder-out" id="finder-out"></p>
+  </div>
+
   <div class="tabs" id="tabs"></div>
   <div class="deps" id="deps-grid"></div>
 </section>
@@ -296,6 +420,13 @@ footer{background:#0A1E33;color:#9FB6C9;padding:clamp(40px,6vw,64px) 0 24px;font
 </div></footer>
 
 <script>
+/* ═══════════════════════════════════════════════════════════
+   Northside Medical — demo logic.
+   A four-step booking flow with real slot availability, a
+   symptom-to-department finder, and consultant profiles that
+   book straight into the widget. The commissioned build swaps
+   the seeded availability for the hospital's own calendar.
+   ═══════════════════════════════════════════════════════════ */
 const DEPS = [
   { n:'Cardiology',       g:'Heart',    d:'Angiography, echo, pacemaker clinic and cardiac rehab.', c:9,  ic:'M12 21s-7-4.7-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.3-7 10-7 10Z' },
   { n:'Orthopaedics',     g:'Bones',    d:'Joint replacement, sports injury and spine clinics.',   c:7,  ic:'M8 4v6m8-6v6M8 20v-6m8 6v-6M6 10h12v4H6z' },
@@ -306,8 +437,193 @@ const DEPS = [
   { n:'Diagnostics',      g:'Brain',    d:'MRI, CT, ultrasound and a same-day pathology lab.',     c:4,  ic:'M4 6h16v12H4zM8 10h8M8 14h5' },
   { n:'Emergency',        g:'Heart',    d:'Round-the-clock trauma and acute care, no appointment.', c:14, ic:'M13 2 4 14h7l-1 8 9-12h-7z' }
 ];
+
+const DOCS = [
+  { n:'Dr. Farhana Haque',   s:'Cardiology',       y:'18 years', fee:1200, days:[1,2,4], img:'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Imran Chowdhury', s:'Orthopaedics',     y:'14 years', fee:1000, days:[1,3,5], img:'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Nabila Rahman',   s:'Paediatrics',      y:'11 years', fee:900,  days:[0,2,4,6], img:'https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Sabbir Ahmed',    s:'Neurology',        y:'21 years', fee:1500, days:[2,3],   img:'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Ayesha Karim',    s:'General medicine', y:'9 years',  fee:700,  days:[0,1,2,3,4], img:'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Tanvir Hasan',    s:'Obstetrics',       y:'16 years', fee:1100, days:[1,4,6], img:'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Rezaul Islam',    s:'Diagnostics',      y:'12 years', fee:600,  days:[0,1,2,3,4,5,6], img:'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=300&auto=format&fit=crop' },
+  { n:'Dr. Shirin Akter',    s:'Emergency',        y:'13 years', fee:0,    days:[0,1,2,3,4,5,6], img:'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop' }
+];
+
+/* what people actually type → where they should go */
+const SYMPTOMS = [
+  { k:['chest pain','chest','heart','palpitation','blood pressure','breathless','bp'], dep:'Cardiology' },
+  { k:['fracture','broken','bone','knee','back pain','shoulder','joint','sprain','spine','hip'], dep:'Orthopaedics' },
+  { k:['child','toddler','baby','kid','vaccination','newborn','fever in a toddler','infant'], dep:'Paediatrics' },
+  { k:['headache','migraine','seizure','stroke','numb','dizzy','memory','nerve','fits'], dep:'Neurology' },
+  { k:['fever','cold','flu','diabetes','sugar','cough','stomach','fatigue','checkup','check-up'], dep:'General medicine' },
+  { k:['pregnant','pregnancy','antenatal','delivery','period','gynae','contraception'], dep:'Obstetrics' },
+  { k:['scan','mri','ct','x-ray','xray','ultrasound','blood test','report','pathology'], dep:'Diagnostics' },
+  { k:['accident','bleeding','emergency','unconscious','burn','poison','severe'], dep:'Emergency' }
+];
+
+const HOURS = ['09:00','09:40','10:20','11:00','11:40','12:20','15:00','15:40','16:20','17:00','17:40','18:20'];
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+let booking = { dep:null, doc:null, date:null, time:null };
+
+/* ── availability ──────────────────────────────────────────
+   Seeded from the date and the doctor's name so a slot that
+   looks taken stays taken while you click around. */
+function seeded(str){
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) % 9973;
+  return h;
+}
+function slotTaken(doc, date, time){
+  return seeded(doc.n + date.toDateString() + time) % 10 < 4;
+}
+function nextDays(n){
+  const out = [];
+  const d = new Date(); d.setHours(0,0,0,0);
+  for (let i = 1; i <= n; i++){
+    const day = new Date(d);
+    day.setDate(d.getDate() + i);
+    out.push(day);
+  }
+  return out;
+}
+function freeCount(doc, date){
+  if (!doc.days.includes(date.getDay())) return 0;
+  return HOURS.filter(t => !slotTaken(doc, date, t)).length;
+}
+function nextFree(doc){
+  for (const d of nextDays(14)) if (freeCount(doc, d) > 0) return d;
+  return null;
+}
+const fmtDay = d => `${DOW[d.getDay()]} ${d.getDate()} ${MON[d.getMonth()]}`;
+
+/* ── step machine ──────────────────────────────────────── */
+const panes = () => [...document.querySelectorAll('#booking .pane')];
+function goStep(n){
+  panes().forEach(p => p.classList.toggle('on', +p.dataset.pane === n));
+  [...document.querySelectorAll('#steps i')].forEach((i, idx) => i.classList.toggle('on', idx <= n));
+  const subs = [
+    'Choose a department to see who is free this week.',
+    'Each consultant shows their next free clinic.',
+    'Pick a day, then a time that suits you.',
+    'Last step — how do we reach you?',
+    'All done.'
+  ];
+  document.getElementById('book-sub').textContent = subs[n];
+}
+window.goStep = goStep;
+
+function renderDeps(){
+  document.getElementById('pick-dep').innerHTML = DEPS.map(d => {
+    const docs = DOCS.filter(x => x.s === d.n);
+    const soon = docs.map(nextFree).filter(Boolean).sort((a,b) => a - b)[0];
+    return `<button class="pick" data-dep="${d.n}">
+      <span class="pi"><svg viewBox="0 0 24 24"><path d="${d.ic}"/></svg></span>
+      <span><b>${d.n}</b><span>${d.c} consultants</span></span>
+      <span class="free">${soon ? fmtDay(soon) : 'On request'}</span>
+    </button>`;
+  }).join('');
+}
+
+function renderDocs(){
+  const list = DOCS.filter(d => d.s === booking.dep);
+  document.getElementById('pick-doc').innerHTML = list.map(d => {
+    const soon = nextFree(d);
+    return `<button class="pick" data-doc="${d.n}">
+      <img src="${d.img}" alt="${d.n}" loading="lazy" />
+      <span><b>${d.n}</b><span>${d.y} · ${d.fee ? '৳' + d.fee + ' consultation' : 'No fee — emergency'}</span></span>
+      <span class="free">${soon ? fmtDay(soon) : '—'}</span>
+    </button>`;
+  }).join('') || '<p style="color:var(--muted);font-size:14px">No clinic list for this department yet — please call reception.</p>';
+}
+
+function renderDays(){
+  const doc = DOCS.find(d => d.n === booking.doc);
+  const days = nextDays(10);
+  document.getElementById('days').innerHTML = days.map(d => {
+    const free = freeCount(doc, d);
+    const on = booking.date && d.toDateString() === booking.date.toDateString();
+    return `<button class="day ${on ? 'on' : ''}" ${free ? '' : 'disabled'} data-date="${d.toISOString()}">
+      <u>${DOW[d.getDay()]}</u><b>${d.getDate()}</b><s>${free ? free + ' free' : 'closed'}</s>
+    </button>`;
+  }).join('');
+  renderSlots();
+}
+
+function renderSlots(){
+  const box = document.getElementById('slots');
+  const legend = document.getElementById('slot-legend');
+  if (!booking.date){
+    box.innerHTML = '';
+    legend.textContent = 'Pick a day above to see the clinic times.';
+    return;
+  }
+  const doc = DOCS.find(d => d.n === booking.doc);
+  box.innerHTML = HOURS.map(t => {
+    const taken = slotTaken(doc, booking.date, t);
+    return `<button class="slot ${booking.time === t ? 'on' : ''}" ${taken ? 'disabled' : ''} data-time="${t}">${t}</button>`;
+  }).join('');
+  legend.innerHTML = `<b>${freeCount(doc, booking.date)}</b> of ${HOURS.length} times free on ${fmtDay(booking.date)} · crossed-out times are taken.`;
+}
+
+function renderSummary(){
+  const doc = DOCS.find(d => d.n === booking.doc);
+  document.getElementById('summary').innerHTML = `
+    <div><span>Department</span><b>${booking.dep}</b></div>
+    <div><span>Consultant</span><b>${booking.doc}</b></div>
+    <div><span>When</span><b>${fmtDay(booking.date)} · ${booking.time}</b></div>
+    <div><span>Consultation fee</span><b>${doc.fee ? '৳' + doc.fee : 'No fee'}</b></div>`;
+}
+
+/* ── clicks ────────────────────────────────────────────── */
+document.getElementById('pick-dep').addEventListener('click', e => {
+  const b = e.target.closest('[data-dep]'); if (!b) return;
+  booking = { dep:b.dataset.dep, doc:null, date:null, time:null };
+  renderDocs(); goStep(1);
+});
+document.getElementById('pick-doc').addEventListener('click', e => {
+  const b = e.target.closest('[data-doc]'); if (!b) return;
+  booking.doc = b.dataset.doc; booking.date = null; booking.time = null;
+  renderDays(); goStep(2);
+});
+document.getElementById('days').addEventListener('click', e => {
+  const b = e.target.closest('[data-date]'); if (!b || b.disabled) return;
+  booking.date = new Date(b.dataset.date); booking.time = null;
+  renderDays();
+});
+document.getElementById('slots').addEventListener('click', e => {
+  const b = e.target.closest('[data-time]'); if (!b || b.disabled) return;
+  booking.time = b.dataset.time;
+  renderSlots(); renderSummary(); goStep(3);
+});
+
+window.confirmBooking = function(){
+  const n = document.getElementById('n'), ph = document.getElementById('ph');
+  let ok = true;
+  const mark = (el, good) => { el.closest('.f').classList.toggle('bad', !good); return good; };
+  ok = mark(n, n.value.trim().length > 1) && ok;
+  ok = mark(ph, ph.value.replace(/\D/g, '').length >= 7) && ok;
+  if (!ok) return;
+
+  const ref = 'NM-' + String(seeded(n.value + booking.time)).padStart(4, '0');
+  const doc = DOCS.find(d => d.n === booking.doc);
+  document.getElementById('confirmed').innerHTML = `
+    <div class="tick">✓</div>
+    <h4>You're booked in, ${n.value.trim().split(' ')[0]}.</h4>
+    <p><b>${booking.doc}</b> · ${booking.dep}<br>
+       ${fmtDay(booking.date)} at ${booking.time}<br>
+       ${doc.fee ? 'Consultation ৳' + doc.fee + ' — payable at reception' : 'No fee for emergency care'}</p>
+    <span class="ref">${ref}</span>
+    <p style="margin-top:16px;font-size:12.5px">A confirmation SMS would go to ${ph.value.trim()} on the real site.
+       Arrive ten minutes early with any previous reports.</p>
+    <button class="btn btn-line" style="margin-top:16px" onclick="location.reload()">Book another</button>`;
+  goStep(4);
+};
+
+/* ── departments grid + symptom finder ─────────────────── */
 const GROUPS = ['All', 'Heart', 'Bones', 'Children', 'Brain'];
-let active = 'All';
+let active = 'All', hit = null;
 
 const tabs = document.getElementById('tabs');
 tabs.innerHTML = GROUPS.map(g => `<button class="tab${g === 'All' ? ' on' : ''}" data-g="${g}">${g}</button>`).join('');
@@ -320,106 +636,114 @@ tabs.addEventListener('click', e => {
 
 function render(){
   const list = active === 'All' ? DEPS : DEPS.filter(d => d.g === active);
-  document.getElementById('deps-grid').innerHTML = list.map(d => `
-    <article class="dep">
+  document.getElementById('deps-grid').innerHTML = list.map(d => {
+    const docs = DOCS.filter(x => x.s === d.n);
+    const soon = docs.map(nextFree).filter(Boolean).sort((a,b) => a - b)[0];
+    return `<button class="dep ${hit === d.n ? 'hit' : ''}" data-book="${d.n}">
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${d.ic}"/></svg></span>
       <h3>${d.n}</h3><p>${d.d}</p>
-      <p class="cnt">${d.c} consultants →</p>
-    </article>`).join('');
+      <p class="cnt"><span>${d.c} consultants →</span><span class="next">${soon ? 'Next: ' + fmtDay(soon) : ''}</span></p>
+    </button>`;
+  }).join('');
 }
 render();
 
-const DOCS = [
-  { n:'Dr. Farhana Haque', s:'Cardiology',   y:'18 years', img:'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop' },
-  { n:'Dr. Imran Chowdhury', s:'Orthopaedics', y:'14 years', img:'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=300&auto=format&fit=crop' },
-  { n:'Dr. Nabila Rahman', s:'Paediatrics',  y:'11 years', img:'https://images.unsplash.com/photo-1594824813573-246434de83fb?q=80&w=300&auto=format&fit=crop' },
-  { n:'Dr. Sabbir Ahmed',  s:'Neurology',    y:'21 years', img:'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=300&auto=format&fit=crop' }
-];
+document.getElementById('deps-grid').addEventListener('click', e => {
+  const b = e.target.closest('[data-book]'); if (!b) return;
+  startBooking(b.dataset.book);
+});
 
-document.getElementById('docs').innerHTML = DOCS.map(d => `
-  <article class="doc">
+function startBooking(dep, doc){
+  booking = { dep, doc:doc || null, date:null, time:null };
+  renderDeps(); renderDocs();
+  if (doc){ renderDays(); goStep(2); } else goStep(1);
+  document.getElementById('booking').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+window.startBooking = startBooking;
+
+/* symptom → department */
+const HINTS = ['Chest pain','Broken wrist','Fever in a toddler','Migraine','Pregnancy','MRI scan'];
+document.getElementById('hints').innerHTML = HINTS.map(h => `<button class="hint">${h}</button>`).join('');
+document.getElementById('hints').addEventListener('click', e => {
+  const b = e.target.closest('.hint'); if (!b) return;
+  const input = document.getElementById('symptom');
+  input.value = b.textContent;
+  findDept(b.textContent);
+});
+document.getElementById('symptom').addEventListener('input', e => findDept(e.target.value));
+
+function findDept(text){
+  const q = text.toLowerCase().trim();
+  const out = document.getElementById('finder-out');
+  if (q.length < 3){ out.classList.remove('on'); hit = null; render(); return; }
+
+  let found = null, score = 0;
+  for (const row of SYMPTOMS){
+    for (const k of row.k){
+      if (q.includes(k) && k.length > score){ found = row.dep; score = k.length; }
+    }
+  }
+  hit = found;
+  render();
+  out.classList.add('on');
+  out.innerHTML = found
+    ? `That is usually <b>${found}</b> — highlighted below.
+       <button class="hint" style="margin-left:8px" onclick="startBooking('${found}')">Book ${found} →</button>`
+    : `Nothing matched that exactly. <b>General medicine</b> is the right first stop, and they refer internally.
+       <button class="hint" style="margin-left:8px" onclick="startBooking('General medicine')">Book general medicine →</button>`;
+}
+
+/* ── consultants grid ──────────────────────────────────── */
+document.getElementById('docs').innerHTML = DOCS.slice(0, 4).map(d => {
+  const soon = nextFree(d);
+  return `<article class="doc">
     <div class="av">
       <img src="${d.img}" alt="${d.n}" loading="lazy" />
+      ${soon ? `<span class="badge">Next: ${fmtDay(soon)}</span>` : ''}
     </div>
     <h3>${d.n}</h3><p class="sp">${d.s}</p><p class="yr">${d.y} experience</p>
-  </article>`).join('');
+    <button class="bookdoc" onclick="startBooking('${d.s}','${d.n}')">Book with ${d.n.split(' ')[1]}</button>
+  </article>`;
+}).join('');
 
-// Mobile menu toggler
+/* ── chrome ────────────────────────────────────────────── */
 const burgerMenu = document.getElementById('burger-menu');
 const mobileOverlay = document.getElementById('mobile-overlay');
-
-function toggleMobileMenu() {
+function toggleMobileMenu(){
   const isActive = mobileOverlay.classList.toggle('active');
   burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
   burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
   burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
 }
 burgerMenu.addEventListener('click', toggleMobileMenu);
+window.toggleMobileMenu = toggleMobileMenu;
 
-// Interactive Booking Success Flow
-window.submitBooking = function() {
-  const submitButton = document.querySelector('#booking-form button');
-  submitButton.textContent = 'Registering...';
-  submitButton.disabled = true;
-  
-  setTimeout(() => {
-    document.getElementById('ok').classList.add('on');
-    submitButton.textContent = 'Request appointment';
-    submitButton.disabled = false;
-    document.getElementById('booking-form').reset();
-    setTimeout(() => {
-      document.getElementById('ok').classList.remove('on');
-    }, 5000);
-  }, 1000);
-};
-
-// Scroll Reveal
-const revealElements = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('active'); });
 }, { threshold: 0.1 });
-revealElements.forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// Back to Top Button
 const backToTopBtn = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backToTopBtn.classList.add('active');
-  } else {
-    backToTopBtn.classList.remove('active');
-  }
-});
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+window.addEventListener('scroll', () => backToTopBtn.classList.toggle('active', window.scrollY > 400));
+backToTopBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
 
-// Stats Counting Animation
-const statNumbers = document.querySelectorAll('.stat-num');
-const countObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      const targetValue = parseInt(el.dataset.target, 10);
-      let currentValue = 0;
-      const duration = 1200; // ms
-      const stepTime = Math.abs(Math.floor(duration / targetValue));
-      
-      const counter = setInterval(() => {
-        currentValue += 1;
-        el.textContent = currentValue;
-        if (currentValue === targetValue) {
-          clearInterval(counter);
-        }
-      }, stepTime);
-      countObserver.unobserve(el);
-    }
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    const el = en.target, target = parseInt(el.dataset.target, 10);
+    let v = 0;
+    const timer = setInterval(() => {
+      v += Math.max(1, Math.round(target / 40));
+      if (v >= target){ v = target; clearInterval(timer); }
+      el.textContent = v;
+    }, 30);
+    countObserver.unobserve(el);
   });
 }, { threshold: 0.8 });
-statNumbers.forEach(num => countObserver.observe(num));
+document.querySelectorAll('.stat-num').forEach(n => countObserver.observe(n));
+
+/* boot */
+renderDeps();
 </script>
 </body>
 </html>

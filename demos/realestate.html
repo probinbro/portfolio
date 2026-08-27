@@ -165,6 +165,85 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,6vw,70px);padding:
 .fgrid a{display:block;padding:4px 0}.fgrid a:hover{color:var(--green)}
 .fbase{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
 
+/* ── Filter bar ───────────────────────────────────────── */
+.fbar{display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:14px 18px;margin-bottom:18px}
+.fbar .fg{display:flex;flex-direction:column;gap:4px;min-width:150px}
+.fbar label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.fbar input[type=range]{width:100%;accent-color:var(--green)}
+.fbar select{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff;font-size:14px;font-weight:600}
+.fbar select:focus{outline:none;border-color:var(--green)}
+.fbar .val{font-size:14px;font-weight:700;color:var(--green)}
+.fbar .clear{margin-left:auto;font-size:13px;color:var(--muted);text-decoration:underline}
+.rescount{font-size:13.5px;color:var(--muted);margin-bottom:18px}
+.rescount b{color:var(--ink)}
+.ppsf{font-size:12px;color:var(--muted);margin-top:4px}
+.prop{cursor:pointer}
+.pb .viewbtn{margin-top:12px;width:100%;padding:9px;border:1.5px solid var(--line);border-radius:8px;font-size:13.5px;font-weight:700;color:var(--green);transition:.2s}
+.pb .viewbtn:hover{border-color:var(--green);background:rgba(15,61,46,.03)}
+
+/* ── Detail modal ─────────────────────────────────────── */
+.md-overlay{position:fixed;inset:0;background:rgba(15,32,26,.5);z-index:120;opacity:0;pointer-events:none;transition:opacity .3s}
+.md-overlay.on{opacity:1;pointer-events:auto}
+.md{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%);z-index:121;width:min(940px,94vw);max-height:92vh;overflow:auto;
+  background:var(--card);border-radius:18px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.45)}
+.md.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.md-close{position:absolute;right:14px;top:14px;width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;z-index:5;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.md-gal{position:relative;aspect-ratio:16/8;background:#e8ece9}
+.md-gal img{width:100%;height:100%;object-fit:cover}
+.md-thumbs{position:absolute;left:14px;bottom:14px;display:flex;gap:8px}
+.md-thumbs button{width:52px;height:38px;border-radius:6px;overflow:hidden;border:2px solid transparent;opacity:.75;transition:.2s}
+.md-thumbs button.on{border-color:#fff;opacity:1}
+.md-thumbs img{width:100%;height:100%;object-fit:cover}
+.md-body{padding:clamp(20px,3vw,30px);display:grid;grid-template-columns:1.25fr .95fr;gap:clamp(20px,3vw,32px)}
+.md-body h3{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(23px,3vw,31px);margin-bottom:4px}
+.md-price{font-size:24px;font-weight:800;color:var(--green);margin:10px 0}
+.md-specs{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.md-specs span{border:1px solid var(--line);border-radius:8px;padding:8px 13px;font-size:13.5px}
+.md-specs b{font-weight:800}
+.md-desc{font-size:14.5px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.md-feats{display:grid;grid-template-columns:1fr 1fr;gap:7px;font-size:13.5px}
+.md-feats li{list-style:none;display:flex;gap:8px}
+.md-feats li::before{content:'✓';color:var(--moss);font-weight:800}
+.calc{background:#F3F6F3;border:1px solid var(--line);border-radius:14px;padding:18px}
+.calc h4{font-size:15px;margin-bottom:4px}
+.calc p.sub{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+.calc .row{margin-bottom:13px}
+.calc .row label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:5px}
+.calc .row label b{color:var(--green)}
+.calc input[type=range]{width:100%;accent-color:var(--green)}
+.calc .out{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;margin-top:6px}
+.calc .out b{display:block;font-size:26px;font-weight:800;color:var(--green);line-height:1.2}
+.calc .out span{font-size:12.5px;color:var(--muted)}
+.calc .fine{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+.viewform{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
+.viewform .vrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.viewform input,.viewform select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:14px}
+.viewform input:focus,.viewform select:focus{outline:none;border-color:var(--green)}
+.viewform .btn{width:100%;margin-top:4px}
+.vok{margin-top:12px;background:rgba(15,61,46,.06);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:13.5px;display:none}
+.vok.on{display:block}
+
+/* ── Saved drawer ─────────────────────────────────────── */
+.sv-drawer{position:fixed;right:0;top:0;bottom:0;width:min(430px,100%);background:var(--card);z-index:122;
+  transform:translateX(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.14)}
+.sv-drawer.on{transform:none}
+.sv-head{padding:20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.sv-head h3{font-family:'DM Serif Display',Georgia,serif;font-size:22px}
+.sv-body{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.sv-row{display:flex;gap:12px;border:1px solid var(--line);border-radius:12px;padding:10px}
+.sv-row img{width:74px;height:60px;border-radius:8px;object-fit:cover}
+.sv-row b{font-size:14px;display:block}
+.sv-row span{font-size:12.5px;color:var(--muted);display:block}
+.sv-row .x{margin-left:auto;font-size:12px;color:var(--muted);text-decoration:underline;align-self:flex-start}
+.cmp{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.cmp th,.cmp td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+.cmp th{background:#F3F6F3;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.cmp td.best{color:var(--green);font-weight:800}
+.sv-empty{color:var(--muted);font-size:14px;text-align:center;margin-top:40px}
+
+@media(max-width:820px){ .md-body{grid-template-columns:1fr} .md-feats{grid-template-columns:1fr} }
 @media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.search{grid-template-columns:1fr 1fr}
   .sf{border-right:none;border-bottom:1px solid var(--line)}.menu{display:none}.why{grid-template-columns:1fr}.burger{display:flex}}
 @media(max-width:680px){.grid{grid-template-columns:1fr}.search{grid-template-columns:1fr}
@@ -228,6 +307,34 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,6vw,70px);padding:
     <a class="btn btn-line" href="#">See all listings →</a>
   </div>
   <div class="chips" id="chips"></div>
+
+  <!-- The filters that actually decide a shortlist: budget, beds
+       and order. All three feed the same render() pass. -->
+  <div class="fbar">
+    <div class="fg">
+      <label for="fprice">Max price <span class="val" id="fprice-val">Any</span></label>
+      <input type="range" id="fprice" min="50" max="600" step="10" value="600" />
+    </div>
+    <div class="fg" style="min-width:120px">
+      <label for="fbeds">Bedrooms</label>
+      <select id="fbeds">
+        <option value="0">Any</option><option value="2">2+</option>
+        <option value="3">3+</option><option value="4">4+</option>
+      </select>
+    </div>
+    <div class="fg" style="min-width:150px">
+      <label for="fsort">Sort by</label>
+      <select id="fsort">
+        <option value="new">Newest first</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+        <option value="size">Largest first</option>
+      </select>
+    </div>
+    <button class="clear" onclick="clearFilters()">Reset filters</button>
+  </div>
+
+  <p class="rescount" id="rescount"></p>
   <div class="grid" id="grid"></div>
 </section>
 
@@ -261,6 +368,71 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,6vw,70px);padding:
 </section>
 
 <button class="back-to-top" id="back-to-top" aria-label="Scroll to top">↑</button>
+<!-- Property detail: gallery, spec, repayment calculator, viewing request -->
+<div class="md-overlay" id="md-overlay" onclick="closeProp()"></div>
+<div class="md" id="md" role="dialog" aria-modal="true" aria-label="Property detail">
+  <div class="md-gal">
+    <button class="md-close" onclick="closeProp()" aria-label="Close">✕</button>
+    <img id="md-img" alt="" />
+    <div class="md-thumbs" id="md-thumbs"></div>
+  </div>
+  <div class="md-body">
+    <div>
+      <h3 id="md-title"></h3>
+      <p class="ad" id="md-addr" style="color:var(--muted)"></p>
+      <div class="md-price" id="md-price"></div>
+      <div class="md-specs" id="md-specs"></div>
+      <p class="md-desc" id="md-desc"></p>
+      <ul class="md-feats" id="md-feats"></ul>
+    </div>
+    <div>
+      <div class="calc">
+        <h4>What would it cost a month?</h4>
+        <p class="sub">Drag the two figures — the repayment updates as you go.</p>
+        <div class="row">
+          <label for="c-dep">Deposit <b id="c-dep-val"></b></label>
+          <input type="range" id="c-dep" min="10" max="60" step="5" value="20" />
+        </div>
+        <div class="row">
+          <label for="c-yrs">Term <b id="c-yrs-val"></b></label>
+          <input type="range" id="c-yrs" min="5" max="25" step="1" value="15" />
+        </div>
+        <div class="out">
+          <b id="c-out">—</b>
+          <span id="c-sub">per month at 9% interest</span>
+        </div>
+        <p class="fine">Indicative only. Bangladeshi home loan rates sat between 8% and 10% through 2025;
+          your bank will quote against income and tenure.</p>
+      </div>
+
+      <div class="viewform">
+        <p style="font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px">Book a viewing</p>
+        <div class="vrow">
+          <input id="v-name" placeholder="Your name" autocomplete="name" />
+          <input id="v-phone" placeholder="Phone" autocomplete="tel" />
+        </div>
+        <div class="vrow">
+          <input id="v-date" type="date" />
+          <select id="v-time">
+            <option>Morning</option><option>Afternoon</option><option>Evening</option><option>Weekend only</option>
+          </select>
+        </div>
+        <button class="btn btn-fill" onclick="requestViewing()">Request a viewing</button>
+        <div class="vok" id="v-ok"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Saved homes, with a side-by-side compare -->
+<div class="sv-drawer" id="sv-drawer">
+  <div class="sv-head">
+    <h3>Saved homes</h3>
+    <button onclick="toggleSaved()" aria-label="Close" style="font-size:19px">✕</button>
+  </div>
+  <div class="sv-body" id="sv-body"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <footer><div class="wrap">
@@ -277,116 +449,318 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,6vw,70px);padding:
 </div></footer>
 
 <script>
-const PROPS = [
-  { p:'৳2,40,00,000', t:'Corner apartment with roof terrace', a:'Gulshan 2, Dhaka', b:3, ba:3, s:2150, k:'Apartment', tag:'New', img:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=400&auto=format&fit=crop', rawPrice: 2.4 },
-  { p:'৳1,10,00,000', t:'Renovated flat near the lake',       a:'Dhanmondi, Dhaka', b:2, ba:2, s:1320, k:'Apartment', tag:'',    img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=400&auto=format&fit=crop', rawPrice: 1.1 },
-  { p:'৳5,80,00,000', t:'Four-storey family duplex',          a:'Baridhara, Dhaka', b:5, ba:5, s:4400, k:'Duplex',    tag:'Chain-free', img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=400&auto=format&fit=crop', rawPrice: 5.8 },
-  { p:'৳92,00,000',   t:'Bright two-bed with parking',        a:'Uttara, Dhaka',    b:2, ba:2, s:1080, k:'Apartment', tag:'',    img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=400&auto=format&fit=crop', rawPrice: 0.92 },
-  { p:'৳3,15,00,000', t:'Garden house on a quiet lane',       a:'Bashundhara, Dhaka', b:4, ba:4, s:3100, k:'House',   tag:'New', img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=400&auto=format&fit=crop', rawPrice: 3.15 },
-  { p:'৳1,85,00,000', t:'South-facing plot, ready to build',  a:'Purbachal, Dhaka', b:0, ba:0, s:5000, k:'Plot',      tag:'',    img:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=400&auto=format&fit=crop', rawPrice: 1.85 }
-];
-const KINDS = ['All', 'Apartment', 'Duplex', 'House', 'Plot'];
-let active = 'All';
-let savedHomes = [];
+/* ═══════════════════════════════════════════════════════════
+   Keystone — demo logic.
+   Search and filters over one dataset, a detail view with a
+   working repayment calculator, saved homes that survive a
+   refresh and compare side by side, and viewing requests.
+   ═══════════════════════════════════════════════════════════ */
+const IMG = {
+  a:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800&auto=format&fit=crop',
+  b:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=800&auto=format&fit=crop',
+  c:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop',
+  d:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800&auto=format&fit=crop',
+  e:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop',
+  f:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop',
+  g:'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop',
+  h:'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=800&auto=format&fit=crop'
+};
 
+const PROPS = [
+  { id:1, t:'Corner apartment with roof terrace', a:'Gulshan 2, Dhaka', b:3, ba:3, s:2150, k:'Apartment', tag:'New', crore:2.40, year:2021,
+    imgs:[IMG.a, IMG.b, IMG.c],
+    d:'Two lifts, a generator that has never failed, and a roof terrace the building rules actually allow you to use. South-west corner, so the living room holds light until six.',
+    f:['Roof terrace, 400 sq ft','Two dedicated parking bays','Full-building generator','Servants quarter','Gas line connected','Lift access to the roof'] },
+  { id:2, t:'Renovated flat near the lake', a:'Dhanmondi, Dhaka', b:2, ba:2, s:1320, k:'Apartment', tag:'', crore:1.10, year:2019,
+    imgs:[IMG.b, IMG.d, IMG.a],
+    d:'Stripped back to brick in 2023 — new wiring, new plumbing, new kitchen. Four minutes from the lake path, which is the reason people buy on this road.',
+    f:['Rewired throughout in 2023','Fitted German kitchen','South-facing balcony','One parking bay','Walking distance to lake','Bank valuation available'] },
+  { id:3, t:'Four-storey family duplex', a:'Baridhara, Dhaka', b:5, ba:5, s:4400, k:'Duplex', tag:'Chain-free', crore:5.80, year:2016,
+    imgs:[IMG.c, IMG.e, IMG.g],
+    d:'A whole house rather than a floor in one. Chain-free, so completion follows your timeline instead of the seller finding somewhere first.',
+    f:['Private garden, 900 sq ft','Internal lift','Four parking bays','Staff accommodation','Solar water heating','Diplomatic zone, five minutes'] },
+  { id:4, t:'Bright two-bed with parking', a:'Uttara, Dhaka', b:2, ba:2, s:1080, k:'Apartment', tag:'', crore:0.92, year:2020,
+    imgs:[IMG.d, IMG.b, IMG.a],
+    d:'The sensible first purchase: low service charge, a lift that works, and a parking bay included in the price rather than sold separately.',
+    f:['Parking included in title','Low service charge','Lift and standby power','Ten minutes to Uttara metro','Tenanted until March','Rental yield ~5.8%'] },
+  { id:5, t:'Garden house on a quiet lane', a:'Bashundhara, Dhaka', b:4, ba:4, s:3100, k:'House', tag:'New', crore:3.15, year:2018,
+    imgs:[IMG.e, IMG.g, IMG.c],
+    d:'A cul-de-sac with six houses on it and nothing passing through. Mature mango trees at the back, and the school run is on foot.',
+    f:['Cul-de-sac position','Mature garden','Two-car covered parking','Study or fifth bedroom','Water reserve tank','School within 600m'] },
+  { id:6, t:'South-facing plot, ready to build', a:'Purbachal, Dhaka', b:0, ba:0, s:5000, k:'Plot', tag:'', crore:1.85, year:0,
+    imgs:[IMG.f, IMG.e, IMG.g],
+    d:'Corner plot with the paperwork clean and the mutation done — the two things that hold up eight out of ten land sales here.',
+    f:['Mutation complete','Corner plot, two frontages','Road access, both sides','Utilities at the boundary','Approved for six floors','No dispute history'] },
+  { id:7, t:'Penthouse with river view', a:'Bashundhara, Dhaka', b:4, ba:4, s:3600, k:'Duplex', tag:'New', crore:4.40, year:2023,
+    imgs:[IMG.g, IMG.a, IMG.c],
+    d:'Top two floors, double-height living room and a terrace facing the water. Newly completed and never lived in.',
+    f:['Double-height living room','Private roof terrace','Three parking bays','Underfloor heating in bathrooms','Building gym and pool','Handover ready'] },
+  { id:8, t:'Compact studio near the office belt', a:'Banani, Dhaka', b:1, ba:1, s:620, k:'Apartment', tag:'Let ready', crore:0.55, year:2022,
+    imgs:[IMG.h, IMG.d, IMG.b],
+    d:'Bought almost exclusively as a rental. Currently let at ৳32,000 a month with a tenant who would happily stay.',
+    f:['Let at ৳32,000/month','Furnished, included','Walk to Banani office belt','Lift and generator','Service charge ৳3,500','Yield around 7%'] }
+];
+
+const KINDS = ['All', 'Apartment', 'Duplex', 'House', 'Plot'];
+const SAVE_KEY = 'keystone.saved';
+let view = { kind:'All', loc:'', maxCrore:6, beds:0, sort:'new' };
+let saved = [];
+let current = null, slide = 0;
+
+/* ── money helpers ─────────────────────────────────────── */
+const taka = n => '৳' + Math.round(n).toLocaleString('en-IN');
+const croreLabel = c => c >= 1 ? `৳${c.toFixed(2)} crore` : `৳${(c * 100).toFixed(0)} lakh`;
+const priceOf = p => p.crore * 10000000;
+const perSqft = p => Math.round(priceOf(p) / p.s);
+
+try { saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || []; } catch(e){ saved = []; }
+const isSaved = id => saved.includes(id);
+
+/* ── listing ───────────────────────────────────────────── */
 const chips = document.getElementById('chips');
 chips.innerHTML = KINDS.map(k => `<button class="chip${k === 'All' ? ' on' : ''}" data-k="${k}">${k}</button>`).join('');
 chips.addEventListener('click', e => {
   const b = e.target.closest('.chip'); if (!b) return;
-  active = b.dataset.k;
+  view.kind = b.dataset.k;
   [...chips.children].forEach(c => c.classList.toggle('on', c === b));
   render();
 });
 
-function render(filteredList = null){
-  const list = filteredList || (active === 'All' ? PROPS : PROPS.filter(p => p.k === active));
-  document.getElementById('grid').innerHTML = list.length ? list.map((p, i) => {
-    const isSaved = savedHomes.includes(p.t);
-    return `
-    <article class="prop" style="animation-delay:${i * 50}ms">
+function matches(){
+  return PROPS.filter(p => {
+    if (view.kind !== 'All' && p.k !== view.kind) return false;
+    if (view.loc && !(p.a + ' ' + p.t).toLowerCase().includes(view.loc)) return false;
+    if (p.crore > view.maxCrore) return false;
+    if (view.beds && p.b < view.beds) return false;
+    return true;
+  }).sort((a, b) => {
+    if (view.sort === 'low')  return a.crore - b.crore;
+    if (view.sort === 'high') return b.crore - a.crore;
+    if (view.sort === 'size') return b.s - a.s;
+    return b.year - a.year;
+  });
+}
+
+function render(){
+  const list = matches();
+  document.getElementById('rescount').innerHTML =
+    `<b>${list.length}</b> of ${PROPS.length} listings` +
+    (view.kind !== 'All' ? ` · ${view.kind}` : '') +
+    (view.beds ? ` · ${view.beds}+ bed` : '') +
+    (view.maxCrore < 6 ? ` · under ${croreLabel(view.maxCrore)}` : '');
+
+  document.getElementById('grid').innerHTML = list.length ? list.map((p, i) => `
+    <article class="prop" style="animation-delay:${i * 50}ms" data-id="${p.id}">
       <div class="pshot">
         ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
-        <img src="${p.img}" alt="${p.t}" loading="lazy" />
-        <button class="fav${isSaved ? ' on' : ''}" aria-label="Save" data-title="${p.t}"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 21s-7-4.7-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.3-7 10-7 10Z"/></svg></button>
+        <img src="${p.imgs[0]}" alt="${p.t}" loading="lazy" />
+        <button class="fav${isSaved(p.id) ? ' on' : ''}" aria-label="Save" data-save="${p.id}">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 21s-7-4.7-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.3-7 10-7 10Z"/></svg>
+        </button>
       </div>
       <div class="pb">
-        <div class="pr">${p.p}</div>
+        <div class="pr">${croreLabel(p.crore)}</div>
         <h3>${p.t}</h3>
         <p class="ad">${p.a}</p>
         <div class="specs">
           ${p.b ? `<span><b>${p.b}</b> bed</span><span><b>${p.ba}</b> bath</span>` : '<span>Land plot</span>'}
           <span><b>${p.s.toLocaleString()}</b> sq ft</span>
         </div>
+        <p class="ppsf">${taka(perSqft(p))} per sq ft${p.year ? ` · built ${p.year}` : ''}</p>
+        <button class="viewbtn" data-open="${p.id}">View details &amp; repayments</button>
       </div>
-    </article>`}).join('') : '<p style="color:var(--muted); grid-column: 1/-1; text-align: center; padding: 40px 0;">Nothing matches your criteria — try another filter.</p>';
+    </article>`).join('')
+    : `<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:44px 0">
+         Nothing matches that yet. <button class="clear" onclick="clearFilters()">Reset the filters</button>
+         and we will show the lot.</p>`;
 }
-render();
 
-// Handle Favorites saving toggler
+document.getElementById('fprice').addEventListener('input', e => {
+  view.maxCrore = +e.target.value / 100;
+  document.getElementById('fprice-val').textContent = view.maxCrore >= 6 ? 'Any' : croreLabel(view.maxCrore);
+  render();
+});
+document.getElementById('fbeds').addEventListener('change', e => { view.beds = +e.target.value; render(); });
+document.getElementById('fsort').addEventListener('change', e => { view.sort = e.target.value; render(); });
+
+window.clearFilters = function(){
+  view = { kind:'All', loc:'', maxCrore:6, beds:0, sort:'new' };
+  document.getElementById('fprice').value = 600;
+  document.getElementById('fprice-val').textContent = 'Any';
+  document.getElementById('fbeds').value = '0';
+  document.getElementById('fsort').value = 'new';
+  document.getElementById('search-loc').value = '';
+  document.getElementById('search-type').value = 'All';
+  document.getElementById('search-price').value = 'Any';
+  [...chips.children].forEach(c => c.classList.toggle('on', c.dataset.k === 'All'));
+  render();
+};
+
+window.triggerSearch = function(){
+  view.loc = document.getElementById('search-loc').value.toLowerCase().trim();
+  view.kind = document.getElementById('search-type').value;
+  const pr = document.getElementById('search-price').value;
+  view.maxCrore = pr === 'Any' ? 6 : parseFloat(pr) === 1 ? 1.5 : parseFloat(pr);
+  document.getElementById('fprice').value = Math.min(600, view.maxCrore * 100);
+  document.getElementById('fprice-val').textContent = view.maxCrore >= 6 ? 'Any' : croreLabel(view.maxCrore);
+  [...chips.children].forEach(c => c.classList.toggle('on', c.dataset.k === view.kind));
+  render();
+  document.getElementById('buy').scrollIntoView({ behavior:'smooth' });
+};
+
+/* ── saving ────────────────────────────────────────────── */
+function persist(){
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(saved)); } catch(e){}
+  document.querySelector('#fav-count b').textContent = saved.length;
+}
+
 document.getElementById('grid').addEventListener('click', e => {
-  const f = e.target.closest('.fav');
-  if (!f) return;
-  
-  const title = f.dataset.title;
-  const index = savedHomes.indexOf(title);
-  
-  if (index > -1) {
-    savedHomes.splice(index, 1);
-    f.classList.remove('on');
-    toast('Removed from saved properties');
-  } else {
-    savedHomes.push(title);
-    f.classList.add('on');
-    toast('Saved to your properties!');
+  const fav = e.target.closest('[data-save]');
+  if (fav){
+    const id = +fav.dataset.save;
+    const i = saved.indexOf(id);
+    if (i > -1){ saved.splice(i, 1); fav.classList.remove('on'); toast('Removed from saved homes'); }
+    else { saved.push(id); fav.classList.add('on'); toast('Saved — compare them any time'); }
+    persist(); renderSaved();
+    return;
   }
-  
-  document.getElementById('fav-count').querySelector('b').textContent = savedHomes.length;
+  const card = e.target.closest('[data-open],[data-id]');
+  if (card) openProp(+(card.dataset.open || card.dataset.id));
 });
 
-// Search filter execution
-window.triggerSearch = function() {
-  const locInput = document.getElementById('search-loc').value.toLowerCase();
-  const typeSelect = document.getElementById('search-type').value;
-  const priceSelect = document.getElementById('search-price').value;
-  
-  let results = PROPS;
-  
-  if (locInput) {
-    results = results.filter(p => p.a.toLowerCase().includes(locInput) || p.t.toLowerCase().includes(locInput));
-  }
-  if (typeSelect !== 'All') {
-    results = results.filter(p => p.k === typeSelect);
-  }
-  if (priceSelect !== 'Any') {
-    const limit = parseFloat(priceSelect);
-    results = results.filter(p => p.rawPrice <= limit);
-  }
-  
-  // Update chip highlights
-  [...chips.children].forEach(c => c.classList.toggle('on', c.dataset.k === typeSelect));
-  active = typeSelect;
-  
-  render(results);
-  
-  document.getElementById('buy').scrollIntoView({ behavior: 'smooth' });
+document.getElementById('fav-count').addEventListener('click', () => toggleSaved());
+
+window.toggleSaved = function(){
+  const d = document.getElementById('sv-drawer');
+  d.classList.toggle('on');
+  renderSaved();
 };
 
-// Valuation popup demo
-window.bookValuation = function() {
-  toast("Valuation request sent! Tanvir will call you shortly.");
+function renderSaved(){
+  const body = document.getElementById('sv-body');
+  const list = PROPS.filter(p => saved.includes(p.id));
+  if (!list.length){
+    body.innerHTML = `<p class="sv-empty">Nothing saved yet.<br>Tap the heart on a listing and it lands here,
+      even after you close the tab.</p>`;
+    return;
+  }
+  const cheapest = Math.min(...list.map(perSqft));
+  const biggest  = Math.max(...list.map(p => p.s));
+  body.innerHTML = list.map(p => `
+    <div class="sv-row">
+      <img src="${p.imgs[0]}" alt="${p.t}" />
+      <div>
+        <b>${p.t}</b>
+        <span>${p.a}</span>
+        <span>${croreLabel(p.crore)} · ${p.b || 0} bed · ${p.s.toLocaleString()} sq ft</span>
+        <button class="clear" style="font-size:12px" onclick="openProp(${p.id})">Open</button>
+      </div>
+      <button class="x" onclick="unsave(${p.id})">Remove</button>
+    </div>`).join('') + `
+    <p style="font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px">Side by side</p>
+    <table class="cmp">
+      <tr><th>Property</th><th>Price</th><th>Per sq ft</th><th>Size</th></tr>
+      ${list.map(p => `<tr>
+        <td>${p.t.split(' ').slice(0,3).join(' ')}</td>
+        <td>${croreLabel(p.crore)}</td>
+        <td class="${perSqft(p) === cheapest ? 'best' : ''}">${taka(perSqft(p))}</td>
+        <td class="${p.s === biggest ? 'best' : ''}">${p.s.toLocaleString()}</td>
+      </tr>`).join('')}
+    </table>
+    <p style="font-size:12px;color:var(--muted)">Green marks the best value per square foot and the largest floor area.</p>`;
+}
+
+window.unsave = function(id){
+  saved = saved.filter(x => x !== id);
+  persist(); renderSaved(); render();
 };
 
-// Mobile menu toggling logic
+/* ── detail ────────────────────────────────────────────── */
+window.openProp = function(id){
+  current = PROPS.find(p => p.id === id);
+  slide = 0;
+  document.getElementById('md-title').textContent = current.t;
+  document.getElementById('md-addr').textContent = current.a + (current.year ? ` · built ${current.year}` : '');
+  document.getElementById('md-price').textContent = croreLabel(current.crore) + '  ·  ' + taka(perSqft(current)) + ' per sq ft';
+  document.getElementById('md-specs').innerHTML = (current.b
+    ? [`<b>${current.b}</b> bedrooms`, `<b>${current.ba}</b> bathrooms`] : ['<b>Land</b> plot'])
+    .concat([`<b>${current.s.toLocaleString()}</b> sq ft`, `<b>${current.k}</b>`])
+    .map(x => `<span>${x}</span>`).join('');
+  document.getElementById('md-desc').textContent = current.d;
+  document.getElementById('md-feats').innerHTML = current.f.map(f => `<li>${f}</li>`).join('');
+  paintGallery();
+  calc();
+  document.getElementById('v-ok').classList.remove('on');
+  document.getElementById('md').classList.add('on');
+  document.getElementById('md-overlay').classList.add('on');
+};
+window.closeProp = function(){
+  document.getElementById('md').classList.remove('on');
+  document.getElementById('md-overlay').classList.remove('on');
+};
+
+function paintGallery(){
+  document.getElementById('md-img').src = current.imgs[slide];
+  document.getElementById('md-img').alt = current.t;
+  document.getElementById('md-thumbs').innerHTML = current.imgs.map((src, i) =>
+    `<button class="${i === slide ? 'on' : ''}" data-slide="${i}"><img src="${src}" alt="" /></button>`).join('');
+}
+document.getElementById('md-thumbs').addEventListener('click', e => {
+  const b = e.target.closest('[data-slide]'); if (!b) return;
+  slide = +b.dataset.slide; paintGallery();
+});
+
+/* repayment: standard amortising formula at a fixed 9% */
+function calc(){
+  if (!current) return;
+  const dep = +document.getElementById('c-dep').value;
+  const yrs = +document.getElementById('c-yrs').value;
+  document.getElementById('c-dep-val').textContent = dep + '% · ' + taka(priceOf(current) * dep / 100);
+  document.getElementById('c-yrs-val').textContent = yrs + ' years';
+
+  const loan = priceOf(current) * (1 - dep / 100);
+  const r = 0.09 / 12, n = yrs * 12;
+  const m = loan * r / (1 - Math.pow(1 + r, -n));
+  document.getElementById('c-out').textContent = taka(m);
+  document.getElementById('c-sub').textContent =
+    `per month · ${taka(loan)} borrowed over ${yrs} years at 9%`;
+}
+document.getElementById('c-dep').addEventListener('input', calc);
+document.getElementById('c-yrs').addEventListener('input', calc);
+
+window.requestViewing = function(){
+  const n = document.getElementById('v-name').value.trim();
+  const ph = document.getElementById('v-phone').value.trim();
+  const dt = document.getElementById('v-date').value;
+  const tm = document.getElementById('v-time').value;
+  const ok = document.getElementById('v-ok');
+  if (n.length < 2 || ph.replace(/\D/g, '').length < 7){
+    ok.classList.add('on');
+    ok.innerHTML = '<b>Almost —</b> we need a name and a number to confirm the appointment.';
+    return;
+  }
+  const when = dt ? new Date(dt).toDateString() : 'the next available slot';
+  ok.classList.add('on');
+  ok.innerHTML = `<b>Viewing requested.</b> Tanvir will ring ${ph} to confirm
+    ${when}, ${tm.toLowerCase()}, at ${current.a}.<br>
+    <span style="color:var(--muted);font-size:12px">Demo only — nothing was sent.</span>`;
+};
+
+window.bookValuation = function(){
+  toast('Valuation requested — Tanvir calls back within 48 hours.');
+};
+
+/* ── chrome ────────────────────────────────────────────── */
 const burgerMenu = document.getElementById('burger-menu');
 const mobileOverlay = document.getElementById('mobile-overlay');
-
-function toggleMobileMenu() {
+function toggleMobileMenu(){
   const isActive = mobileOverlay.classList.toggle('active');
   burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
   burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
   burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
 }
 burgerMenu.addEventListener('click', toggleMobileMenu);
+window.toggleMobileMenu = toggleMobileMenu;
 
 function toast(msg){
   const t = document.getElementById('toast');
@@ -395,54 +769,39 @@ function toast(msg){
   window._tt = setTimeout(() => t.classList.remove('on'), 2600);
 }
 
-// Scroll Reveal
-const revealElements = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape'){ closeProp(); document.getElementById('sv-drawer').classList.remove('on'); }
+});
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('active'); });
 }, { threshold: 0.1 });
-revealElements.forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// Back to Top button toggler
 const backToTopBtn = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backToTopBtn.classList.add('active');
-  } else {
-    backToTopBtn.classList.remove('active');
-  }
-});
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+window.addEventListener('scroll', () => backToTopBtn.classList.toggle('active', window.scrollY > 400));
+backToTopBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
 
-// Stats animators
-const statNumbers = document.querySelectorAll('.stat-num');
-const countObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      const targetValue = parseInt(el.dataset.target, 10);
-      let currentValue = 0;
-      const duration = 1500; // ms
-      const stepTime = Math.abs(Math.floor(duration / targetValue));
-      
-      const counter = setInterval(() => {
-        currentValue += Math.ceil(targetValue / 40);
-        if (currentValue >= targetValue) {
-          currentValue = targetValue;
-          clearInterval(counter);
-        }
-        el.textContent = currentValue.toLocaleString();
-      }, 30);
-      countObserver.unobserve(el);
-    }
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    const el = en.target, target = parseInt(el.dataset.target, 10);
+    let v = 0;
+    const timer = setInterval(() => {
+      v += Math.max(1, Math.round(target / 40));
+      if (v >= target){ v = target; clearInterval(timer); }
+      el.textContent = v.toLocaleString();
+    }, 30);
+    countObserver.unobserve(el);
   });
 }, { threshold: 0.8 });
-statNumbers.forEach(num => countObserver.observe(num));
+document.querySelectorAll('.stat-num').forEach(n => countObserver.observe(n));
+
+/* boot */
+document.getElementById('fprice-val').textContent = 'Any';
+persist();
+render();
+renderSaved();
 </script>
 </body>
 </html>

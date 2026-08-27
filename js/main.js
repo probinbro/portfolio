@@ -234,22 +234,22 @@ function initCursor(){
 }
 
 /* ═══════════════ COMMAND PALETTE ═══════════════ */
-function initPalette({ xray, bot, arcade }){
+function initPalette({ xray, bot, arcade, contact }){
   const modal = $('#palette'), input = $('#palette-input'), list = $('#palette-list');
   let sel = 0, items = [];
 
   const go = id => () => { close(); $(id)?.scrollIntoView({ behavior:'smooth' }); };
 
   const COMMANDS = [
-    { ic:'◆', label:'Go to Work',            hint:'section', run:go('#work') },
-    { ic:'▥', label:'Industry demo templates', hint:'section', run:go('#demos') },
-    { ic:'◈', label:'Go to Live proof',      hint:'section', run:go('#proof') },
     { ic:'◇', label:'Go to Services',        hint:'section', run:go('#services') },
+    { ic:'▥', label:'Industry demo templates', hint:'section', run:go('#demos') },
+    { ic:'◆', label:'Go to Work',            hint:'section', run:go('#work') },
+    { ic:'◈', label:'Go to Live proof',      hint:'section', run:go('#proof') },
     { ic:'▤', label:'Go to Process',         hint:'section', run:go('#process') },
     { ic:'▶', label:'Go to the Playground',  hint:'section', run:go('#arcade') },
     { ic:'🤖', label:'About the chatbot',    hint:'section', run:go('#chatbot') },
     { ic:'✉', label:'Start a project',       hint:'section', run:go('#contact') },
-    { ic:'$', label:'Set my budget',         hint:'section', run:() => { close(); $('#contact')?.scrollIntoView({ behavior:'smooth' }); setTimeout(() => $('#cfg-amount')?.focus({ preventScroll:true }), 900); } },
+    { ic:'$', label:'Set my budget',         hint:'section', run:() => { close(); contact?.setMode('brief'); $('#contact')?.scrollIntoView({ behavior:'smooth' }); setTimeout(() => $('#cfg-amount')?.focus({ preventScroll:true }), 900); } },
     { ic:'⊞', label:'Toggle x-ray mode',     hint:'X',       run:() => { close(); xray.toggle(); } },
     { ic:'◐', label:'Toggle light / dark',   hint:'T',       run:() => { close(); applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'); } },
     { ic:'🤖', label:'Talk to Robo Probin',  hint:'chat',    run:() => { close(); bot.open(); } },
@@ -310,6 +310,7 @@ function initPalette({ xray, bot, arcade }){
   modal.addEventListener('click', e => { if (e.target === modal) close(); });
   $('#btn-palette')?.addEventListener('click', open);
   $('#foot-palette')?.addEventListener('click', open);
+  $$('[data-open-palette]').forEach(b => b.addEventListener('click', () => open()));
 
   return { open, close, isOpen: () => modal.classList.contains('is-open') };
 }
@@ -368,7 +369,7 @@ function start(){
 
   initHero($('#hero-canvas'), { reduced });
   initVitals($('#proof'));
-  initContact();
+  const contact = initContact();
 
   const xray = initBlueprint({
     onToggle: on => { if (on) toast('X-ray on — hover anything. Press <b>X</b> to put the paint back.'); }
@@ -379,6 +380,9 @@ function start(){
       if (action === 'xray'){ xray.set(true); return; }
       if (action.startsWith('goto:')){
         const id = action.slice(5);
+        // the bot only sends people to #contact when they asked about money,
+        // so open the full brief — quick mode keeps the estimator hidden
+        if (id === '#contact') contact?.setMode('brief');
         setTimeout(() => $(id)?.scrollIntoView({ behavior:'smooth' }), 500);
       }
     }
@@ -391,7 +395,7 @@ function start(){
   initWork({ onSelf: () => $('#hero').scrollIntoView({ behavior:'smooth' }) });
   reveal.scan();          // the project cards only exist as of this line
 
-  const palette = initPalette({ xray, bot, arcade });
+  const palette = initPalette({ xray, bot, arcade, contact });
   initKeys({ palette, xray });
 
   // one quiet line in the console for the curious

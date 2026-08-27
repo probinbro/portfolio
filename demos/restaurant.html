@@ -159,6 +159,59 @@ header{position:absolute;top:0;left:0;right:0;z-index:40}
 
 footer{border-top:1px solid var(--line);padding:44px 0 26px;font-size:13.5px;color:var(--muted)}
 .fin{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+/* ── Menu filters & dish detail ───────────────────────── */
+.m-filters{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:-14px 0 30px}
+.dchip{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--line);padding:7px 15px;border-radius:2px;transition:.25s}
+.dchip:hover{color:var(--cream);border-color:var(--gold)}
+.dchip.on{background:var(--gold);border-color:var(--gold);color:var(--night)}
+.m-search{max-width:340px;margin:0 auto 26px;position:relative}
+.m-search input{width:100%;padding:11px 14px 11px 36px;background:transparent;border:1px solid var(--line);color:var(--cream);font:inherit;font-size:14px}
+.m-search input:focus{outline:none;border-color:var(--gold)}
+.m-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.5}
+.item{cursor:pointer;flex-wrap:wrap}
+.item:hover .nm{color:var(--gold)}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.tag{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:1px 6px;border-radius:3px;border:1px solid rgba(212,162,76,.4);color:var(--gold)}
+.tag.v{color:#8FBF6B;border-color:rgba(143,191,107,.4)}
+.tag.gf{color:#7FB4C9;border-color:rgba(127,180,201,.4)}
+.tag.hot{color:#D9704F;border-color:rgba(217,112,79,.45)}
+.tag.pick{background:rgba(212,162,76,.16)}
+.note{flex-basis:100%;font-size:13.5px;color:var(--muted);line-height:1.65;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+.item.open .note{max-height:140px;padding-top:10px}
+.m-empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0}
+
+/* ── Reservation ──────────────────────────────────────── */
+.party{display:flex;gap:8px;flex-wrap:wrap}
+.pbtn{width:44px;height:42px;border:1px solid var(--line);color:var(--cream);font-size:15px;transition:.2s}
+.pbtn:hover{border-color:var(--gold)}
+.pbtn.on{background:var(--gold);border-color:var(--gold);color:var(--night);font-weight:600}
+.rdays{display:flex;gap:7px;overflow-x:auto;padding-bottom:7px}
+.rday{min-width:58px;flex-shrink:0;border:1px solid var(--line);padding:9px 5px;text-align:center;transition:.2s}
+.rday:hover:not(:disabled){border-color:var(--gold)}
+.rday.on{background:var(--gold);border-color:var(--gold);color:var(--night)}
+.rday:disabled{opacity:.32;cursor:not-allowed}
+.rday u{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;opacity:.8}
+.rday b{display:block;font-family:'Cormorant Garamond';font-size:20px;font-weight:400}
+.rslots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rslot{border:1px solid var(--line);padding:11px 4px;font-size:13.5px;transition:.2s}
+.rslot:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.rslot.on{background:var(--gold);border-color:var(--gold);color:var(--night)}
+.rslot:disabled{opacity:.3;cursor:not-allowed}
+.rslot small{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-top:2px}
+.rmsg{font-size:12.5px;color:var(--muted);margin-top:9px;min-height:18px}
+.rmsg b{color:var(--gold)}
+.rbad input{border-color:var(--rust)}
+.rerr{font-size:11.5px;color:var(--rust);margin-top:5px;display:none}
+.rbad .rerr{display:block}
+.rsum{border:1px solid var(--line);padding:14px 16px;margin-bottom:16px;font-size:13.5px;background:rgba(212,162,76,.04)}
+.rsum div{display:flex;justify-content:space-between;padding:3px 0}
+.rsum div span:last-child{color:var(--gold)}
+.rdone{text-align:center;padding:10px 0}
+.rdone h3{font-size:30px;margin-bottom:10px;color:var(--gold)}
+.rdone p{font-size:14px;color:var(--muted);line-height:1.7}
+.rdone .ref{display:inline-block;margin-top:14px;border:1px dashed var(--line);padding:8px 15px;font-size:12.5px;letter-spacing:.14em}
+
 @media(max-width:900px){.split,.res{grid-template-columns:1fr}.m-list{grid-template-columns:1fr}.menu{display:none}
   .gal{grid-template-columns:repeat(2,1fr)}.burger{display:flex}}
 @media(max-width:560px){.rf3{grid-template-columns:1fr}}
@@ -225,6 +278,16 @@ footer{border-top:1px solid var(--line);padding:44px 0 26px;font-size:13.5px;col
       <p>Served 6pm till late. Kitchen closes at 10:30.</p>
     </div>
     <div class="m-tabs" id="mt"></div>
+
+    <!-- Dietary filters and a search over the whole card. Guests with
+         an allergy should not have to read forty dishes to find three. -->
+    <div class="m-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="7" /><path d="m20 20-3.6-3.6" />
+      </svg>
+      <input id="msearch" type="search" placeholder="Search a dish or ingredient" aria-label="Search the menu" />
+    </div>
+    <div class="m-filters" id="mf"></div>
     <div class="m-list" id="ml"></div>
   </div>
 </section>
@@ -255,17 +318,33 @@ footer{border-top:1px solid var(--line);padding:44px 0 26px;font-size:13.5px;col
         <div><span>Monday</span><span>Closed</span></div>
       </div>
     </div>
-    <form class="rform" onsubmit="event.preventDefault(); submitReservation()">
-      <div class="rf"><label for="rn">Name</label><input id="rn" required placeholder="Your name" /></div>
-      <div class="rf"><label for="re">Phone or email</label><input id="re" required placeholder="How we confirm" /></div>
-      <div class="rf rf3">
-        <div><label for="rg">Guests</label><select id="rg"><option>2</option><option>3</option><option>4</option><option>6</option></select></div>
-        <div><label for="rd">Date</label><input id="rd" type="date" required /></div>
-        <div><label for="rt">Time</label><select id="rt"><option>6:00</option><option>8:30</option></select></div>
+    <div class="rform" id="rform">
+      <div id="rstep">
+        <div class="rf">
+          <label>How many of you?</label>
+          <div class="party" id="party"></div>
+        </div>
+        <div class="rf">
+          <label>Which evening?</label>
+          <div class="rdays" id="rdays"></div>
+        </div>
+        <div class="rf">
+          <label>Sitting</label>
+          <div class="rslots" id="rslots"></div>
+          <p class="rmsg" id="rmsg"></p>
+        </div>
+        <div class="rf"><label for="rn">Name</label>
+          <input id="rn" placeholder="Your name" autocomplete="name" />
+          <span class="rerr">We need a name for the book.</span></div>
+        <div class="rf"><label for="re">Phone or email</label>
+          <input id="re" placeholder="How we confirm" />
+          <span class="rerr">One way to reach you, please.</span></div>
+        <div class="rf"><label for="rq">Anything we should know? <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input id="rq" placeholder="Nut allergy · birthday · high chair" /></div>
+        <button class="btn btn-solid" type="button" onclick="reserve()">Request a table</button>
       </div>
-      <button class="btn btn-solid" type="submit">Request a table</button>
-      <p class="done" id="done">✓ Request sent — we'll confirm by phone today.</p>
-    </form>
+      <div id="rdone" style="display:none"></div>
+    </div>
   </div>
 </section>
 
@@ -277,93 +356,232 @@ footer{border-top:1px solid var(--line);padding:44px 0 26px;font-size:13.5px;col
 </div></footer>
 
 <script>
+/* ═══════════════════════════════════════════════════════════
+   Saffron & Smoke — demo logic.
+   The card filters by diet and searches by ingredient; the
+   booking widget knows the closing days, the two sittings and
+   how many covers are left on each. Seeded rather than random,
+   so a full sitting stays full while you look around.
+   ═══════════════════════════════════════════════════════════ */
 const MENU = {
   Starters: [
-    ['Charred aubergine', 'burnt garlic yoghurt, pomegranate', 480, 1],
-    ['Smoked bone marrow', 'parsley, capers, sourdough', 620, 0],
-    ['Tandoori beetroot', 'whipped feta, dukkah', 440, 1],
-    ['Fire-roasted prawns', 'kashmiri butter, lime', 780, 0]
+    { n:'Charred aubergine',  d:'burnt garlic yoghurt, pomegranate', p:480, t:['v','gf'],   note:'Aubergine straight onto the coals until the skin collapses, then dressed while still warm. Contains dairy; ask for it vegan and we use cashew yoghurt.' },
+    { n:'Smoked bone marrow', d:'parsley, capers, sourdough',        p:620, t:['pick'],     note:'Two halves, ten minutes over the fire, salt and lemon. Order it first — it does not wait.' },
+    { n:'Tandoori beetroot',  d:'whipped feta, dukkah',              p:440, t:['v','gf'],   note:'Roasted in salt for two hours, then a minute in the tandoor. The dukkah is ground the same morning.' },
+    { n:'Fire-roasted prawns',d:'kashmiri butter, lime',             p:780, t:['gf','hot'], note:'Head-on tiger prawns from Cox\u2019s Bazar. Medium heat — the chilli is warmth rather than punishment.' },
+    { n:'Green mango salad',  d:'peanut, chilli, crisp shallot',     p:380, t:['vg','gf','hot'], note:'Sharp, cold and loud. The one dish on the card with no fire in it at all.' }
   ],
   Mains: [
-    ['Charcoal lamb shoulder', 'six hours, cumin salt, flatbread', 1680, 0],
-    ['Whole river fish', 'green chilli, mustard oil, banana leaf', 1420, 0],
-    ['Smoked paneer steak', 'black lentil, brown butter', 940, 1],
-    ['Duck seekh', 'pickled onion, mint chutney', 1240, 0]
+    { n:'Charcoal lamb shoulder', d:'six hours, cumin salt, flatbread', p:1680, t:['pick'],     note:'Shoulder rubbed at midnight, in the pit by six, pulled at service. Feeds two comfortably; three if you order well.' },
+    { n:'Whole river fish',       d:'green chilli, mustard oil, banana leaf', p:1420, t:['gf','hot'], note:'Whatever came up the river that morning — usually bhetki. Served whole, bones and all.' },
+    { n:'Smoked paneer steak',    d:'black lentil, brown butter',       p:940,  t:['v','gf'],   note:'Pressed paneer, smoked for an hour, seared hard. The lentils sit overnight on the edge of the fire.' },
+    { n:'Duck seekh',             d:'pickled onion, mint chutney',      p:1240, t:['hot'],      note:'Minced by hand, not machine, which is why it is coarse. Two skewers.' },
+    { n:'Burnt cabbage',          d:'tahini, urfa chilli, dill',        p:760,  t:['vg'],       note:'A whole hispi, black outside, sweet through the middle. Our most ordered vegan main by a distance.' }
   ],
   Desserts: [
-    ['Burnt basbousa', 'orange blossom, clotted cream', 420, 1],
-    ['Charcoal ice cream', 'salted date caramel', 380, 1],
-    ['Cardamom custard tart', 'toasted pistachio', 440, 1]
+    { n:'Burnt basbousa',        d:'orange blossom, clotted cream', p:420, t:['v'],       note:'Semolina cake soaked while hot. Thirty portions a night and then it is gone.' },
+    { n:'Charcoal ice cream',    d:'salted date caramel',           p:380, t:['v','gf'],  note:'Activated charcoal and burnt sugar. Alarming to look at, gentle to eat.' },
+    { n:'Cardamom custard tart', d:'toasted pistachio',             p:440, t:['v'],       note:'Cardamom ground to order — the reason it tastes different to the one you had elsewhere.' }
   ]
 };
-const mt = document.getElementById('mt'), ml = document.getElementById('ml');
-mt.innerHTML = Object.keys(MENU).map((k, i) => `<button class="m-tab${i ? '' : ' on'}" data-k="${k}">${k}</button>`).join('');
+
+const TAGS = { v:'Veg', vg:'Vegan', gf:'Gluten-free', hot:'Spicy', pick:'Chef\u2019s pick' };
+const FILTERS = ['All', 'v', 'vg', 'gf', 'hot', 'pick'];
+
+const mt = document.getElementById('mt'),
+      ml = document.getElementById('ml'),
+      mf = document.getElementById('mf');
+let course = 'Starters', diet = 'All', query = '';
+
+mt.innerHTML = Object.keys(MENU).map((k, i) =>
+  `<button class="m-tab${i ? '' : ' on'}" data-k="${k}">${k}</button>`).join('');
+mf.innerHTML = FILTERS.map(f =>
+  `<button class="dchip${f === 'All' ? ' on' : ''}" data-f="${f}">${f === 'All' ? 'Everything' : TAGS[f]}</button>`).join('');
+
 mt.addEventListener('click', e => {
   const b = e.target.closest('.m-tab'); if (!b) return;
   [...mt.children].forEach(t => t.classList.toggle('on', t === b));
-  render(b.dataset.k);
+  course = b.dataset.k; render();
 });
-function render(k){
-  ml.innerHTML = MENU[k].map(([n, d, p, v], i) => `
-    <div class="item" style="animation-delay:${i * 45}ms">
-      <span class="nm">${n} ${v ? '<span class="veg">VEG</span>' : ''}<small>${d}</small></span>
-      <span class="dots"></span><span class="pr">৳${p}</span>
+mf.addEventListener('click', e => {
+  const b = e.target.closest('.dchip'); if (!b) return;
+  [...mf.children].forEach(t => t.classList.toggle('on', t === b));
+  diet = b.dataset.f; render();
+});
+document.getElementById('msearch').addEventListener('input', e => { query = e.target.value.toLowerCase().trim(); render(); });
+
+function render(){
+  /* a search looks across the whole card; the tabs only narrow it */
+  let list = query
+    ? Object.entries(MENU).flatMap(([c, items]) => items.map(i => ({ ...i, c })))
+    : MENU[course].map(i => ({ ...i, c:course }));
+
+  if (diet !== 'All') list = list.filter(i => i.t.includes(diet));
+  if (query) list = list.filter(i => (i.n + ' ' + i.d + ' ' + i.note).toLowerCase().includes(query));
+
+  if (!list.length){
+    ml.innerHTML = `<p class="m-empty">Nothing on the card matches that.<br>
+      Tell us on the night and the kitchen will cook around it.</p>`;
+    return;
+  }
+
+  ml.innerHTML = list.map((i, idx) => `
+    <div class="item" style="animation-delay:${idx * 45}ms" data-dish="${idx}">
+      <span class="nm">${i.n}<small>${i.d}${query ? ' · ' + i.c : ''}</small>
+        <span class="tags">${i.t.map(t => `<span class="tag ${t}">${TAGS[t]}</span>`).join('')}</span>
+      </span>
+      <span class="dots"></span><span class="pr">৳${i.p}</span>
+      <span class="note">${i.note}</span>
     </div>`).join('');
 }
-render('Starters');
+render();
 
-// Mobile Overlay Menu Toggler
+ml.addEventListener('click', e => {
+  const item = e.target.closest('.item'); if (!item) return;
+  item.classList.toggle('open');
+});
+
+/* ── reservations ──────────────────────────────────────────
+   Closed Mondays, two sittings on weekdays, three at the
+   weekend, and a fixed number of covers on each. */
+const SITTINGS = { week:['18:00','20:30'], weekend:['17:30','19:45','22:00'], sun:['12:00','14:30'] };
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const COVERS = 24;
+
+let res = { party:2, date:null, time:null };
+
+function seeded(str){
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 33 + str.charCodeAt(i)) % 7919;
+  return h;
+}
+function sittingsFor(d){
+  const g = d.getDay();
+  if (g === 1) return [];                    // Monday: closed
+  if (g === 0) return SITTINGS.sun;
+  if (g === 5 || g === 6) return SITTINGS.weekend;
+  return SITTINGS.week;
+}
+function seatsLeft(d, t){
+  return Math.max(0, COVERS - (seeded(d.toDateString() + t) % 26));
+}
+function nextDays(n){
+  const out = [], today = new Date();
+  today.setHours(0,0,0,0);
+  for (let i = 0; i < n; i++){
+    const d = new Date(today); d.setDate(today.getDate() + i + 1); out.push(d);
+  }
+  return out;
+}
+const fmtDay = d => `${DOW[d.getDay()]} ${d.getDate()} ${MON[d.getMonth()]}`;
+
+function renderParty(){
+  document.getElementById('party').innerHTML = [1,2,3,4,5,6,8].map(n =>
+    `<button class="pbtn ${res.party === n ? 'on' : ''}" data-p="${n}">${n === 8 ? '8+' : n}</button>`).join('');
+}
+function renderDays(){
+  document.getElementById('rdays').innerHTML = nextDays(12).map(d => {
+    const open = sittingsFor(d).length > 0;
+    const on = res.date && d.toDateString() === res.date.toDateString();
+    return `<button class="rday ${on ? 'on' : ''}" ${open ? '' : 'disabled'} data-d="${d.toISOString()}">
+      <u>${DOW[d.getDay()]}</u><b>${d.getDate()}</b></button>`;
+  }).join('');
+}
+function renderSlots(){
+  const box = document.getElementById('rslots'), msg = document.getElementById('rmsg');
+  if (!res.date){
+    box.innerHTML = '';
+    msg.textContent = 'Choose an evening — we are closed on Mondays.';
+    return;
+  }
+  const times = sittingsFor(res.date);
+  box.innerHTML = times.map(t => {
+    const left = seatsLeft(res.date, t);
+    const full = left < res.party;
+    return `<button class="rslot ${res.time === t ? 'on' : ''}" ${full ? 'disabled' : ''} data-t="${t}">
+      ${t}<small>${full ? 'full' : left + ' seats'}</small></button>`;
+  }).join('');
+  const any = times.some(t => seatsLeft(res.date, t) >= res.party);
+  msg.innerHTML = any
+    ? `Table for <b>${res.party}</b> on <b>${fmtDay(res.date)}</b> — pick a sitting.`
+    : `Nothing left for <b>${res.party}</b> that night. Try another evening, or take the bar — we hold two seats back for walk-ins.`;
+}
+
+document.getElementById('party').addEventListener('click', e => {
+  const b = e.target.closest('[data-p]'); if (!b) return;
+  res.party = +b.dataset.p; res.time = null;
+  renderParty(); renderSlots();
+});
+document.getElementById('rdays').addEventListener('click', e => {
+  const b = e.target.closest('[data-d]'); if (!b || b.disabled) return;
+  res.date = new Date(b.dataset.d); res.time = null;
+  renderDays(); renderSlots();
+});
+document.getElementById('rslots').addEventListener('click', e => {
+  const b = e.target.closest('[data-t]'); if (!b || b.disabled) return;
+  res.time = b.dataset.t; renderSlots();
+});
+
+window.reserve = function(){
+  const n = document.getElementById('rn'), c = document.getElementById('re');
+  const msg = document.getElementById('rmsg');
+  if (!res.date || !res.time){
+    msg.innerHTML = '<b>Pick an evening and a sitting first.</b>';
+    return;
+  }
+  let ok = true;
+  const mark = (el, good) => { el.closest('.rf').classList.toggle('rbad', !good); return good; };
+  ok = mark(n, n.value.trim().length > 1) && ok;
+  ok = mark(c, c.value.trim().length > 4) && ok;
+  if (!ok) return;
+
+  const ref = 'SS' + String(seeded(n.value + res.time) % 9000 + 1000);
+  const notes = document.getElementById('rq').value.trim();
+  document.getElementById('rstep').style.display = 'none';
+  const done = document.getElementById('rdone');
+  done.style.display = 'block';
+  done.innerHTML = `
+    <div class="rdone">
+      <h3>Table held for ${n.value.trim().split(' ')[0]}</h3>
+      <div class="rsum" style="text-align:left;margin-top:18px">
+        <div><span>Guests</span><span>${res.party}</span></div>
+        <div><span>Evening</span><span>${fmtDay(res.date)}</span></div>
+        <div><span>Sitting</span><span>${res.time}</span></div>
+        ${notes ? `<div><span>Noted</span><span>${notes}</span></div>` : ''}
+      </div>
+      <p>We hold the table for fifteen minutes past the sitting. If you are running late,
+         ring us and it is yours all evening.</p>
+      <span class="ref">${ref}</span>
+      <p style="margin-top:16px;font-size:12px">Demo only — no message was sent. The real site
+         confirms by SMS and writes straight into the reservation book.</p>
+      <button class="btn" style="margin-top:18px" onclick="location.reload()">Book another</button>
+    </div>`;
+};
+
+/* ── chrome ────────────────────────────────────────────── */
 const burgerMenu = document.getElementById('burger-menu');
 const mobileOverlay = document.getElementById('mobile-overlay');
-
-function toggleMobileMenu() {
+function toggleMobileMenu(){
   const isActive = mobileOverlay.classList.toggle('active');
   burgerMenu.children[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : 'none';
   burgerMenu.children[1].style.opacity = isActive ? '0' : '1';
   burgerMenu.children[2].style.transform = isActive ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
 }
 burgerMenu.addEventListener('click', toggleMobileMenu);
+window.toggleMobileMenu = toggleMobileMenu;
 
-// Interactive Table Reservation Success Flow
-window.submitReservation = function() {
-  const submitButton = document.querySelector('.rform button');
-  submitButton.textContent = 'Submitting...';
-  submitButton.disabled = true;
-  
-  setTimeout(() => {
-    document.getElementById('done').classList.add('on');
-    submitButton.textContent = 'Request a table';
-    submitButton.disabled = false;
-    document.querySelector('.rform').reset();
-    setTimeout(() => {
-      document.getElementById('done').classList.remove('on');
-    }, 5000);
-  }, 1000);
-};
-
-// Scroll Reveal Observer
-const revealElements = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('active'); });
 }, { threshold: 0.1 });
-revealElements.forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Back to Top button
 const backToTopBtn = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backToTopBtn.classList.add('active');
-  } else {
-    backToTopBtn.classList.remove('active');
-  }
-});
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+window.addEventListener('scroll', () => backToTopBtn.classList.toggle('active', window.scrollY > 400));
+backToTopBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+/* boot */
+renderParty(); renderDays(); renderSlots();
 </script>
 </body>
 </html>

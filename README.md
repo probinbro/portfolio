@@ -133,6 +133,21 @@ devserver.py          local static server with caching disabled
 
 ## Adding another demo template
 
+Every demo carries one real, working feature rather than a static mock:
+
+| Demo | The thing that actually works |
+| --- | --- |
+| `ecommerce.html` | Category filter, search and sort · quick-view with size and colour · a bag kept in `localStorage` · validated checkout that issues an order number |
+| `hospital.html` | Symptom-to-department finder · four-step booking (department → consultant → day → slot) with seeded availability, so taken slots stay taken |
+| `restaurant.html` | Dietary filters and dish notes · reservations that know the closing day, both sittings and the covers left on each |
+| `realestate.html` | Budget/bed filters and sort · detail modal with gallery, spec and a live repayment calculator · saved homes compared side by side |
+| `saas.html` | Seat slider that reprices every plan · comparison table · a payback calculator · sign-up that creates a workspace slug |
+| `school.html` | Age-to-year-group finder · fee calculator with sibling discounts, plans and extras · tour booking on the two mornings tours actually run |
+
+Availability in the booking demos is **seeded from a hash**, not `Math.random()` — a
+slot that reads "full" stays full while the visitor clicks around, which is the
+difference between a demo that feels real and one that feels fake.
+
 Each file in `demos/` is **completely self-contained** — its own CSS, its own
 JavaScript, its own Google Font. Nothing is shared, deliberately: a client can be
 sent one file on its own, and changing one template can never break another.
@@ -190,6 +205,12 @@ usual next requests.
   entry in the `GAMES` map plus one `<button class="gtab">` in the markup.
 - **Games** pause when scrolled off-screen and resume when scrolled back.
   High scores are per-device, in `localStorage`.
+- **The contact section has two modes.** `Just send a message` is the default —
+  three fields and a button — and `Build a full brief` reveals the configurator plus
+  the optional fields (`data-brief-only` in the markup). The switch is `setMode()` in
+  `js/contact.js`, and anything that deep-links to the estimate (the chatbot's pricing
+  answers, the palette's "Set my budget") calls it first so the configurator is on
+  screen when the visitor arrives.
 - **Budget is a first-class field**, not an afterthought. The configurator reconciles
   the visitor's number against the estimated range and says plainly whether it fits —
   and when it doesn't, it works out which features to drop, or which smaller project

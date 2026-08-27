@@ -67,10 +67,10 @@
     </a>
 
     <nav class="nav__links" aria-label="Primary">
-      <a href="#work" data-nav>Work</a>
-      <a href="#demos" data-nav>Demos</a>
-      <a href="#proof" data-nav>Proof</a>
       <a href="#services" data-nav>Services</a>
+      <a href="#demos" data-nav>Demos</a>
+      <a href="#work" data-nav>Work</a>
+      <a href="#proof" data-nav>Proof</a>
       <a href="#arcade" data-nav>Playground</a>
       <a href="#chatbot" data-nav>Chatbot</a>
       <a href="#contact" data-nav>Contact</a>
@@ -180,12 +180,52 @@
     <!-- ══════════════ 02 · MANIFESTO ══════════════ -->
     <section class="manifesto" id="manifesto" data-x="section#manifesto">
       <div class="shell">
-        <p class="kinetic" id="kinetic">
-          Most portfolios show you screenshots of work.
-          This one hands you the tools. Flip the x-ray, open the console, play the games,
-          interrogate the bot. Everything here was written by hand — because the fastest way to
-          prove I can build your site is to make you use mine.
-        </p>
+        <!-- The statement lives in a framed panel so it reads as a deliberate
+             callout rather than a stray wall of text, and the rail beside it
+             turns each claim into something the visitor can actually press. -->
+        <div class="mfx reveal" data-x="div.mfx">
+          <div class="mfx__bar">
+            <span class="mfx__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="mfx__file">why-this-page.txt</span>
+            <span class="mfx__meta">hand-written · no page builder</span>
+          </div>
+
+          <div class="mfx__body">
+            <p class="kinetic" id="kinetic">
+              Most portfolios show you screenshots of work.
+              This one hands you the tools. Flip the x-ray, open the console, play the games,
+              interrogate the bot. Everything here was written by hand — because the fastest way to
+              prove I can build your site is to make you use mine.
+            </p>
+
+            <aside class="mfx__try" aria-label="Things you can try on this page">
+              <h3>Try it while you read</h3>
+              <ul>
+                <li>
+                  <button type="button" data-xray-toggle>
+                    <kbd>X</kbd><b>Flip the x-ray</b><em>see the structure underneath</em>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" data-open-palette>
+                    <kbd>⌘K</kbd><b>Jump to anything</b><em>the command palette</em>
+                  </button>
+                </li>
+                <li>
+                  <a href="#arcade">
+                    <kbd>▶</kbd><b>Play the games</b><em>six, all playable</em>
+                  </a>
+                </li>
+                <li>
+                  <button type="button" data-open-bot data-bot-seed="What makes this site different from a template?">
+                    <kbd>◍</kbd><b>Interrogate the bot</b><em>ask it anything</em>
+                  </button>
+                </li>
+              </ul>
+              <p class="mfx__foot">Curious ones: there is a note waiting in the browser console too.</p>
+            </aside>
+          </div>
+        </div>
 
         <div class="manifesto__cards">
           <article class="mcard reveal" data-x="article.mcard">
@@ -210,21 +250,22 @@
       </div>
     </section>
 
-    <!-- ══════════════ 03 · WORK ══════════════ -->
-    <section class="work" id="work" data-x="section#work">
+    <!-- ══════════════ 03 · SERVICES ══════════════ -->
+    <section class="services" id="services" data-x="section#services">
       <div class="shell">
         <header class="sec-head reveal">
-          <span class="sec-eyebrow"><i></i>01 — Selected work</span>
-          <h2 class="sec-title">Real sites. Real clients.<br /><span class="dim">Still live right now.</span></h2>
-          <p class="sec-lede">Every preview below is the <b>live site itself</b>, running in a frame on this page — not
-            a screenshot. Hit <b>Peek</b> to open one full size and click around inside it.</p>
+          <span class="sec-eyebrow"><i></i>01 — What Probin builds</span>
+          <h2 class="sec-title">Full support, both ends<br /><span class="dim">of the wire.</span></h2>
         </header>
+        <div class="svc" id="svc-grid"><!-- injected by js/services.js --></div>
 
-        <div class="work__grid" id="work-grid"><!-- injected by js/work.js --></div>
+        <div class="stack-marquee" aria-label="Tech stack">
+          <div class="stack-marquee__track" id="stack-track"></div>
+        </div>
       </div>
     </section>
 
-    <!-- ══════════════ 03b · INDUSTRY DEMOS ══════════════ -->
+    <!-- ══════════════ 04 · INDUSTRY DEMOS ══════════════ -->
     <section class="demos" id="demos" data-x="section#demos">
       <div class="shell">
         <header class="sec-head reveal">
@@ -268,11 +309,25 @@
       </div>
     </section>
 
-    <!-- ══════════════ 04 · PROOF / LIVE VITALS ══════════════ -->
+    <!-- ══════════════ 05 · WORK ══════════════ -->
+    <section class="work" id="work" data-x="section#work">
+      <div class="shell">
+        <header class="sec-head reveal">
+          <span class="sec-eyebrow"><i></i>03 — Selected work</span>
+          <h2 class="sec-title">Real sites. Real clients.<br /><span class="dim">Still live right now.</span></h2>
+          <p class="sec-lede">Every preview below is the <b>live site itself</b>, running in a frame on this page — not
+            a screenshot. Hit <b>Peek</b> to open one full size and click around inside it.</p>
+        </header>
+
+        <div class="work__grid" id="work-grid"><!-- injected by js/work.js --></div>
+      </div>
+    </section>
+
+    <!-- ══════════════ 06 · PROOF / LIVE VITALS ══════════════ -->
     <section class="proof" id="proof" data-x="section#proof">
       <div class="shell">
         <header class="sec-head reveal">
-          <span class="sec-eyebrow"><i></i>03 — Live proof</span>
+          <span class="sec-eyebrow"><i></i>04 — Live proof</span>
           <h2 class="sec-title">Numbers measured from<br /><span class="dim">the page you're reading.</span></h2>
           <p class="sec-lede">Not a marketing badge. These are read straight off your browser's Performance API, right
             now, on your device and your connection.</p>
@@ -328,22 +383,7 @@
       </div>
     </section>
 
-    <!-- ══════════════ 05 · SERVICES ══════════════ -->
-    <section class="services" id="services" data-x="section#services">
-      <div class="shell">
-        <header class="sec-head reveal">
-          <span class="sec-eyebrow"><i></i>04 — What Probin builds</span>
-          <h2 class="sec-title">Full support, both ends<br /><span class="dim">of the wire.</span></h2>
-        </header>
-        <div class="svc" id="svc-grid"><!-- injected by js/services.js --></div>
-
-        <div class="stack-marquee" aria-label="Tech stack">
-          <div class="stack-marquee__track" id="stack-track"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════ 06 · PROCESS ══════════════ -->
+    <!-- ══════════════ 07 · PROCESS ══════════════ -->
     <section class="process" id="process" data-x="section#process">
       <div class="shell">
         <header class="sec-head reveal">
@@ -355,7 +395,7 @@
       </div>
     </section>
 
-    <!-- ══════════════ 07 · ARCADE ══════════════ -->
+    <!-- ══════════════ 08 · ARCADE ══════════════ -->
     <section class="arcade" id="arcade" data-x="section#arcade">
       <div class="shell">
         <header class="sec-head sec-head--wide reveal">
@@ -457,16 +497,30 @@
       </div>
     </section>
 
-    <!-- ══════════════ 08 · CONTACT ══════════════ -->
-    <section class="contact" id="contact" data-x="section#contact">
+    <!-- ══════════════ 09 · CONTACT ══════════════ -->
+    <!-- `is-quick` is the default on purpose: three fields and a button.
+         The configurator and the optional fields only appear for visitors
+         who choose the longer path. -->
+    <section class="contact is-quick" id="contact" data-x="section#contact">
       <div class="shell">
         <header class="sec-head reveal">
           <span class="sec-eyebrow"><i></i>07 — Start something</span>
-          <h2 class="sec-title">Build the brief.<br /><span class="dim">Get a real answer in 24h.</span></h2>
-          <p class="sec-lede">Pick what you need — the estimate updates as you go. Then <b>tell it your budget</b>:
-            Probin works to your number rather than against it, and the configurator will say plainly whether the scope
-            fits or what to drop.</p>
+          <h2 class="sec-title">Start with a sentence.<br /><span class="dim">Get a real answer in 24h.</span></h2>
+          <p class="sec-lede">Two ways to do this, and neither is wrong. Send a short message and Probin will ask the
+            rest himself — or build a full brief and watch the estimate, and an honest read on your budget, update as
+            you pick.</p>
         </header>
+
+        <div class="cmodes reveal" role="group" aria-label="How much detail you would like to give">
+          <button class="cmode is-on" type="button" data-cmode="quick" aria-pressed="true">
+            <b>Just send a message</b>
+            <em>Name, one way to reach you, done · ~30 seconds</em>
+          </button>
+          <button class="cmode" type="button" data-cmode="brief" aria-pressed="false">
+            <b>Build a full brief</b>
+            <em>Pick the scope, get a live price and timeline</em>
+          </button>
+        </div>
 
         <div class="contact__grid">
           <!-- Configurator -->
@@ -518,13 +572,18 @@
             <p class="cform__intro">Only your name and one way to reach you are needed — everything else is
               entirely optional, and Probin is happy to fill in the gaps on a call.</p>
 
+            <p class="cform__switch" data-quick-only>
+              Want a price before you send it?
+              <button class="linkish" type="button" data-cmode-jump="brief">Build the full brief instead</button>
+            </p>
+
             <div class="cform__row">
               <label class="field">
                 <span>Your name</span>
                 <input type="text" name="name" id="f-name" autocomplete="name" placeholder="Jane Doe" />
                 <em class="field__err" data-err></em>
               </label>
-              <label class="field">
+              <label class="field" data-brief-only>
                 <span>Company <i>optional</i></span>
                 <input type="text" name="company" id="f-company" autocomplete="organization" placeholder="Acme Ltd." />
               </label>
@@ -543,7 +602,7 @@
               </label>
             </div>
 
-            <fieldset class="field field--choice">
+            <fieldset class="field field--choice" data-brief-only>
               <legend>How would you prefer to hear back?</legend>
               <div class="choices">
                 <label><input type="radio" name="prefer" value="Either is fine" checked /><span>Either is fine</span></label>
@@ -593,7 +652,7 @@
       </div>
       <div class="foot__cols">
         <div>
-          <h5>Site</h5><a href="#work">Work</a><a href="#proof">Proof</a><a href="#services">Services</a><a
+          <h5>Site</h5><a href="#services">Services</a><a href="#demos">Demos</a><a href="#work">Work</a><a
             href="#arcade">Arcade</a>
         </div>
         <div>

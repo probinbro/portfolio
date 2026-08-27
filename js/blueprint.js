@@ -88,6 +88,7 @@ export function initBlueprint({ onToggle } = {}){
 
   btn?.addEventListener('click', toggle);
   document.getElementById('foot-xray')?.addEventListener('click', toggle);
+  document.querySelectorAll('[data-xray-toggle]').forEach(b2 => b2.addEventListener('click', toggle));
   window.addEventListener('resize', measure);
   window.addEventListener('pointermove', onMove, { passive:true });
   measure();

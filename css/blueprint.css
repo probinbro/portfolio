@@ -29,11 +29,14 @@ html.xray body{
   background-attachment:fixed;
 }
 
-/* Flatten decoration so structure is all that's left */
+/* Flatten decoration so structure is all that's left.
+   The scroll rail goes too — a violet-to-amber gradient is the one
+   thing on the page that x-ray mode cannot explain. */
 html.xray .hero__veil,
 html.xray .grain,
 html.xray .scard__glow,
 html.xray .screen__scan,
+html.xray .scroll-rail,
 html.xray .mini__hero::after{ display:none; }
 
 html.xray .hero__canvas{ opacity:.28; filter:saturate(0) contrast(1.4); }
