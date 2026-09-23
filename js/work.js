@@ -17,7 +17,6 @@ export function initWork({ onSelf } = {}){
   initPeek({ onSelf });
   initLiveShots();          // picks up client sites and demos in one pass
   glowTrack(grid, '.pcard');
-  glowTrack(document, '.mcard');
   glowTrack(document, '.dcard');
 }
 
@@ -131,7 +130,7 @@ function card(p, i){
   el.style.transitionDelay = Math.min(i * 70, 350) + 'ms';
   el.dataset.x = 'article.pcard';
 
-  const host = p.url.startsWith('#') ? 'probin.dev' : new URL(p.url).host.replace(/^www\./, '');
+  const host = p.url.startsWith('#') ? 'probin.me' : new URL(p.url).host.replace(/^www\./, '');
 
   el.innerHTML = `
     <div class="pcard__stage">

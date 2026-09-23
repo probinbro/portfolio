@@ -1,4 +1,4 @@
-# Probin.dev — portfolio
+# probin.me — portfolio
 
 A portfolio that argues for itself. Instead of showing screenshots of work, it hands
 the visitor the tools: an x-ray mode that exposes the page's own structure, a playground

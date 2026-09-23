@@ -16,6 +16,8 @@ export const PROFILE = {
   email:     'probinmajumderr@gmail.com',
   whatsapp:  '+8801634308360',
   location:  'Dhaka, Bangladesh · working remote worldwide',
+  site:      'probin.me',
+  siteUrl:   'https://probin.me',
   github:    'https://github.com/probinbro',
   linkedin:  'https://www.linkedin.com/in/mrprobin/',
 

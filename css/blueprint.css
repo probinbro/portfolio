@@ -81,7 +81,6 @@ html.xray [data-x]::before{
 /* Every meaningful box gets a hairline so the grid reads */
 html.xray .shell > *,
 html.xray .pcard,
-html.xray .mcard,
 html.xray .scard,
 html.xray .vital,
 html.xray .step,

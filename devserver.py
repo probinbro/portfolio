@@ -32,7 +32,7 @@ def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 4321
     handler = partial(NoCacheHandler, directory=str(ROOT))
     with ThreadingHTTPServer(("127.0.0.1", port), handler) as httpd:
-        print(f"probin.dev running at http://localhost:{port}  (no-store, ctrl-c to stop)")
+        print(f"probin.me running at http://localhost:{port}  (no-store, ctrl-c to stop)")
         httpd.serve_forever()
 
 

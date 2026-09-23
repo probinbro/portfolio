@@ -101,7 +101,7 @@ function boot(){
   sessionStorage.setItem('probin.booted', '1');
 
   const lines = [
-    'probin.dev — cold start',
+    'probin.me — cold start',
     'loading <b>0</b> dependencies',
     'compiling interactions … <b>ok</b>',
     'waking <b>Robo Probin</b> … <b>ok</b>',
@@ -400,7 +400,7 @@ function start(){
 
   // one quiet line in the console for the curious
   console.log(
-    '%cProbin.dev%c\nHand-coded. Zero dependencies. No build step.\nLike what you see? ' + PROFILE.email,
+    '%cProbin.me%c\nHand-coded. Zero dependencies. No build step.\nLike what you see? ' + PROFILE.email,
     'font:800 22px/1.2 system-ui;color:#4FF0D6',
     'font:13px/1.6 ui-monospace,monospace;color:#7B8497'
   );
