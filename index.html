@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -7,7 +7,20 @@
   <title>Probin — I build websites that behave like software</title>
   <meta name="description"
     content="Probin is a full-stack web developer with 3 years of experience building fast, custom, hand-coded websites and web apps. Frontend, backend, and everything between." />
-  <meta name="theme-color" content="#F3F4F0" />
+  <meta name="theme-color" content="#06070B" />
+
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem('probin.theme_pref');
+        const sys = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const theme = (saved === 'dark' || saved === 'light') ? saved : sys;
+        document.documentElement.dataset.theme = theme;
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'light' ? '#F3F4F0' : '#06070B');
+      } catch (e) {}
+    })();
+  </script>
 
   <link rel="canonical" href="https://probin.me/" />
   <meta property="og:type" content="website" />

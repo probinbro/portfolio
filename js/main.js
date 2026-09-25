@@ -17,20 +17,41 @@ const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
 /* ═══════════════ THEME ═══════════════ */
-const THEME_KEY = 'probin.theme';
-function applyTheme(t){
+const THEME_KEY = 'probin.theme_pref';
+const getSystemTheme = () =>
+  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+function applyTheme(t, save = true){
   document.documentElement.dataset.theme = t;
   $('#btn-theme')?.setAttribute('aria-pressed', String(t === 'light'));
   $('meta[name="theme-color"]')?.setAttribute('content', t === 'light' ? '#F3F4F0' : '#06070B');
-  localStorage.setItem(THEME_KEY, t);
+  if (save) localStorage.setItem(THEME_KEY, t);
   window.dispatchEvent(new Event('probin:theme'));
 }
+
+function resetThemeToSystem(){
+  try {
+    localStorage.removeItem(THEME_KEY);
+    localStorage.removeItem('probin.theme');
+  } catch (e) {}
+  applyTheme(getSystemTheme(), false);
+  toast('Theme reset to system preference');
+}
+
 function initTheme(){
-  // Light is the house style; the toggle still remembers a visitor's choice.
+  try { localStorage.removeItem('probin.theme'); } catch (e) {}
+
   const saved = localStorage.getItem(THEME_KEY);
-  applyTheme(saved || 'light');
+  applyTheme(saved || getSystemTheme(), false);
+
+  window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener?.('change', e => {
+    if (!localStorage.getItem(THEME_KEY)){
+      applyTheme(e.matches ? 'dark' : 'light', false);
+    }
+  });
+
   $('#btn-theme')?.addEventListener('click', () => {
-    applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
+    applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light', true);
     sfx('tick');
   });
 }
@@ -250,8 +271,8 @@ function initPalette({ xray, bot, arcade, contact }){
     { ic:'🤖', label:'About the chatbot',    hint:'section', run:go('#chatbot') },
     { ic:'✉', label:'Start a project',       hint:'section', run:go('#contact') },
     { ic:'$', label:'Set my budget',         hint:'section', run:() => { close(); contact?.setMode('brief'); $('#contact')?.scrollIntoView({ behavior:'smooth' }); setTimeout(() => $('#cfg-amount')?.focus({ preventScroll:true }), 900); } },
-    { ic:'⊞', label:'Toggle x-ray mode',     hint:'X',       run:() => { close(); xray.toggle(); } },
-    { ic:'◐', label:'Toggle light / dark',   hint:'T',       run:() => { close(); applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'); } },
+    { ic:'◐', label:'Toggle light / dark',   hint:'T',       run:() => { close(); applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light', true); } },
+    { ic:'⚙', label:'Use system theme',      hint:'auto',    run:() => { close(); resetThemeToSystem(); } },
     { ic:'🤖', label:'Talk to Robo Probin',  hint:'chat',    run:() => { close(); bot.open(); } },
     { ic:'🐛', label:'Play Bug Squash',      hint:'game',    run:() => { close(); $('#arcade').scrollIntoView({ behavior:'smooth' }); setTimeout(() => arcade?.select('bugs'), 700); } },
     { ic:'▦', label:'Play Div Stacker',      hint:'game',    run:() => { close(); $('#arcade').scrollIntoView({ behavior:'smooth' }); setTimeout(() => arcade?.select('stack'), 700); } },

@@ -88,7 +88,7 @@ export const PROJECTS = [
     year:   '2024',
     kind:   'Showreel portfolio',
     url:    'https://yousuf-portfolio-phi.vercel.app/',
-    size:   'third',
+    size:   'half',
     accent: '#FFC46B',
     desc:   'A portfolio for someone whose entire craft is motion — so the site had to move without ever upstaging the reel. Three work streams, external Vimeo and Behance embeds, and a contact path built for one thing: getting the enquiry.',
     tags:   ['Video-first', 'Motion UI', 'Embeds'],
@@ -100,24 +100,11 @@ export const PROJECTS = [
     year:   '2024',
     kind:   'Research portfolio · GitHub Pages',
     url:    'https://probinbro.github.io/Pratiks-portfolio/',
-    size:   'third',
+    size:   'half',
     accent: '#5EE6FF',
     desc:   'Published geospatial research rebuilt as browsable web pages — figures, methods and DOI links included — instead of a wall of PDF downloads. Static, free to host, and fast on a bad connection.',
     tags:   ['Static site', 'Data storytelling', 'Zero hosting cost'],
     mini:   { bg:'#06121a', hero:'linear-gradient(120deg,#5EE6FF,#1d5b7a 60%,#07161f)', layout:'doc' }
-  },
-  {
-    title:  'This site',
-    client: 'Probin',
-    year:   '2026',
-    kind:   'The one you are standing in',
-    url:    '#hero',
-    size:   'third',
-    accent: '#4FF0D6',
-    self:   true,
-    desc:   'Custom canvas hero, an x-ray mode that exposes the DOM, three hand-written games, a chatbot and a live performance readout — with no framework, no build step and no dependencies. If it runs this smoothly, your site will too.',
-    tags:   ['0 dependencies', '3 games', 'Canvas', 'Robo Probin'],
-    mini:   { bg:'#06070B', hero:'linear-gradient(120deg,#4FF0D6,#9080FF 60%,#0a0d18)', layout:'hero' }
   }
 ];
 
